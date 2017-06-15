@@ -2,9 +2,6 @@
 This script will create functions which will be used
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 

@@ -1,11 +1,8 @@
 /*
 This script will create stored procedure to 
-1. create TransDateTime column for accountInfo table
-2. sort the table in account, TransDateTime with descent order
+1. create transactionDateTime column for Account_Info table
+2. sort the table in account, transactionDateTime with descent order
 */
-
-use [OnlineFraudDetection]
-go
 
 set ansi_nulls on
 go
@@ -22,15 +19,15 @@ begin
 
 declare @dropTable nvarchar(max) 
 set @dropTable = '
-drop table if exists ' + @table + '_sort'
+drop table if exists ' + @table + '_Sort'
 exec sp_executesql @dropTable
 
 declare @sortAcctTableQuery nvarchar(max) 
 set @sortAcctTableQuery = '
 select *,
-convert(datetime,stuff(stuff(stuff(concat(transactionDate,dbo.FormatTime(transactionTime)), 9, 0, '' ''), 12, 0, '':''), 15, 0, '':'')) as TransDateTime
-into ' + @table + '_sort from ' + @table + '
-order by accountID, TransDateTime desc
+convert(datetime,stuff(stuff(stuff(concat(transactionDate,dbo.FormatTime(transactionTime)), 9, 0, '' ''), 12, 0, '':''), 15, 0, '':'')) as transactionDateTime
+into ' + @table + '_Sort from ' + @table + '
+order by accountID, transactionDateTime desc
 '
 exec sp_executesql @sortAcctTableQuery
 end

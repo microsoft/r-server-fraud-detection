@@ -6,9 +6,6 @@ input parameters:
 @table_name = the name of the output risk table
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -35,13 +32,13 @@ exec sp_executesql @droptablesql
 /* create risk table */
 set @filltablesql = 'select ' + @name + ' , log(odds/(1-odds)) as risk 
             into .dbo.' + @table_name + 
-			' from (select distinct ' + @name + ' ,cast((sum(Label)+10) as float)/cast((sum(Label)+sum(1-Label)+100) as float) as odds 
-			from sql_tagged_training_processed group by ' + @name + ' ) temp'
+			' from (select distinct ' + @name + ' ,cast((sum(label)+10) as float)/cast((sum(label)+sum(1-label)+100) as float) as odds 
+			from Tagged_Training_Processed group by ' + @name + ' ) temp'
 
-/* example: when @name=localHour, @table_name=sql_risk_localHour, @sql is the following:
+/* example: when @name=localHour, @table_name=Risk_LocalHour, @sql is the following:
 select localHour , log(odds/(1-odds)) as risk 
-            into sql_risk_localHour from (select distinct localHour ,cast((sum(Label)+10) as float)/cast((sum(Label)+sum(1-Label)+100) as float) as odds 
-			from sql_tagged_training group by localHour ) temp
+            into Risk_LocalHour from (select distinct localHour ,cast((sum(label)+10) as float)/cast((sum(label)+sum(1-label)+100) as float) as odds 
+			from Tagged_Training group by localHour ) temp
 */
 
 exec sp_executesql @filltablesql

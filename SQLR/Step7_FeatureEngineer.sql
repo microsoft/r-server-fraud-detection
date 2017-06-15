@@ -8,9 +8,6 @@ input parameters:
 @table = the table need to be feature engineered
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -28,12 +25,12 @@ begin
 declare 
 @sql_dropview1 nvarchar(max) = '';
 set @sql_dropview1 = '
-DROP VIEW IF EXISTS ' + @table + '_features1'
+DROP VIEW IF EXISTS ' + @table + '_Features1'
 exec sp_executesql @sql_dropview1;
 
 declare @sql_fe1 nvarchar(max) = '';
-set @sql_fe1 = 'create view ' + @table + '_features1 as
-select t.Label,t.accountID,t.TransDateTime,
+set @sql_fe1 = 'create view ' + @table + '_Features1 as
+select t.label,t.accountID,t.transactionDateTime,
 cast(t.transactionAmountUSD as float) as transactionAmountUSD,
 cast(t.digitalItemCount as int) as digitalItemCount,
 cast(t.physicalItemCount as int) as physicalItemCount,
@@ -61,18 +58,18 @@ isnull(pbpc.risk,0) as paymentBillingPostalCode_risk,
 isnull(pbst.risk,0) as paymentBillingState_risk,
 isnull(tcc.risk,0) as transactionCurrencyCode_risk
 from ' +@table + ' as t
-left join sql_risk_accountCountry as ac on ac.accountCountry = t.accountCountry
-left join sql_risk_accountPostalCode as apc on apc.accountPostalCode = t.accountPostalCode
-left join sql_risk_accountState as actst on actst.accountState = t.accountState
-left join sql_risk_browserLanguage as bl on bl.browserLanguage = t.browserLanguage
-left join sql_risk_ipCountryCode as ic on ic.ipCountryCode = t.ipCountryCode
-left join sql_risk_ipPostCode as ipc on ipc.ipPostCode = t.ipPostCode
-left join sql_risk_ipState as ips on ips.ipState = t.ipState
-left join sql_risk_localHour as lh on lh.localHour = t.localHour
-left join sql_risk_paymentBillingCountryCode as pbcc on pbcc.paymentBillingCountryCode = t.paymentBillingCountryCode
-left join sql_risk_paymentBillingPostalCode as pbpc on pbpc.paymentBillingPostalCode = t.paymentBillingPostalCode
-left join sql_risk_paymentBillingState as pbst on pbst.paymentBillingState = t.paymentBillingState
-left join sql_risk_transactionCurrencyCode as tcc on tcc.transactionCurrencyCode = t.transactionCurrencyCode
+left join Risk_AccountCountry as ac on ac.accountCountry = t.accountCountry
+left join Risk_AccountPostalCode as apc on apc.accountPostalCode = t.accountPostalCode
+left join Risk_AccountState as actst on actst.accountState = t.accountState
+left join Risk_BrowserLanguage as bl on bl.browserLanguage = t.browserLanguage
+left join Risk_IpCountryCode as ic on ic.ipCountryCode = t.ipCountryCode
+left join Risk_IpPostCode as ipc on ipc.ipPostCode = t.ipPostCode
+left join Risk_IpState as ips on ips.ipState = t.ipState
+left join Risk_LocalHour as lh on lh.localHour = t.localHour
+left join Risk_PaymentBillingCountryCode as pbcc on pbcc.paymentBillingCountryCode = t.paymentBillingCountryCode
+left join Risk_PaymentBillingPostalCode as pbpc on pbpc.paymentBillingPostalCode = t.paymentBillingPostalCode
+left join Risk_PaymentBillingState as pbst on pbst.paymentBillingState = t.paymentBillingState
+left join Risk_TransactionCurrencyCode as tcc on tcc.transactionCurrencyCode = t.transactionCurrencyCode
 '
 exec sp_executesql @sql_fe1;
 
@@ -80,18 +77,18 @@ exec sp_executesql @sql_fe1;
 declare 
 @sql_dropview nvarchar(max) = '';
 set @sql_dropview = '
-DROP VIEW IF EXISTS ' + @table + '_features'
+DROP VIEW IF EXISTS ' + @table + '_Features'
 exec sp_executesql @sql_dropview;
 
 declare @sql_fe nvarchar(max) = '';
-set @sql_fe = 'create view ' + @table + '_features as
-select * from ' + @table + '_features1 as t
+set @sql_fe = 'create view ' + @table + '_Features as
+select * from ' + @table + '_Features1 as t
 outer apply
-(select sum(case when t2.TransDateTime > last24Hours then cast(t2.transactionAmountUSD as float) end) as sumPurchaseAmount1dPerUser,count(case when t2.TransDateTime > last24Hours then t2.transactionAmountUSD end) as sumPurchaseCount1dPerUser
+(select sum(case when t2.transactionDateTime > last24Hours then cast(t2.transactionAmountUSD as float) end) as sumPurchaseAmount1dPerUser,count(case when t2.transactionDateTime > last24Hours then t2.transactionAmountUSD end) as sumPurchaseCount1dPerUser
 ,sum(cast(t2.transactionAmountUSD as float)) as sumPurchaseAmount30dPerUser,count(t2.transactionAmountUSD) as sumPurchaseCount30dPerUser
-from sql_transaction_history as t2
-cross apply (values(t.TransDateTime, DATEADD(hour, -24, t.TransDateTime), DATEADD(day, -30, t.TransDateTime))) as c(TransDateTime, last24Hours, last30Days)
-where t2.accountID = t.accountID and t2.TransDateTime < t.TransDateTime and t2.TransDateTime > last30Days
+from Transaction_History as t2
+cross apply (values(t.transactionDateTime, DATEADD(hour, -24, t.transactionDateTime), DATEADD(day, -30, t.transactionDateTime))) as c(transactionDateTime, last24Hours, last30Days)
+where t2.accountID = t.accountID and t2.transactionDateTime < t.transactionDateTime and t2.transactionDateTime > last30Days
 ) as a1'
 
 exec sp_executesql @sql_fe;

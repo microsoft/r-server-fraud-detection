@@ -4,9 +4,6 @@ This script creates the stored procedure to score one transaction by invoking th
 2. PredictR:  preprocess, feature engineer, and scoring the parsed transaction
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -29,7 +26,7 @@ exec sp_executesql @invokeParseStr
 /* invoke PredictR */
 declare @invokePredictR nvarchar(max)
 set @invokePredictR ='
-exec PredictR ''parsed_string'', ''1''
+exec PredictR ''Parsed_String'', ''1''
 '
 exec sp_executesql @invokePredictR
 

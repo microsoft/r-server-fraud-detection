@@ -5,9 +5,6 @@ input parameter:
 @table = table to be splitted
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -26,22 +23,24 @@ begin
 
 declare @hashacctNsplit nvarchar(max)
 set @hashacctNsplit ='
-DROP TABLE IF EXISTS sql_tagged_training
-DROP TABLE IF EXISTS sql_tagged_testing
-DROP TABLE IF EXISTS temp
+DROP TABLE IF EXISTS Tagged_Training
+DROP TABLE IF EXISTS Tagged_Testing
+DROP TABLE IF EXISTS Temp
 
 select *,
 abs(CAST(CAST(HashBytes(''MD5'', accountID) AS VARBINARY(64)) AS BIGINT) % 100) as hashcode 
-into temp
+into Temp
 from ' + @table + '
 
-select * into sql_tagged_training
-from temp
+select * into Tagged_Training
+from Temp
 where hashcode > 30
 
-select * into sql_tagged_testing
-from temp
-where hashcode <= 30'
+select * into Tagged_Testing
+from Temp
+where hashcode <= 30
+
+drop table Temp'
 
 exec sp_executesql @hashacctNsplit
 

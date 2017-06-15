@@ -2,9 +2,6 @@
 This script will create stored procedure to merge untagged transactions with account level infomations
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -19,10 +16,10 @@ as
 begin
 
 declare @droptable nvarchar(max) 
-set @droptable = 'drop table if exists ' + @table + '_acct'
+set @droptable = 'drop table if exists ' + @table + '_Acct'
 exec sp_executesql @droptable
 
-/* Merge with accountInfo_sort table */
+/* Merge with AccountInfo_Sort table */
 declare @MergeQuery nvarchar(max) 
 set @MergeQuery =  
 '
@@ -38,15 +35,15 @@ select t1.*,
 	   t2.isUserRegistered,
 	   t2.paymentInstrumentAgeInAccount,
 	   t2.numPaymentRejects1dPerUser
-into ' + @table + '_acct ' +
+into ' + @table + '_Acct ' +
 'from 
  (select *, 
-       convert(datetime,stuff(stuff(stuff(concat(transactionDate,dbo.FormatTime(transactionTime)), 9, 0, '' ''), 12, 0, '':''), 15, 0, '':'')) as TransDateTime
+       convert(datetime,stuff(stuff(stuff(concat(transactionDate,dbo.FormatTime(transactionTime)), 9, 0, '' ''), 12, 0, '':''), 15, 0, '':'')) as transactionDateTime
   from ' + @table + ') as t1
  outer apply 
- (select top 1 * -- the top 1 is the maximum TransDateTime up to current TransDateTime
-  from accountInfo_sort as t
-  where t.accountID = t1.accountID and t.TransDateTime <= t1.TransDateTime) as t2
+ (select top 1 * -- the top 1 is the maximum transactionDateTime up to current transactionDateTime
+  from Account_Info_Sort as t
+  where t.accountID = t1.accountID and t.transactionDateTime <= t1.transactionDateTime) as t2
 where t1.accountID = t2.accountID
 '
 

@@ -8,9 +8,6 @@ input parameters:
 @truncateflag = indicate whether the historical table need to be truncated: '1'=yes, '0'=no
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -27,14 +24,14 @@ begin
 
 /* truncate historical table if truncateflag = '1' */
 declare @truncatetable nvarchar(max) = '';
-set @truncatetable = 'if cast(' + @truncateflag + ' as int) = 1 truncate table sql_transaction_history'
+set @truncatetable = 'if cast(' + @truncateflag + ' as int) = 1 truncate table Transaction_History'
 exec sp_executesql @truncatetable
 
 /* insert transactions into historical table */
 declare @sql_save2history nvarchar(max) = '';
 set @sql_save2history ='
-insert into sql_transaction_history
-select accountID, transactionID, TransDateTime, transactionAmountUSD from ' + @table + ';'
+insert into Transaction_History
+select accountID, transactionID, transactionDateTime, transactionAmountUSD from ' + @table + ';'
 exec sp_executesql @sql_save2history
 
 end

@@ -39,7 +39,7 @@ $filePath = $scriptPath.Path+ "\"
 if ($dataPath -eq "")
 {
 $parentPath = Split-Path -parent $scriptPath
-$dataPath = $filePath + "Data\"
+$dataPath = $parentPath + "\Data\"
 }
 
 ##########################################################################
@@ -67,7 +67,7 @@ $sqlquery
 }
 
 ##########################################################################
-# Check if the SQL server exists
+# Check if the SQL server/database exists
 ##########################################################################
 $query = "IF NOT EXISTS(SELECT * FROM sys.databases WHERE NAME = '$DBName') CREATE DATABASE $DBName"
 Invoke-Sqlcmd -ServerInstance $ServerName -Username $username -Password $password -Query $query -ErrorAction SilentlyContinue
@@ -95,21 +95,21 @@ ExecuteSQL $script
 # populate untagged table
 Write-Host -ForeGroundColor 'green' ("Populate untaggedTransactions table.")
 $destination = $dataPath + "untaggedTransactions.csv"
-$tableName = $DBName + ".dbo.untaggedTransactions"
+$tableName = $DBName + ".dbo.Untagged_Transactions"
 $tableSchema = $dataPath + "untaggedTransactions.xml"
 bcp $tableName format nul -c -x -f $tableSchema  -U $username -S $ServerName -P $password  -t ',' 
 bcp $tableName in $destination -t ',' -S $ServerName -f $tableSchema -F 2 -C "RAW" -U $username -P $password 
 # populate fraud table
 Write-Host -ForeGroundColor 'green' ("Populate fraud table.")
 $destination = $dataPath + "fraudTransactions.csv"
-$tableName = $DBName + ".dbo.fraud"
+$tableName = $DBName + ".dbo.Fraud"
 $tableSchema = $dataPath + "fraudTransactions.xml"
 bcp $tableName format nul -c -x -f $tableSchema  -U $username -S $ServerName -P $password  -t ',' 
 bcp $tableName in $destination -t ',' -S $ServerName -f $tableSchema -F 2 -C "RAW" -U $username -P $password
 # populate accountInfo table
 Write-Host -ForeGroundColor 'green' ("Populate accountInfo table.")
 $destination = $dataPath + "accountInfo.csv"
-$tableName = $DBName + ".dbo.accountInfo"
+$tableName = $DBName + ".dbo.Account_Info"
 $tableSchema = $dataPath + "accountInfo.xml"
 bcp $tableName format nul -c -x -f $tableSchema  -U $username -S $ServerName -P $password  -t ',' 
 bcp $tableName in $destination -t ',' -S $ServerName -f $tableSchema -F 2 -C "RAW" -U $username -P $password
@@ -124,8 +124,8 @@ ExecuteSQL $script
 $script = $filepath + "SortAcctTable.sql"
 ExecuteSQL $script
 # invoke the stored procedure for sorting accountInfo table
-Write-Host -ForeGroundColor 'Cyan' (" Sorting accountInfo table...")
-$query = "Exec sortAcctTable 'accountInfo'"
+Write-Host -ForeGroundColor 'Cyan' (" Sorting Account_Info table...")
+$query = "Exec sortAcctTable 'Account_Info'"
 ExecuteSQLQuery $query
 
 ## merge with account info
@@ -134,7 +134,7 @@ $script = $filepath + "Step1_MergeAcctInfo.sql"
 ExecuteSQL $script
 # invoke the stored procedure for merging account info
 Write-Host -ForeGroundColor 'Cyan' (" Merging with account info...")
-$query = "EXEC MergeAcctInfo 'untaggedTransactions'"
+$query = "EXEC MergeAcctInfo 'Untagged_Transactions'"
 ExecuteSQLQuery $query
 
 ## tagging
@@ -143,7 +143,7 @@ $script = $filepath + "Step2_Tagging.sql"
 ExecuteSQL $script
 # invoke the stored procedure for tagging
 Write-Host -ForeGroundColor 'Cyan' (" Tagging on account level...")
-$query = "EXEC Tagging 'untaggedTransactions_acct', 'fraud'"
+$query = "EXEC Tagging 'Untagged_Transactions_Acct', 'Fraud'"
 ExecuteSQLQuery $query
 
 ## split data
@@ -152,7 +152,7 @@ $script = $filepath + "Step3_SplitData.sql"
 ExecuteSQL $script
 # invoke the stored procedure for splitting data
 Write-Host -ForeGroundColor 'Cyan' (" Splitting data into training and testing...")
-$query = "EXEC SplitData 'sql_taggedData'"
+$query = "EXEC SplitData 'Tagged'"
 ExecuteSQLQuery $query
 
 ## data process
@@ -161,7 +161,7 @@ $script = $filepath + "Step4_Preprocess.sql"
 ExecuteSQL $script
 # invoke the stored procedure for processing data
 Write-Host -ForeGroundColor 'Cyan' (" Creating view for processing data, will be execute later...")
-$query = "EXEC Preprocess 'sql_tagged_training'"
+$query = "EXEC Preprocess 'Tagged_Training'"
 ExecuteSQLQuery $query
 
 ## dave transaction to historical table
@@ -170,7 +170,7 @@ $script = $filepath + "Step5_Save2History.sql"
 ExecuteSQL $script
 # invoke the stored procedure for saving data to historical table
 Write-Host -ForeGroundColor 'Cyan' (" Saving data to historical table...")
-$query = "Exec Save2TransactionHistory 'sql_tagged_training_processed' ,'1'"
+$query = "Exec Save2TransactionHistory 'Tagged_Training_Processed' ,'1'"
 ExecuteSQLQuery $query
 
 ## create risk tables
@@ -190,7 +190,7 @@ $script = $filepath + "Step7_FeatureEngineer.sql"
 ExecuteSQL $script
 # invoke the stored procedure for feature engineering
 Write-Host -ForeGroundColor 'Cyan' (" Creating views for feature engineering will be executed later...")
-$query = "EXEC FeatureEngineer 'sql_tagged_training_processed'"
+$query = "EXEC FeatureEngineer 'Tagged_Training_Processed'"
 ExecuteSQLQuery $query
 
 ## training 
@@ -199,7 +199,7 @@ $script = $filepath + "Step8_Training.sql"
 ExecuteSQL $script
 # invoke the stored procedure for training
 Write-Host -ForeGroundColor 'Cyan' (" Training...")
-$query = "EXEC TrainModelR 'sql_tagged_training_processed_features'"
+$query = "EXEC TrainModelR 'Tagged_Training_Processed_Features'"
 ExecuteSQLQuery $query
 
 ## prediction
@@ -208,7 +208,7 @@ $script = $filepath + "Step9_Prediction.sql"
 ExecuteSQL $script
 # invoke the stored procedure for prediction
 Write-Host -ForeGroundColor 'Cyan' (" Prediction...")
-$query = "EXEC PredictR 'sql_tagged_testing', '0'"
+$query = "EXEC PredictR 'Tagged_Testing', '0'"
 ExecuteSQLQuery $query
 
 ## Evaluation
@@ -219,9 +219,9 @@ $script = $filepath + "Step10B_Evaluation_AUC.sql"
 ExecuteSQL $script
 # invoke the stored procedure for evaluation
 Write-Host -ForeGroundColor 'Cyan' (" Evaluation...")
-$query = "EXEC EvaluateR 'sql_predict_score'"
+$query = "EXEC EvaluateR 'Predict_Score'"
 ExecuteSQLQuery $query
-$query = "EXEC EvaluateR_auc 'sql_predict_score'"
+$query = "EXEC EvaluateR_auc 'Predict_Score'"
 ExecuteSQLQuery $query
 
 ## Scoring one transaction

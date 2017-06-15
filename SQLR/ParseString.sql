@@ -4,9 +4,6 @@ This script creates the stored procedure to:
 2. parse the string and output the parsed string to a sql table 
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -25,7 +22,7 @@ declare @parsequery nvarchar(max)
 set @parsequery = '
 DECLARE @tmp table ( ID int Identity(1,1)  ,[Name] nvarchar(max))
 INSERT into @tmp SELECT ''' + @inputstring + '''
-drop table if exists parsed_string
+drop table if exists Parsed_String
 ;WITH tmp AS
 ( 
     SELECT
@@ -74,7 +71,7 @@ SELECT
      [NameParsed].value(''/M[41]'', ''varchar (100)'') As [digitalItemCount],
      [NameParsed].value(''/M[42]'', ''varchar (100)'') As [physicalItemCount],
 	 [NameParsed].value(''/M[43]'', ''varchar (100)'') As [purchaseProductType]
-into parsed_string  
+into Parsed_String  
 FROM tmp'
 exec sp_executesql @parsequery
 end

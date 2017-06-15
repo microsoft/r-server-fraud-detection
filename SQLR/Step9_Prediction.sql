@@ -12,9 +12,6 @@ input parameters:
 @getacctflag = the flag to indicate if merge with accountInfo table is needed: '1'=yes, '0'=no
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -42,49 +39,52 @@ declare @renametable nvarchar(max) = '';
 set @renametable = 
 'if cast(' + @getacctflag + ' as int) = 0 
 begin
-  drop table if exists ' + @table + '_acct
-  select * into ' + @table + '_acct from ' + @table + '
+  drop table if exists ' + @table + '_Acct
+  select * into ' + @table + '_Acct from ' + @table + '
 end'
 exec sp_executesql @renametable
 
-/* add a fake Label if Label doesn't exist */
+/* add a fake label if label doesn't exist */
 declare @addlabel nvarchar(max) = '';
 set @addlabel = '
 IF NOT EXISTS(SELECT 1 FROM sys.columns 
-          WHERE Name = N''Label''
-          AND Object_ID = Object_ID(N''' + @table + '_acct''))
+          WHERE Name = N''label''
+          AND Object_ID = Object_ID(N''' + @table + '_Acct''))
 BEGIN
-    alter table ' + @table + '_acct add Label int not null default(-1)
+    alter table ' + @table + '_Acct add label int not null default(-1)
 END'
 exec sp_executesql @addlabel
 
 /* preprocessing by calling the stored procedure 'Preprocess' */
 declare @preprocess nvarchar(max)
-set @preprocess = 'exec Preprocess ' + @table + '_acct'
+set @preprocess = 'exec Preprocess ' + @table + '_Acct'
 exec sp_executesql @preprocess
 
 /* save transactions to history table */
 declare @sql_save2history nvarchar(max)
-set @sql_save2history = 'exec Save2TransactionHistory ' + @table + '_acct_processed, ''0'''
+set @sql_save2history = 'exec Save2TransactionHistory ' + @table + '_Acct_Processed, ''0'''
 exec sp_executesql @sql_save2history
 
 /* feature engineering by calling the stored procedure 'FeatureEngineer' */
 declare @fe_query nvarchar(max) 
-set @fe_query = 'exec FeatureEngineer ' + @table + '_acct_processed'
+set @fe_query = 'exec FeatureEngineer ' + @table + '_Acct_Processed'
 exec sp_executesql @fe_query
 
 /* specify the query to select data to be scored. This query will be used as input to following R script */
 declare @GetData2Score nvarchar(max) 
-set @GetData2Score =  'select * from ' + @table + '_acct_processed_features where Label<=1';
+set @GetData2Score =  'select * from ' + @table + '_Acct_Processed_Features where label<=1';
+
+/* Get the database name*/
+DECLARE @database_name varchar(max) = db_name();
 
 /* R script to do scoring and save scored dataset into sql table */
 exec sp_execute_external_script @language = N'R',
                                   @script = N'
 ## Get the trained model
 # Define connectioin string
-connection_string <- c("Driver=SQL Server;Server=localhost;Database=OnlineFraudDetection;Trusted_Connection=true;")
+connection_string <- paste("Driver=SQL Server;Server=localhost;Database=", database_name, ";Trusted_Connection=true;", sep="")
 # Create an Odbc connection with SQL Server using the name of the table storing the model
-OdbcModel <- RxOdbcData(table = "sql_trained_model", connectionString = connection_string) 
+OdbcModel <- RxOdbcData(table = "Trained_Model", connectionString = connection_string) 
 # Read the model from SQL.  
 boosted_fit <- rxReadObject(OdbcModel, "Gradient Boosted Tree")
 
@@ -93,7 +93,7 @@ test_sql <- RxSqlServerData(sqlQuery = sprintf("%s", inquery),
 							connectionString = connection_string)
 
 ## Specify the pointer to output table
-Predictions_gbt_sql <- RxSqlServerData(table = "sql_predict_score", connectionString = connection_string)
+Predictions_gbt_sql <- RxSqlServerData(table = "Predict_Score", connectionString = connection_string)
 
 ## Set the Compute Context to SQL.
 sql <- RxInSqlServer(connectionString = connection_string)
@@ -106,10 +106,11 @@ rxPredict(modelObject = boosted_fit,
           type = "response",
 		  overwrite = T,
 		  predVarNames = "Score",
-		  extraVarsToWrite = c("accountID", "TransDateTime", "transactionAmountUSD", "Label"))
+		  extraVarsToWrite = c("accountID", "transactionDateTime", "transactionAmountUSD", "label"))
 
-',
-  @params = N' @inquery nvarchar(max)' ,
-  @inquery = @GetData2Score
+'
+ , @params = N' @inquery nvarchar(max), @database_name varchar(max)'
+ , @inquery = @GetData2Score
+ , @database_name = @database_name
  ;
 end

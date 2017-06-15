@@ -3,13 +3,11 @@ This script will create stored procedure to do preprocessing including:
 1. fill missing values with 0
 2. remove transactions with negative transaction amount
 3. remove transactions with invalide transactionData and time
+4. remove prefraud: label == 2
 
 input parameters:
 @table = table need to be preprocessed 
 */
-
-use [OnlineFraudDetection]
-go
 
 set ansi_nulls on
 go
@@ -28,18 +26,18 @@ begin
 declare 
 @sql_dropview nvarchar(max) = '';
 set @sql_dropview = '
-DROP VIEW IF EXISTS ' + @table + '_processed'
+DROP VIEW IF EXISTS ' + @table + '_Processed'
 exec sp_executesql @sql_dropview;
 
 /* create a veiw to do preprocessing */
 declare @sql_process nvarchar(max) = '';
 set @sql_process = '
-create view ' + @table + '_processed as
+create view ' + @table + '_Processed as
 select
-Label,
+label,
 accountID,
 transactionID,
-TransDateTime,
+transactionDateTime,
 isProxyIP,
 paymentInstrumentType,
 cardType,
@@ -69,7 +67,8 @@ case when numPaymentRejects1dPerUser = ''""'' then ''0'' else numPaymentRejects1
 isUserRegistered = case when isUserRegistered like ''%[0-9]%'' then ''0'' else isUserRegistered end
 from ' + @table + '
 where cast(transactionAmountUSD as float) >= 0 and   
-      (case when TransDateTime is null then 1 else 0 end) = 0' 
+      (case when transactionDateTime is null then 1 else 0 end) = 0 and
+	  label < 2' 
 
 exec sp_executesql @sql_process
 end

@@ -5,9 +5,6 @@ parameters:
 @table= the scored data to be evaluated
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -23,10 +20,10 @@ begin
 
 /* create table to store AUC value */
 if exists 
-(select * from sysobjects where name like 'sql_performance_auc') 
-truncate table sql_performance_auc
+(select * from sysobjects where name like 'Performance_Auc') 
+truncate table Performance_Auc
 else
-create table sql_performance_auc ( 
+create table Performance_Auc ( 
 AUC float
 );
 
@@ -35,12 +32,12 @@ declare @GetScoreData nvarchar(max)
 set @GetScoreData =  'select * from ' + @table
 
 /* R script to calculate AUC */
-insert into sql_performance_auc
+insert into Performance_Auc
 exec sp_execute_external_script @language = N'R',
                                   @script = N'
  library(ROCR)
  scored_data <- InputDataSet
- pred <- prediction(scored_data$Score, scored_data$Label)
+ pred <- prediction(scored_data$Score, scored_data$label)
  auc = as.numeric(performance(pred,"auc")@y.values)
  OutputDataSet <- as.data.frame(auc)
 ',

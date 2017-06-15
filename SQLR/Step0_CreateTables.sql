@@ -6,9 +6,6 @@ The script will create the following tables:
 4. table storing historical transactions which will be used for calculating aggregates
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -16,10 +13,10 @@ set quoted_identifier on
 go
 
 if exists 
-(select * from sysobjects where name like 'untaggedTransactions') 
-truncate table untaggedTransactions
+(select * from sysobjects where name like 'Untagged_Transactions') 
+truncate table Untagged_Transactions
 else
-create table untaggedTransactions (
+create table Untagged_Transactions (
 transactionID varchar(255),
 accountID varchar(255),
 transactionAmountUSD varchar(255),
@@ -63,14 +60,13 @@ purchaseProductType varchar(255)
 );
 
 if exists 
-(select * from sysobjects where name like 'accountInfo') 
-truncate table accountInfo
+(select * from sysobjects where name like 'Account_Info') 
+truncate table Account_Info
 else
-create table accountInfo (
+create table Account_Info (
 accountID varchar(255),
 transactionDate varchar(255),
 transactionTime varchar(255),  
-TransDateTime varchar(255),
 accountOwnerName varchar(255),
 accountAddress varchar(255),
 accountPostalCode varchar(255),
@@ -86,10 +82,10 @@ numPaymentRejects1dPerUser varchar(255)
 
 
 if exists 
-(select * from sysobjects where name like 'fraud') 
-truncate table fraud
+(select * from sysobjects where name like 'Fraud') 
+truncate table Fraud
 else
-create table fraud (
+create table Fraud (
 transactionID varchar(255),
 accountID varchar(255),
 transactionAmount varchar(255),
@@ -102,14 +98,14 @@ transactionIPaddress varchar(255)
 );
 
 if exists 
-(select * from sysobjects where name like 'sql_transaction_history') 
-truncate table sql_transaction_history
+(select * from sysobjects where name like 'Transaction_History') 
+truncate table Transaction_History
 else
-create table sql_transaction_history
+create table Transaction_History
 (
 accountID varchar(255),
 transactionID varchar(255),
-TransDateTime datetime,
+transactionDateTime datetime,
 transactionAmountUSD varchar(255)
 ); 
 

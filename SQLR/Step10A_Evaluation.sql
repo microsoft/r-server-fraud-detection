@@ -5,9 +5,6 @@ parameters:
 @table= the scored data to be evaluated
 */
 
-use [OnlineFraudDetection]
-go
-
 set ansi_nulls on
 go
 
@@ -23,10 +20,10 @@ begin
 
 /* create table to store the result */
 if exists 
-(select * from sysobjects where name like 'sql_performance') 
-truncate table sql_performance
+(select * from sysobjects where name like 'Performance') 
+truncate table Performance
 else
-create table sql_performance ( 
+create table Performance ( 
 ADR varchar(255),
 PCT_NF_Acct varchar(255),
 Dol_Frd varchar(255),
@@ -41,10 +38,10 @@ TFPR varchar(255)
 
 /* specify the query to select data to be evaluated. this query will be used as input for following R script */
 declare @GetScoreData nvarchar(max) 
-set @GetScoreData =  'select accountID, TransDateTime, transactionAmountUSD, Label, Score from ' + @table
+set @GetScoreData =  'select accountID, transactionDateTime, transactionAmountUSD, label, Score from ' + @table
 
 /* R script to generate account level metrics */
-insert into sql_performance
+insert into Performance
 exec sp_execute_external_script @language = N'R',
                                   @script = N'
 ####################################################################################################
@@ -72,8 +69,8 @@ scr2stat <-function(dataset, contactPeriod, sampleRateNF,sampleRateFrd)
   fields = names(dataset)
   if(! ("accountID" %in% fields)) 
   {print ("Error: Need accountID column!")}
-  if(! ("TransDateTime" %in% fields)) 
-  {print ("Error: Need TransDateTime column!")}
+  if(! ("transactionDateTime" %in% fields)) 
+  {print ("Error: Need transactionDateTime column!")}
   if(! ("transactionAmountUSD" %in% fields))
   {print ("Error: Need transactionAmountUSD column!")}
   if(! ("Scored Probabilities" %in% fields))
@@ -105,9 +102,9 @@ scr2stat <-function(dataset, contactPeriod, sampleRateNF,sampleRateFrd)
   {
     acct = as.character(dataset$accountID[r])
     dolamt = as.double(dataset$transactionAmountUSD[r])
-    label = dataset$Label[r]
+    label = dataset$label[r]
     score = dataset$"Scored Probabilities"[r]
-    datetime = dataset$TransDateTime[r]
+    datetime = dataset$transactionDateTime[r]
     
     if(score == 0)
     { 
@@ -269,7 +266,7 @@ scr2stat <-function(dataset, contactPeriod, sampleRateNF,sampleRateFrd)
   return (perf.df)	
  }
  scored_data <- InputDataSet
- scored_data$TransDateTime <- as.character(scored_data$TransDateTime)
+ scored_data$transactionDateTime <- as.character(scored_data$transactionDateTime)
  perf <- scr2stat(scored_data,contactPeriod=30, sampleRateNF=1,sampleRateFrd=1)
  OutputDataSet <- as.data.frame(perf)
 ',

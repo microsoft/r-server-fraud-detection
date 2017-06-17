@@ -1,0 +1,34 @@
+<h1>SQL Stored Procedure Test Page</h1>
+<hr>
+<div class="col-md-4">
+    <label for="custID">Customer ID: </label>
+    <input type="text" class="form-control input-sm" id="custID" placeholder="Account ID" value="131395">
+    <hr>
+    <button class="btn btn-info pushme">Predict</button>
+</div>
+<div class="col-md-8">
+    <div id="result"></div>
+</div>
+<script>
+$(".pushme").click (function(){
+    $('#result').html(" ") 
+    cust =  $("#custID").val()
+    $.ajax({
+        url: '/predict',
+        type: 'GET',
+        data: {custid: cust},
+        contentType:"application/json; charset=utf-8",
+        error: function(xhr, error){
+                console.log(xhr); console.log(error);
+        }, 
+        success: function(res) {   
+            msg = "<h2>Your Results</h2>"
+            msg =  msg + "Results from PREDICT_CUSTOMER_RETURN_HISTORY @cust_key = " + cust;
+            msg =  msg + "<br> O_CUSTKEY: " + res.cust;
+            msg = msg + "<br/> PROBABILITY: " + res.prob;
+            msg = msg + "<br/> PREDICTION: " + res.pred
+            $('#result').html(msg)
+    }
+});	
+    });
+  </script>  

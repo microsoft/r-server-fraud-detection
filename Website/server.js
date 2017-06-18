@@ -22,7 +22,7 @@ var con = new Connection({ //fix this with fraud db info
     password: 'D@tascience',
     server: 'localhost',
     // When you connect to Azure SQL Database, you need encrypt: true
-     options: {  encrypt: true, database: 'FraudDetection' }
+     options: {  encrypt: true, database: 'Fraud' }
 });
 
 con.on('connect', function(err) {
@@ -49,7 +49,7 @@ app.get('/test', function (req, res) {
 
 
 app.get('/predict', function (req, res) {
-    var request = new Request('Score', function(err, rowCount) {
+    var request = new Request('ScoreOneTrans', function(err, rowCount) {
     if (err) {
         console.log(err);
         }  
@@ -74,7 +74,7 @@ app.get('/predict', function (req, res) {
         
     });  
     // pass the entire record to the stored procedure
-    request.addParameter('raw_data', TYPES.VarChar, record);
+    request.addParameter('inputdata', TYPES.VarChar, record);
     con.callProcedure(request);   
     
 });

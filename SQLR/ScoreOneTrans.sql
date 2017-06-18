@@ -29,5 +29,7 @@ set @invokePredictR ='
 exec PredictR ''Parsed_String'', ''1''
 '
 exec sp_executesql @invokePredictR
+SELECT  [label_prob]  FROM [Fraud].[dbo].[Predict_Score]
+
 
 end 

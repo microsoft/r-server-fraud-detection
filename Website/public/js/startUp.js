@@ -3,13 +3,21 @@
 $(document).ready ( function () {
 			$("#resultArea").hide();
             $("#status").hide();
-
+            // show the login dialog on startup
+            $('#loginDlg').modal('show');
+      
+       $('#selAccount').change(function() {
+            $("#claimantID").val( ($(this).val()) );
+            });
 
 		$("#resetBtn").click(function(){
         //	empty the table and change the purchase back to 0.
             $("#myTable > tbody").html("");
              $("#status").removeClass('show');   
              $("#status").addClass('hide');
+             // hide the result area
+             $("#resultArea").addClass('hide');
+             $("#resultArea").removeClass('show');
             document.getElementById('result').innerHTML = "Total Purchase: $0" 
 			$("#resultArea").fadeOut();
 		});	
@@ -22,17 +30,20 @@ $(document).ready ( function () {
         if ($('#myTable tr').length > 0 ) {
             // also make sure the account id is present.
             if (acctID !== '') {
-                // show the status message and call scoreClaim
+                // hide the status message and call scoreClaim
                 $("#status").removeClass('hide');
                 $("#status").addClass('show');
                 $("#status").fadeIn();
+                // clear the result area
+                $("#resultArea").addClass('hide');
+                $("#resultArea").removeClass('show');
                 var amt = recalc();
                 scoreClaim( acctID, amt);  
                 } else {
                     // no account ID present
                 $("#status").removeClass('show');   
                 $("#status").addClass('hide');
-                $("#resultArea").html('Please enter your Account ID and try again.');
+                $("#resultArea").html('Please Login and try again.');
                 $("#resultArea").removeClass('alert-success');
                 $("#resultArea").addClass('alert-danger');
                 $("#resultArea").fadeIn();

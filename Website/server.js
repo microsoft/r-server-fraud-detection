@@ -39,14 +39,8 @@ app.get('/', function (req, res) {
             res.render('home') 
 });
 
-// Test Page
-app.get('/test', function (req, res) {
-            res.render('test') 
-});
 
 // predict function, called from scoreClaim.js
-
-
 
 app.get('/predict', function (req, res) {
     var request = new Request('ScoreOneTrans', function(err, rowCount) {

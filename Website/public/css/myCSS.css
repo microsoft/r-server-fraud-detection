@@ -9,3 +9,8 @@ body {
 .bdba{
 	color:#DD4814;
 }
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}

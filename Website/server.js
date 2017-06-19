@@ -3,6 +3,9 @@ var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
 
+var fs = require('fs');
+var util = require('util');
+var logFileName = __dirname + '/debug.log';
 
 var app = express();
 var exphbs  = require('express-handlebars');
@@ -12,14 +15,18 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 
 
+
 //
 // DB Connection
 //
+var args = process.argv.slice(2);
+var user = args[0];
+var pw = args[1];
 
 
-var con = new Connection({ //fix this with fraud db info
-	userName: 'rdemo',
-    password: 'D@tascience',
+var con = new Connection({ 
+	userName: user,
+    password: pw,
     server: 'localhost',
     // When you connect to Azure SQL Database, you need encrypt: true
      options: {  encrypt: true, database: 'Fraud' }
@@ -37,6 +44,11 @@ con.on('connect', function(err) {
 // Home Page
 app.get('/', function (req, res) {
             res.render('home') 
+});
+
+// Kill the server
+app.get('/kill', function (req, res) {
+     setTimeout(() => process.exit(), 500);
 });
 
 
@@ -67,12 +79,20 @@ app.get('/predict', function (req, res) {
         
     });  
     // pass the entire record to the stored procedure
-    request.addParameter('inputdata', TYPES.VarChar, record);
+    request.addParameter('inputstring', TYPES.VarChar, record);
     con.callProcedure(request); 
     con.close;
   
     
 });
+
+//write the logFile
+var logFile = fs.createWriteStream(logFileName, { flags: 'a' });
+var logProxy = console.log;
+console.log = function (d) { //
+    logFile.write(util.format(new Date() + ": " + d || '') + '\rn');
+    logProxy.apply(this, arguments);
+};
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');

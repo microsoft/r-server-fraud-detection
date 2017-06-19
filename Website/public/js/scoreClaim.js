@@ -18,13 +18,17 @@ var scoreClaim = function(id, amt){
             if (res.pred > 0.5) {  //problem with this order; 
                 $("#resultArea").html('There is a problem with this order.  Please call 800-555-2222 for more information');
                         $("#resultArea").removeClass('alert-success');
-                        $("#resultArea").addClass('alert-danger');		
+                        $("#resultArea").addClass('alert-danger');
+                        
 
                     } else { // no problem with the order
                 $("#resultArea").html('Thank you for submitting your order. You will receive an email with tracking information shortly.');
                         $("#resultArea").removeClass('alert-danger');
                         $("#resultArea").addClass('alert-success');
                     }
+            // make sure result is visible
+            $("#resultArea").removeClass('hide');
+            $("#resultArea").addClass('show');		
             // remove the "click here for status" section
             $("#status").removeClass('show');   
             $("#status").addClass('hide');

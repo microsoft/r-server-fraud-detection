@@ -120,9 +120,12 @@
                 </div>
             </div>
             <hr>
+            <div class="container">
+                <div class="row pull-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
            
-                <div>&nbsp;</div>
-            <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Done</button>
                 
         </div>
       </div>
@@ -144,27 +147,33 @@
         <div class="modal-body" id="dlgContent">
             <div class="container">
                 <div class="row">
-                    <h1>Demo of Online Fraud Detection</h1> 
+                    <div class="col-md-8">
+                    <h2>Online Fraud Detection Demo</h2> 
                     <p>This site demonstrates how a website might interact with a fraud prediction score.  When the user purchases from this site, the transaction is sent first to SQL Server to predict a score.  When the score is high, the transaction has a high probability of being fraudulent.  </p>
-                    <p>
-                    Here are a few different accounts to try out for this demo.  Select one of the accounts below, and see how the shopping experience changes.
-                    <p>Select an account to try: 
-                    <select  id=selAccount class="form-control form-group-lg form-control-inline">
-                    <option selected='y' value="A">First Account</option>
-                    <option value="B">Second Account</option>
-                    <option value="C">Third Account</option>
-                    <option value="D">Fourth Account</option>
-                    </select>             
-                    </p>
-                    <p>After you click <code>Done</code> below, try adding some items to your cart and purchase them. 
+                    <p>After you click <code>OK</code> below, try adding some items to your cart and purchase them. 
                      Then use the <code>Login to Your Account</code> button on the shopping page to return here to select a different account, and try the purchase again.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Try an Account</h2>
+                         <p>Here are a few different accounts to try out for this demo.</p>
+                        <p>Select an account to try:&nbsp;
+                        <select  id=selAccount class="form-control form-group-lg form-control-inline">
+                        <option selected='y' value="A">First Account</option>
+                        <option value="B">Second Account</option>
+                        <option value="C">Third Account</option>
+                        <option value="D">Fourth Account</option>
+                        </select>             
+                     </div>
                     <p></p>
                 </div>
             </div>
             <hr>
-           
-                <div>&nbsp;</div>
-            <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Done</button>
+            <div class="container">
+                <div class="row pull-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">OK</button>
+                </div>
+            </div>
+            
                 
         </div>
       </div>

@@ -67,10 +67,10 @@ app.get('/predict', function (req, res) {
           }
 
          res.json({ pred: value });
-         request.on('done', function(rowCount, more) { 
-          console.log(rowCount + ' rows returned'); 
+         request.on('doneInProc', function(rowCount, more) { 
+            console.log(rowCount + ' rows returned'); 
+            con.close;
       }); 
-
         
     });  
     // pass the entire record to the stored procedure

@@ -26,10 +26,9 @@ exec sp_executesql @invokeParseStr
 /* invoke PredictR */
 declare @invokePredictR nvarchar(max)
 set @invokePredictR ='
-exec PredictR ''Parsed_String'', ''1''
+exec PredictR ''Parsed_String'', ''Predict_Score_Single_Transaction'',''1''
 '
 exec sp_executesql @invokePredictR
-SELECT  [label_prob]  FROM [Fraud].[dbo].[Predict_Score]
-
+SELECT  [label_prob]  FROM [Fraud].[dbo].[Predict_Score_Single_Transaction]
 
 end 

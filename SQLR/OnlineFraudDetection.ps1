@@ -207,8 +207,8 @@ ExecuteSQLQuery $query
 $script = $filepath + "Step9_Prediction.sql"
 ExecuteSQL $script
 # invoke the stored procedure for prediction
-Write-Host -ForeGroundColor 'Cyan' (" Prediction...")
-$query = "EXEC PredictR 'Tagged_Testing', '0'"
+Write-Host -ForeGroundColor 'Cyan' (" Batch Scoring on testing set...")
+$query = "EXEC PredictR 'Tagged_Testing', 'Predict_Score', '0'"
 ExecuteSQLQuery $query
 
 ## Evaluation
@@ -218,7 +218,7 @@ ExecuteSQL $script
 $script = $filepath + "Step10B_Evaluation_AUC.sql"
 ExecuteSQL $script
 # invoke the stored procedure for evaluation
-Write-Host -ForeGroundColor 'Cyan' (" Evaluation...")
+Write-Host -ForeGroundColor 'Cyan' (" Evaluation on account level and transaction level...")
 $query = "EXEC EvaluateR 'Predict_Score'"
 ExecuteSQLQuery $query
 $query = "EXEC EvaluateR_auc 'Predict_Score'"

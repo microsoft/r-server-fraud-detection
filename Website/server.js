@@ -24,7 +24,7 @@ var user = args[0];
 var pw = args[1];
 
 
-var con = new Connection({ 
+var con = new Connection({ //fix this with fraud db info
 	userName: user,
     password: pw,
     server: 'localhost',
@@ -86,7 +86,7 @@ app.get('/predict', function (req, res) {
     
 });
 
-//write the logFile
+//log to file
 var logFile = fs.createWriteStream(logFileName, { flags: 'a' });
 var logProxy = console.log;
 console.log = function (d) { //

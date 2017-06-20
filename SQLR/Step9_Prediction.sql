@@ -92,7 +92,8 @@ boosted_fit <- rxReadObject(OdbcModel, "Gradient Boosted Tree")
 
 ## Point to testing data in sql server
 test_sql <- RxSqlServerData(sqlQuery = sprintf("%s", inquery),
-							connectionString = connection_string)
+							connectionString = connection_string,
+							stringsAsFactors = TRUE)
 
 ## Specify the pointer to output table
 Predictions_gbt_sql <- RxSqlServerData(table = outputtable, connectionString = connection_string)

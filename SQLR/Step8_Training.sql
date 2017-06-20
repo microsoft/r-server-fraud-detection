@@ -46,18 +46,27 @@ DECLARE @database_name nvarchar(max) = db_name();
 execute sp_execute_external_script
   @language = N'R',
   @script = N' 
-  train <- InputDataSet
+  # define the connection string
+  connection_string <- paste("Driver=SQL Server;Server=localhost;Database=", database_name, ";Trusted_Connection=true;", sep="")
 
-  ## make the label as factor
-  train$label <- as.factor(train$label)
+  # Set the Compute Context to SQL for faster training.
+  sql <- RxInSqlServer(connectionString = connection_string)
+  rxSetComputeContext(sql)
+
+  ## Point to testing data in sql server
+  train_sql <- RxSqlServerData(sqlQuery = sprintf("%s", inquery),
+							   connectionString = connection_string,
+							   stringsAsFactors = TRUE)
 
   ## make equations
-  names <- colnames(train)[which(colnames(train) != c("label","accountID","transactionDate","transactionTime_new","transactionDateTime"))]
-  equation <- paste("label ~ ", paste(names, collapse = "+", sep=""), sep="")
+  variables_all <- rxGetVarNames(train_sql)
+  variables_to_remove <- c("label", "accountID", "transactionDateTime")
+  training_variables <- variables_all[!(variables_all %in% variables_to_remove)]
+  equation <- paste("label ~ ", paste(training_variables, collapse = "+", sep=""), sep="")
 
   ## train GBT model
   boosted_fit <- rxBTrees(formula = as.formula(equation),
-                          data = train,
+                          data = train_sql,
                           learningRate = 0.2,
                           minSplit = 10,
                           minBucket = 10,
@@ -65,9 +74,7 @@ execute sp_execute_external_script
                           seed = 5,
                           lossFunction = "bernoulli")
 
-  ## save the trained model in sql server
-  # define the connection string
-  connection_string <- paste("Driver=SQL Server;Server=localhost;Database=", database_name, ";Trusted_Connection=true;", sep="")
+  ## save the trained model in sql server 
   # set the compute context to local for tables exportation to SQL
   rxSetComputeContext("local")
   # Open an Odbc connection with SQL Server. 
@@ -77,8 +84,8 @@ execute sp_execute_external_script
   rxWriteObject(OdbcModel, "Gradient Boosted Tree", boosted_fit)
  
   '
-  , @input_data_1 = @GetTrainData
-  , @params = N' @database_name varchar(max)'
+  , @params = N' @inquery nvarchar(max), @database_name varchar(max)'
+  , @inquery = @GetTrainData
   , @database_name = @database_name
  ;
 end

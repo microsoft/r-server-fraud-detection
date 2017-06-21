@@ -90,7 +90,7 @@ app.get('/predict', function (req, res) {
 var logFile = fs.createWriteStream(logFileName, { flags: 'a' });
 var logProxy = console.log;
 console.log = function (d) { //
-    logFile.write(util.format(new Date() + ": " + d || '') + '\rn');
+    logFile.write(util.format(new Date() + ": " + d || '') + '\r\n');
     logProxy.apply(this, arguments);
 };
 

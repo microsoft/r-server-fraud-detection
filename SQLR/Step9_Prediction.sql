@@ -103,12 +103,11 @@ sql <- RxInSqlServer(connectionString = connection_string)
 #rxSetComputeContext(sql) 
 
 ## Scoring
+library("MicrosoftML")
 rxPredict(modelObject = boosted_fit,
           data = test_sql,
 		  outData = Predictions_gbt_sql,
-          type = "response",
 		  overwrite = T,
-		  predVarNames = "Score",
 		  extraVarsToWrite = c("accountID", "transactionDateTime", "transactionAmountUSD", "label"))
 
 '

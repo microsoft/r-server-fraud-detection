@@ -35,11 +35,13 @@ set @GetScoreData =  'select * from ' + @table
 insert into Performance_Auc
 exec sp_execute_external_script @language = N'R',
                                   @script = N'
- library(ROCR)
- scored_data <- InputDataSet
- pred <- prediction(scored_data$Score, scored_data$label)
- auc = as.numeric(performance(pred,"auc")@y.values)
- OutputDataSet <- as.data.frame(auc)
+ Predictions <- InputDataSet
+ Predictions$label <- as.numeric(as.character(Predictions$label))
+
+ # Compute the AUC. 
+ ROC <- rxRoc(actualVarName = "label", predVarNames = "Probability.1", data = Predictions, numBreaks = 1000)
+ AUC <- rxAuc(ROC)
+ OutputDataSet <- as.data.frame(AUC)
 ',
   @input_data_1 = @GetScoreData
 ;

@@ -25,22 +25,20 @@ declare @hashacctNsplit nvarchar(max)
 set @hashacctNsplit ='
 DROP TABLE IF EXISTS Tagged_Training
 DROP TABLE IF EXISTS Tagged_Testing
-DROP TABLE IF EXISTS Temp
+DROP TABLE IF EXISTS Hash_Id
 
-select *,
-abs(CAST(CAST(HashBytes(''MD5'', accountID) AS VARBINARY(64)) AS BIGINT) % 100) as hashcode 
-into Temp
+select accountID,
+abs(CAST(CAST(HashBytes(''MD5'', accountID) AS VARBINARY(64)) AS BIGINT) % 100) as hashCode 
+into Hash_Id
 from ' + @table + '
 
 select * into Tagged_Training
-from Temp
-where hashcode > 30
+from ' +@table + '
+where accountID in (select accountID from Hash_Id where hashCode <= 70)
 
 select * into Tagged_Testing
-from Temp
-where hashcode <= 30
-
-drop table Temp'
+from ' +@table + '
+where accountID in (select accountID from Hash_Id where hashCode > 70)'
 
 exec sp_executesql @hashacctNsplit
 

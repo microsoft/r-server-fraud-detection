@@ -38,7 +38,7 @@ TFPR varchar(255)
 
 /* specify the query to select data to be evaluated. this query will be used as input for following R script */
 declare @GetScoreData nvarchar(max) 
-set @GetScoreData =  'select accountID, transactionDateTime, transactionAmountUSD, label, Score from ' + @table
+set @GetScoreData =  'select accountID, transactionDateTime, transactionAmountUSD, label, [Probability.1] from ' + @table
 
 /* R script to generate account level metrics */
 insert into Performance
@@ -64,7 +64,7 @@ scr2stat <-function(dataset, contactPeriod, sampleRateNF,sampleRateFrd)
   #accout level score is the maximum of trans scores of that account
   #all transactions after the first fraud transaction detected are value savings
   #input score file needs to be acct-date-time sorted   
-  dataset$"Scored Probabilities" <- dataset$Score
+  dataset$"Scored Probabilities" <- dataset$Probability.1
   
   fields = names(dataset)
   if(! ("accountID" %in% fields)) 

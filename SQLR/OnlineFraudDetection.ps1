@@ -164,7 +164,7 @@ Write-Host -ForeGroundColor 'Cyan' (" Creating view for processing data, will be
 $query = "EXEC Preprocess 'Tagged_Training'"
 ExecuteSQLQuery $query
 
-## dave transaction to historical table
+## save transaction to historical table
 # create the stored procedure for saving data to historical table
 $script = $filepath + "Step5_Save2History.sql"
 ExecuteSQL $script

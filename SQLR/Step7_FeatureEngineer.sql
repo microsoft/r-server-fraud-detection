@@ -86,8 +86,11 @@ declare @sql_fe nvarchar(max) = '';
 set @sql_fe = 'create view ' + @table + '_Features as
 select * from ' + @table + '_Features1 as t
 outer apply
-(select sum(case when t2.transactionDateTime > last24Hours then cast(t2.transactionAmountUSD as float) end) as sumPurchaseAmount1dPerUser,count(case when t2.transactionDateTime > last24Hours then t2.transactionAmountUSD end) as sumPurchaseCount1dPerUser
-,sum(cast(t2.transactionAmountUSD as float)) as sumPurchaseAmount30dPerUser,count(t2.transactionAmountUSD) as sumPurchaseCount30dPerUser
+(select 
+isnull(sum(case when t2.transactionDateTime > last24Hours then cast(t2.transactionAmountUSD as float) end),0) as sumPurchaseAmount1dPerUser,
+isnull(count(case when t2.transactionDateTime > last24Hours then t2.transactionAmountUSD end),0) as sumPurchaseCount1dPerUser,
+isnull(sum(cast(t2.transactionAmountUSD as float)),0) as sumPurchaseAmount30dPerUser,
+isnull(count(t2.transactionAmountUSD),0) as sumPurchaseCount30dPerUser
 from Transaction_History as t2
 cross apply (values(t.transactionDateTime, DATEADD(hour, -24, t.transactionDateTime), DATEADD(day, -30, t.transactionDateTime))) as c(transactionDateTime, last24Hours, last30Days)
 where t2.accountID = t.accountID and t2.transactionDateTime < t.transactionDateTime and t2.transactionDateTime > last30Days

@@ -65,14 +65,16 @@ execute sp_execute_external_script
   equation <- paste("label ~ ", paste(training_variables, collapse = "+", sep=""), sep="")
 
   ## train GBT model
-  boosted_fit <- rxBTrees(formula = as.formula(equation),
-                          data = train_sql,
-                          learningRate = 0.2,
-                          minSplit = 10,
-                          minBucket = 10,
-                          nTree = 100,
-                          seed = 5,
-                          lossFunction = "bernoulli")
+  library("MicrosoftML")
+  boosted_fit <- rxFastTrees(formula = as.formula(equation),
+                             data = train_sql,
+                             type = c("binary"),
+                             numTrees = 100,
+                             learningRate = 0.2,
+                             splitFraction = 5/24,
+                             featureFraction = 1,
+                             minSplit = 10,
+							 randomSeed = 5)
 
   ## save the trained model in sql server 
   # set the compute context to local for tables exportation to SQL

@@ -29,6 +29,6 @@ set @invokePredictR ='
 exec PredictR ''Parsed_String'', ''Predict_Score_Single_Transaction'',''1''
 '
 exec sp_executesql @invokePredictR
-SELECT  [label_prob]  FROM [Fraud].[dbo].[Predict_Score_Single_Transaction]
+SELECT  [Probability.1]  FROM [Fraud].[dbo].[Predict_Score_Single_Transaction]
 
 end 

@@ -42,17 +42,21 @@ var lookupData = function(custID, amt){
  amt = parseFloat(amt.replace(/,/g, ''));
 // the rest of the record would be looked up in a customer database.
 // for this demo we are simply supplying that info directly for our four test accounts
-var custData = 'USD,NULL,20130409,104848,NULL,A,P,NULL,NULL,NULL,121.242,maharashtra,411001,in,FALSE,NULL,en-US,CREDITCARD,VISA,NULL,NULL,NULL,98033,WA,US,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,0,NULL';
+var custData;
 
 switch(custID) {
-    case 'A1055521358474530':
+    case 'A1055521358474530':       
         custData = 'USD,NULL,20130409,102958,14,A,P,NULL,NULL,NULL,92.97,dubayy,0,ae,FALSE,NULL,en-US,CREDITCARD,AMEX,NULL,NULL,NULL,33071,FL,US,NULL,NULL,NULL,NULL,NULL,NULL,M,NULL,0,4,NULL';
         break;
-    case 'A1688853588113020':
-        custdata = 'USD,NULL,20130409,102755,2,A,P,NULL,NULL,NULL,130.65,california,95192,us,FALSE,NULL,en-US,CREDITCARD,VISA,NULL,NULL,NULL,95112,CA,US,NULL,NULL,NULL,NULL,NULL,NULL,M,NULL,1,0,NULL';
+    case 'A914800341525449':
+        custData = 'USD,NULL,20130409,122427,7,A,P,NULL,NULL,NULL,108.49,massachusetts,2118,us,FALSE,NULL,en-US,CREDITCARD,VISA,NULL,NULL,NULL,1702,MA,US,NULL,NULL,NULL,NULL,NULL,NULL,M,NULL,1,0,NULL';
         break;
     case 'A1688852355371910':
         custData = 'USD,NULL,20130409,110900,6,A,P,NULL,NULL,NULL,99.47,florida,32114,us,FALSE,NULL,en-US,CREDITCARD,VISA,NULL,NULL,NULL,32746,FL,US,NULL,NULL,NULL,NULL,NULL,NULL,M,NULL,1,0,NULL';
+        break;
+    default:
+        custData = 'USD,NULL,20130409,104848,NULL,A,P,NULL,NULL,NULL,121.242,maharashtra,411001,in,FALSE,NULL,en-US,CREDITCARD,VISA,NULL,NULL,NULL,98033,WA,US,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,0,NULL';
+        break;        
 } 
 
 var record = 'xxxTRANSID,'+ custID + ',' + amt + ',' + amt + ',' + custData;

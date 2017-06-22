@@ -30,7 +30,7 @@ exec sp_executesql @sql_dropview1;
 
 declare @sql_fe1 nvarchar(max) = '';
 set @sql_fe1 = 'create view ' + @table + '_Features1 as
-select t.label,t.accountID,t.transactionDateTime,
+select t.label,t.accountID,t.transactionID,t.transactionDateTime,
 t.transactionAmountUSD,
 t.digitalItemCount,
 t.physicalItemCount,

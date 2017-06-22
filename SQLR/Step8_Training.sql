@@ -60,7 +60,7 @@ execute sp_execute_external_script
 
   ## make equations
   variables_all <- rxGetVarNames(train_sql)
-  variables_to_remove <- c("label", "accountID", "transactionDateTime")
+  variables_to_remove <- c("label", "accountID", "transactionID", "transactionDateTime")
   training_variables <- variables_all[!(variables_all %in% variables_to_remove)]
   equation <- paste("label ~ ", paste(training_variables, collapse = "+", sep=""), sep="")
 

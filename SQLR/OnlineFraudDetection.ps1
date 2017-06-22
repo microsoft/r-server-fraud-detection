@@ -233,7 +233,7 @@ $script = $filepath + "ScoreOneTrans.sql"
 ExecuteSQL $script
 # invoke the stored procedure for scoring one transaction
 Write-Host -ForeGroundColor 'Cyan' (" Scoring one transaction...")
-$query = "exec ScoreOneTrans 'F51EE8F3-A99F-49B6-A06A-CA24AEA1BE3C,A1055520428840440,173.223251,109.99,GBP,"",20130725,152703,15,A,P,"","","",31.221,greater london,sw1p,gb,False,"",en-GB,CREDITCARD,AMEX,"","","",ec4y 1hs,"",GB,"","","","","","",M,"",1,0,""'"
+$query = "exec ScoreOneTrans 'C34F7C20-6203-42F5-A41B-AF26177345BE,A1055521358474530,2405.33,2405.33,USD,NULL,20130409,102958,14,A,P,NULL,NULL,NULL,92.97,dubayy,0,ae,FALSE,NULL,en-US,CREDITCARD,AMEX,NULL,NULL,NULL,33071,FL,US,NULL,NULL,NULL,NULL,NULL,NULL,M,NULL,0,4,NULL'"
 ExecuteSQLQuery $query
 
 Write-Host -ForeGroundColor 'green' ("Finished!")

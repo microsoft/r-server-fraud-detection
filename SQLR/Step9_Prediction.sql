@@ -108,7 +108,7 @@ rxPredict(modelObject = boosted_fit,
           data = test_sql,
 		  outData = Predictions_gbt_sql,
 		  overwrite = T,
-		  extraVarsToWrite = c("accountID", "transactionDateTime", "transactionAmountUSD", "label"))
+		  extraVarsToWrite = c("accountID", "transactionID", "transactionDateTime", "transactionAmountUSD", "label"))
 
 '
  , @params = N' @inquery nvarchar(max), @database_name varchar(max), @outputtable nvarchar(max)'

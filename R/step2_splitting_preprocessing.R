@@ -112,6 +112,10 @@ clean_preprocess <- function(input_data_query, output_sql_name){
   Input_sql <- RxSqlServerData(sqlQuery = input_data_query, connectionString = connection_string)
   Output_sql <- RxSqlServerData(table =  output_sql_name, connectionString = connection_string)
   
+  # We drop the output if it already exists as a view in case the SQL SP was executed in the same database before. 
+  rxExecuteSQLDDL(outOdbcDS, sSQLString = sprintf("IF OBJECT_ID ('%s', 'V') IS NOT NULL DROP VIEW %s ;", 
+                                                  output_sql_name, output_sql_name))
+  
   # Perform the data cleaning with rxDataStep. 
   ## To preserve the type of transactionDateTime, we recreate it.
   rxDataStep(inData = Input_sql, 
@@ -126,7 +130,7 @@ clean_preprocess <- function(input_data_query, output_sql_name){
 
 }
 
-# Apply the preprocessing and cleaning ot the training set. 
+# Apply the preprocessing and cleaning to the training set. 
 clean_preprocess(input_data_query = query_training, 
                  output_sql_name = "Tagged_Training_Processed")
 

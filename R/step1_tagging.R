@@ -1,11 +1,10 @@
 ##########################################################################################################################################
 ## This R script will do the following:
 ## 1. Upload the 3 data sets Untagged_Transactions, Account_Info and Fraud_Transactions from disk to SQL Server.
-## 2. Create the transactionDateTime variable based on transactionDate and transactionTime, and fix its type. 
+## 2. Create the transactionDateTime variable based on transactionDate and transactionTime.
 ## 3. Merge the two tables Untagged_Transaction ad Account_Info.
 ## 4. Remove duplicates from the 2 tables. 
 ## 5. Merge the 2 tables and create the label. 
-## 6. Clean the Tagged data. 
 
 ## Input : 3 Data Tables: Untagged_Transactions, Account_Info and Fraud_Transactions.
 ## Output: Tagged data.
@@ -149,7 +148,7 @@ rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("ALTER TABLE Fraud_Transactions AL
 
 
 # Sort Account_Info in descending order of accountID, transactionDateTime. 
-# Note: SQL queries are used here becasue the rxSort function is not available for SQL data sources.
+# Note: SQL queries are used here because the rxSort function is not available for SQL data sources.
 print("Sorting the Account_Info table ...")
 
 rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("DROP TABLE if exists Account_Info_Sort;"
@@ -190,7 +189,7 @@ print("Removing duplicates from Untagged_Transactions_Account and Fraud_Transact
 # We remove duplicates based on keys: transactionID, accountID, transactionDateTime, transactionAmount.
 ## Sometimes an entire transaction might be divided into multiple sub-transactions, so we can have the same IDs and Time but different amounts. 
 ## Note that it will be done with SQL queries and not with rx functions because evaluating if a row is a duplicate would not be possible 
-## if the data is loaded chubk by chunk.
+## if the data is loaded chunk by chunk.
 
 rxExecuteSQLDDL(outOdbcDS, sSQLString = paste(
   "WITH cte_1

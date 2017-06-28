@@ -3,7 +3,7 @@
 ## 1. Train a boosted tree classification model on the training set and save it to SQL. 
 ## 2. Preprocess and perform feature engineering for the testing set. 
 ## 3. Score the GBT on the test set.
-## 4. Evaluate the tested model: ROC, AUC, and fraud level account metrics 
+## 4. Evaluate the tested model: ROC, AUC, and fraud level account metrics. 
 
 ## Input : Featurized training set Tagged_Training_Processed_Features.
 ## Output: GBT Model, Predictions and Evaluation Metrics. 
@@ -14,7 +14,7 @@
 rxSetComputeContext(sql)
 
 # Input table pointer. 
-Tagged_Training_Processed_Features_sql <- RxSqlServerData(sqlQuery = query_training_features, 
+Tagged_Training_Processed_Features_sql <- RxSqlServerData(table = "Tagged_Training_Processed_Features", 
                                                           connectionString = connection_string,
                                                           colInfo = column_info)
 
@@ -41,15 +41,18 @@ formula <- as.formula(paste("label ~", paste(training_variables, collapse = "+")
 print("Training the gradient boosted trees (GBT) model...")
 
 # Train the GBT Boosted Trees model.
+## The unbalancedSets = TRUE argument helps deal with the class imbalance between fraud and non-fraud observations.
 library(MicrosoftML)
 boosted_fit <- rxFastTrees(formula = formula,
                            data = Tagged_Training_Processed_Features_sql,
                            type = c("binary"),
                            numTrees = 100,
-                           learningRate = 0.02,
+                           learningRate = 0.2,
                            splitFraction = 5/24,
                            featureFraction = 1,
-                           minSplit = 10)	
+                           minSplit = 10,
+                           unbalancedSets = TRUE,
+                           randomSeed = 5)	
 
 # The standard RevoScaleR rxBTrees function can also be used.
 #boosted_fit <- rxBTrees(formula = formula,
@@ -95,6 +98,7 @@ rxSetComputeContext(sql)
 ## The block below will preprocess and perform feature engineering on the testing set, by calling previously defined functions. 
 ############################################################################################################################################
 
+# Point to the testing set.
 query_testing <- "SELECT label, accountID, transactionID, transactionDateTime, isProxyIP, paymentInstrumentType, cardType, paymentBillingAddress,
                          paymentBillingPostalCode, paymentBillingCountryCode, paymentBillingName, accountAddress, accountPostalCode,  
                          accountCountry, accountOwnerName, shippingAddress, transactionCurrencyCode,localHour, ipState, ipPostCode,
@@ -118,12 +122,17 @@ clean_preprocess(input_data_query = query_testing,
 # Apply the feature engineering on the testing set. 
 print("Perform feature engineering the testing set...")
 
-query_testing_features <- feature_engineer(input_sql_name = "Tagged_Testing_Processed",
-                                           output_sql_name = "Tagged_Testing_Processed_Features1",
-                                           no_of_rows = 60000)
+print("Assigning risk values to the variables, and creating address mismatch and high amount flags...")
+assign_risk_and_flags(input_sql_name = "Tagged_Testing_Processed",
+                      output_sql_name = "Tagged_Testing_Processed_Features1")
+
+print("Computing the number of transactions and their amounts in the past day and 30 days for every transaction per accountID...")
+compute_aggregates(input_sql_name = "Tagged_Testing_Processed_Features1", 
+                   output_sql_name = "Tagged_Testing_Processed_Features")
+
 
 # Create a pointer to the testing set. 
-Tagged_Testing_Processed_Features_sql <- RxSqlServerData(sqlQuery = query_testing_features, 
+Tagged_Testing_Processed_Features_sql <- RxSqlServerData(table = "Tagged_Testing_Processed_Features",
                                                           connectionString = connection_string,
                                                           colInfo = column_info)
 
@@ -139,7 +148,7 @@ rxPredict(modelObject = boosted_fit,
           data = Tagged_Testing_Processed_Features_sql,
           outData = Predict_Score1_sql,
           overwrite = T,
-          extraVarsToWrite = c("accountID", "transactionDate", "transactionTime", "transactionAmountUSD", "label"))
+          extraVarsToWrite = c("accountID", "transactionID", "transactionDate", "transactionTime", "transactionAmountUSD", "label"))
 
 
 # To preserve the type of transactionDateTime, we recreate it.
@@ -153,7 +162,7 @@ rxDataStep(inData = Predict_Score1_sql,
              transactionDateTime = as.character(as.POSIXct(paste(transactionDate, sprintf("%06d", as.numeric(transactionTime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT")),
              transactionDate = NULL, 
              transactionTime = NULL,
-             PredictedLAbel = NULL, 
+             PredictedLabel = NULL, 
              Score.1 = NULL,
              labelProb = Probability.1, 
              Probability.1 = NULL
@@ -177,7 +186,7 @@ Predictions$label <- as.numeric(as.character(Predictions$label))
 # Plot the ROC and compute the AUC. 
 ROC <- rxRoc(actualVarName = "label", predVarNames = "labelProb", data = Predictions, numBreaks = 1000)
 AUC <- rxAuc(ROC)
-plot(ROC, title = "ROC Curve for Logistic Regression")
+plot(ROC, title = "ROC Curve for GBT")
 
 print(sprintf("AUC = %s", AUC))
   
@@ -199,27 +208,19 @@ print("Evaluating the GBT model: Computing fraud level account metrics...")
 # Variable contactPeriod is in the unit of days, indicating the lag before a customer is contacted again. 
 # to verify high-score transactions are legitimate. 
 
-scr2stat <- function(dataset, contactPeriod, sampleRateNF, sampleRateFrd)
+scr2stat <- function(data, contactPeriod, sampleRateNF, sampleRateFrd)
 {
   #scr quantization/binning into 1000 equal bins
   
-  #accout level score is the maximum of trans scores of that account
+  #account level score is the maximum of trans scores of that account
   #all transactions after the first fraud transaction detected are value savings
   #input score file needs to be acct-date-time sorted   
-  dataset$"Scored Probabilities" <- dataset$Score
   
-  fields = names(dataset)
-  if(! ("accountID" %in% fields)) {print ("Error: Need accountID column!")}
-  if(! ("transactionDateTime" %in% fields)) {print ("Error: Need transactionDateTime column!")}
-  if(! ("transactionAmountUSD" %in% fields)){print ("Error: Need transactionAmountUSD column!")}
-  if(! ("labelProb" %in% fields)) {print ("Error: Need labelProb column!")}
-  
-  nRows = dim(dataset)[1]
+  nRows = nrow(data)
   nBins = 1000
   
   #1. Calculate the perf stats by score band.  
-  
-  prev_acct <- dataset$accountID[1]
+  prev_acct <- data$accountID[1]
   prev_score <- 0
   is_frd_acct <- 0
   max_scr <- 0	
@@ -232,19 +233,17 @@ scr2stat <- function(dataset, contactPeriod, sampleRateNF, sampleRateFrd)
   nf_scr_rec_time <- vector("numeric", nBins)
   
   for (r in 1:nRows){
-    acct <- as.character(dataset$accountID[r])
-    dolamt <- as.double(dataset$transactionAmountUSD[r])
-    label <- dataset$label[r]
-    score <- dataset$labelProb[r]
-    datetime <- dataset$transactionDateTime[r]
+    acct <- as.character(data$accountID[r])
+    dolamt <- data$transactionAmountUSD[r]
+    label <- data$label[r]
+    score <- data$labelProb[r]
+    datetime <- data$transactionDateTime[r]
     
     if(score == 0){ 
       score <- score + 0.00001
       print ("The following account has zero score!")
       print (paste(acct, dolamt, datetime,sep = " "))
     }
-    
-    if(label == 2) next
     
     if (acct != prev_acct){
       scr_bin <- ceiling(max_scr*nBins)
@@ -280,29 +279,24 @@ scr2stat <- function(dataset, contactPeriod, sampleRateNF, sampleRateFrd)
     if(label == 1){
       scr_hash[tran_scr_bin, 3] <- scr_hash[tran_scr_bin, 3] + dolamt
       scr_hash[tran_scr_bin, 7] <- scr_hash[tran_scr_bin, 7] + 1
-      is_frd_acct = 1;
-    }
-    else{
+      is_frd_acct = 1
+    } else{
       scr_hash[tran_scr_bin, 4] <- scr_hash[tran_scr_bin, 4] + dolamt	
       scr_hash[tran_scr_bin, 8] <- scr_hash[tran_scr_bin, 8] + 1 	
     }
     
     # ADR/VDR
-    if(label == 1)
-    {
+    if(label == 1){
       # ADR
       f_scr_rec[tran_scr_bin] <- 1
       
       # VDR
       # If a higher score appeared before the current score, then this is also savings for the higher score.
       # Once a fraud transaction is discovered, all subsequent approved transactons are savings.
-      for(i in  1: ceiling(max_scr*nBins))
-      {
+      for(i in  1: ceiling(max_scr*nBins)){
         f_scr_rec[i] <- f_scr_rec[i] + dolamt
       }
-    }
-    else
-    { 
+    } else { 
       # False Positive Accounts (FP) with recontact period.
       # Check if there is any earlier dates for the same or lower score.
       # Update the count and dates when within recontact period.
@@ -385,11 +379,11 @@ scr2stat <- function(dataset, contactPeriod, sampleRateNF, sampleRateFrd)
                    sampleRateFrd = 1)
   
 # Performance plots. 
-## ADR
-plot(perf[, 9], perf[, 1], type = 'b', xlab = 'AFPR', ylab = 'ADR', xlim=c(0, 100))
+## ADR -- Fraud account detection rate
+plot(perf[, 9], perf[, 1], type = 'b', xlab = 'AFPR', ylab = 'ADR', xlim = c(0, 100))
 grid()
   
-## VDR
+## VDR -- Value detection rate. The percentage of values saved.
 plot(perf[, 9], perf[, 5], type = 'b', xlab = 'AFPR', ylab = 'VDR', xlim = c(0, 100))
 grid()
   
@@ -404,3 +398,4 @@ grid()
 ## TFPR vs TDR
 plot(perf[, 10], perf[, 7], type = 'b', xlab ='TFPR', ylab = 'PCT Frd', xlim = c(0, 100))
 grid()
+

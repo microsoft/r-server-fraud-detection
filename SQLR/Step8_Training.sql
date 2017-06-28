@@ -37,7 +37,7 @@ create table Trained_Model (
 2. select the top 10000 rows
 */
 declare @GetTrainData nvarchar(max) 
-set @GetTrainData =  'select top 10000 * from ' + @table + ' where label<=1 order by label DESC, accountID';
+set @GetTrainData =  'select * from ' + @table
 
 /*Get the database name*/
 DECLARE @database_name nvarchar(max) = db_name();
@@ -74,6 +74,7 @@ execute sp_execute_external_script
                              splitFraction = 5/24,
                              featureFraction = 1,
                              minSplit = 10,
+							 unbalancedSets = TRUE,
 							 randomSeed = 5)
 
   ## save the trained model in sql server 

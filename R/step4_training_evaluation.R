@@ -216,8 +216,8 @@ scr2stat <- function(data, contactPeriod, sampleRateNF, sampleRateFrd)
   #all transactions after the first fraud transaction detected are value savings
   #input score file needs to be acct-date-time sorted   
   
-  nRows = nrow(data)
-  nBins = 1000
+  nRows <- nrow(data)
+  nBins <- 1000
   
   #1. Calculate the perf stats by score band.  
   prev_acct <- data$accountID[1]
@@ -339,7 +339,7 @@ scr2stat <- function(data, contactPeriod, sampleRateNF, sampleRateFrd)
   # 5, 6 already in cumulative during previous calculation.
   for (i in (nBins-1):1){
     for(j in c(1:4,7:8)){
-      scr_hash[i, j] <- scr_hash[i, j]+scr_hash[i + 1, j]
+      scr_hash[i, j] <- scr_hash[i, j]+ scr_hash[i + 1, j]
     }
   }
   
@@ -373,7 +373,7 @@ scr2stat <- function(data, contactPeriod, sampleRateNF, sampleRateFrd)
 }
 
 # Apply the evaluation function to the imported predictions table.
-  perf <- scr2stat(dataset = Predictions,
+  perf <- scr2stat(data = Predictions,
                    contactPeriod = 30, 
                    sampleRateNF = 1,
                    sampleRateFrd = 1)

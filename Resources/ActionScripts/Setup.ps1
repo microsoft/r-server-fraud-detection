@@ -73,18 +73,18 @@ $checkoutDir = "Source"
 $setupLog = $solutionTemplateSetupPath + "\setup_log.txt"
 Start-Transcript -Path $setupLog -Append
 
-cd $dataDirPath
+# cd $dataDirPath
 
-# List of data files to be downloaded
-$dataList = "Loan_Prod", "Borrower_Prod"
-$dataExtn = ".csv"
-# $hashExtn = ".hash"
-foreach ($dataFile in $dataList)
-{
-    $down = $baseurl + '/' + $dataFile + $dataExtn
-    Write-Host -ForeGroundColor 'magenta' "Downloading file $down..."
-    Start-BitsTransfer -Source $down  
-}
+# # List of data files to be downloaded
+# $dataList = "Loan_Prod", "Borrower_Prod"
+# $dataExtn = ".csv"
+# # $hashExtn = ".hash"
+# foreach ($dataFile in $dataList)
+# {
+#     $down = $baseurl + '/' + $dataFile + $dataExtn
+#     Write-Host -ForeGroundColor 'magenta' "Downloading file $down..."
+#     Start-BitsTransfer -Source $down  
+# }
 
 
 

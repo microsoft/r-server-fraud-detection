@@ -30,17 +30,20 @@ Fraud_Transactions <- "../Data/fraudTransactions.csv"
 ## User ID and Password. Change them below if you modified the default values.  
 db_name <- "Fraud"
 server <- "localhost"
-user_id <- "rdemo"
-password <- "D@tascience"
-
-connection_string <- sprintf("Driver=SQL Server;Server=%s;Database=%s;UID=%s;PWD=%s", server, db_name, user_id, password)
+connection_string <- sprintf("Driver=SQL Server;Server=%s;Database=%s;Trusted_Connection=TRUE", server, db_name)
+# connection is set up to use your Windows credentials
+# to use an id/password instead, add them in the lines below and uncomment 
+# user_id <- "XXX"
+# password <- "XXX"
+#connection_string <- sprintf("Driver=SQL Server;Server=%s;Database=%s;UID=%s;PWD=%s", server, db_name, user_id, password)
 
 ##############################################################################################################################
 ## Database Creation. 
 ##############################################################################################################################
 
 # Open an Odbc connection with SQL Server master database only to create a new database with the rxExecuteSQLDDL function.
-connection_string_master <- sprintf("Driver=SQL Server;Server=%s;Database=master;UID=%s;PWD=%s", server, user_id, password)
+# connection_string_master <- sprintf("Driver=SQL Server;Server=%s;Database=master;UID=%s;PWD=%s", server, user_id, password)
+connection_string_master <- sprintf("Driver=SQL Server;Server=%s;Database=master;Trusted_Connection=TRUE", server)
 outOdbcDS_master <- RxOdbcData(table = "Default_Master", connectionString = connection_string_master)
 rxOpen(outOdbcDS_master, "w")
 
@@ -69,7 +72,7 @@ sql <- RxInSqlServer(connectionString = connection_string)
 # Step 1: Tagging. 
 print("Step 1: Tagging.")
 source(paste(getwd(),"/step1_tagging.R", sep=""))
-  
+
 # Step 2: Splitting & Preprocessing the training set. 
 print("Step 2: Splitting and Preprocessing the training set.")
 source(paste(getwd(),"/step2_splitting_preprocessing.R", sep=""))

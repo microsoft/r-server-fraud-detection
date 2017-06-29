@@ -45,7 +45,7 @@ Param(
 
 [parameter(Mandatory=$false, Position=5, ParameterSetName = "LCR")]
 [ValidateNotNullOrEmpty()] 
-[string]$dbname="LoanChargeOff"
+[string]$dbname="Loans"
 )
 
 # Change SQL Server to mixed mode authentication

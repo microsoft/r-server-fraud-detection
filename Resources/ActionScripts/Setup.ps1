@@ -99,40 +99,13 @@ git clone -n https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
 cd $checkoutDir
 git config core.sparsecheckout true
 echo "/*`r`n!HDI`r`n!Resources" | out-file -encoding ascii .git/info/sparse-checkout
-git checkout master
+git checkout dev
 
 $sqlsolutionCodePath = $solutionTemplateSetupPath + "\" + $checkoutDir + "\SQLR"
-$helpShortCutFilePath = $sqlsolutionCodePath + "\frauddetection_Help.url"
-cd $sqlsolutionCodePath
+$sqlsolutionResourcePath = $solutionTemplateSetupPath + "\" + $checkoutDir + "\Resources\ActionScripts"
+$helpShortCutFilePath = $sqlsolutionResourcePath + "\frauddetection_Help.url"
+cd $sqlsolutionResourcePath
 
-# make sure the hashes match for data files
-# Write-Host -ForeGroundColor 'magenta' "Checking integrity of downloaded files..."
-# foreach ($dataFile in $dataList)
-# {
-#     $dataFileHash = Get-FileHash ($dataDirPath + "\" + $dataFile + $dataExtn) -Algorithm SHA512
-#     $storedHash = Get-Content ($dataFile + $hashExtn)
-#     if ($dataFileHash.Hash -ne $storedHash)
-#     {
-#         Write-Error "Data file $dataFile has been corrupted. Please try again."
-#         throw
-#     }
-# }
-
-# foreach ($report in $reportsList)
-# {
-#     $fileHash = Get-FileHash ($reportsDirPath + "\" + $report) -Algorithm SHA512
-#     $storedHash = Get-Content ($report + $hashExtn)
-#     if ($fileHash.Hash -ne $storedHash)
-#     {
-#         Write-Error "Report file $report has been corrupted. Please try again."
-#         throw
-#     }
-# }
-
-# Write-Host -ForeGroundColor 'magenta' "File integrity check successful."
-
-# Start the script for DB creation. Due to privilege issues with SYSTEM user (the user that runs the 
-# extension script), we use ps-remoting to login as admin use and run the DB creation scripts
 
 $passwords = $password | ConvertTo-SecureString -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential("$serverName\$username", $passwords)

@@ -26,21 +26,17 @@ Name of the database to create in SQL Server
 Param(
 [parameter(Mandatory=$true, Position=1, ParameterSetName = "LCR")]
 [ValidateNotNullOrEmpty()] 
-[string]$datadir,
+[string]$basedir,
 
 [parameter(Mandatory=$true, Position=2, ParameterSetName = "LCR")]
 [ValidateNotNullOrEmpty()] 
-[string]$basedir,
+[string]$sqlUsername,
 
 [parameter(Mandatory=$true, Position=3, ParameterSetName = "LCR")]
 [ValidateNotNullOrEmpty()] 
-[string]$sqlUsername,
-
-[parameter(Mandatory=$true, Position=4, ParameterSetName = "LCR")]
-[ValidateNotNullOrEmpty()] 
 [string]$sqlPassword,
 
-[parameter(Mandatory=$false, Position=5, ParameterSetName = "LCR")]
+[parameter(Mandatory=$false, Position=4, ParameterSetName = "LCR")]
 [ValidateNotNullOrEmpty()] 
 [string]$dbname="Loans"
 )

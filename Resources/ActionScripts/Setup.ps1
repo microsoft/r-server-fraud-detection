@@ -97,8 +97,6 @@ if (Test-Path $checkoutDir)
 
 git clone -n https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
 cd $checkoutDir
-git config core.sparsecheckout true
-echo "/*`r`n!HDI`r`n!Resources" | out-file -encoding ascii .git/info/sparse-checkout
 git checkout dev
 
 $sqlsolutionCodePath = $solutionTemplateSetupPath + "\" + $checkoutDir + "\SQLR"

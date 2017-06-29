@@ -66,7 +66,7 @@ New-Item -Path "D:\" -Name $solutionTemplateName -ItemType directory -force
 $setupLog = $solutionTemplatePath + "\setup_log.txt"
 Start-Transcript -Path $setupLog -Append
 
-
+cd $solutionTemplatePath
 ### DON'T FORGET TO CHANGE TO MASTER LATER...
 git clone  --branch dev --single-branch https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
 

@@ -38,7 +38,7 @@ Param(
 
 [parameter(Mandatory=$false, Position=4, ParameterSetName = "LCR")]
 [ValidateNotNullOrEmpty()] 
-[string]$dbname="Loans"
+[string]$dbname="Fraud"
 )
 
 $scriptdir = $basedir + '/SQLR'

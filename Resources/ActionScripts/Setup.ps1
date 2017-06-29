@@ -83,7 +83,7 @@ $command1 = "runDB.ps1"
 $command2 ="setupHelp.ps1"
 
 Enable-PSRemoting -Force
-Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command1 -ArgumentList $sqlsolutionBase, $sqlUsername, $sqlPassword, $checkoutDir
+Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command1 -ArgumentList $solutionBase, $sqlUsername, $sqlPassword, $checkoutDir
 Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command2 -ArgumentList $helpShortCutFilePath, $solutionBase
 Disable-PSRemoting -Force
 

@@ -58,10 +58,10 @@ Write-Host "Start time for setup is:" $startTime
 $originalLocation = Get-Location
 # This is the directory for the data/code download
 $solutionTemplateName = "Solutions"
-$solutionTemplatePath = "D:\" + $solutionTemplateName
+$solutionTemplatePath = "C:\" + $solutionTemplateName
 $checkoutDir = "Fraud"
 
-New-Item -Path "D:\" -Name $solutionTemplateName -ItemType directory -force
+New-Item -Path "C:\" -Name $solutionTemplateName -ItemType directory -force
 
 $setupLog = $solutionTemplatePath + "\setup_log.txt"
 Start-Transcript -Path $setupLog -Append

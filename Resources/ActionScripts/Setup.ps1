@@ -72,7 +72,7 @@ git clone  --branch dev --single-branch https://github.com/Microsoft/r-server-fr
 
 
 $solutionBase = $solutionTemplatePath + "\" + $checkoutDir 
-$solutionResourcePath = $solutionTemplatebase + "\Resources\ActionScripts"
+$solutionResourcePath = $solutionBase + "\Resources\ActionScripts"
 $helpShortCutFilePath = $solutionResourcePath + "\frauddetection_Help.url"
 
 cd $solutionResourcePath

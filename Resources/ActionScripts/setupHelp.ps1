@@ -27,8 +27,6 @@ $desktop = [Environment]::GetFolderPath("Desktop")
 $desktop = $desktop + '\'
 
 
-
-
 #create the help link in startup program 
 
 $startmenu = [Environment]::GetFolderPath("StartMenu")

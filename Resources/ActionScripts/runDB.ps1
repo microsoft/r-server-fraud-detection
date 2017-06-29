@@ -10,9 +10,6 @@ It creates the SQL Server user and uses it to create the database.
 This script should only be run once through the template deployment process. It is
 not meant to be run by users as it assumes database and users don't already exist.
 
-.PARAMETER datadir
-directory where raw csv data has been downloaded
-
 .PARAMETER scriptdir
 directory where scripts are checked out from github
 

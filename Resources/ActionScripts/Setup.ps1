@@ -57,53 +57,25 @@ $startTime= Get-Date
 Write-Host "Start time for setup is:" $startTime
 $originalLocation = Get-Location
 # This is the directory for the data/code download
-$solutionTemplateSetupDir = "FraudDetectionSolution"
-$solutionTemplateSetupPath = "D:\" + $solutionTemplateSetupDir
-$dataDir = "Data"
-$dataDirPath = $solutionTemplateSetupPath + "\" + $dataDir
-$reportsDir = "Reports"
-$reportsDirPath = $solutionTemplateSetupPath + "\" + $reportsDir
+$solutionTemplateName = "Solutions"
+$solutionTemplatePath = "D:\" + $solutionTemplateName
+$checkoutDir = "Fraud"
 
-New-Item -Path "D:\" -Name $solutionTemplateSetupDir -ItemType directory -force
-New-Item -Path $solutionTemplateSetupPath -Name $dataDir -ItemType directory -force
-New-Item -Path $solutionTemplateSetupPath -Name $reportsDir -ItemType directory -force
+New-Item -Path "D:\" -Name $solutionTemplateName -ItemType directory -force
 
-$checkoutDir = "Source"
-
-$setupLog = $solutionTemplateSetupPath + "\setup_log.txt"
+$setupLog = $solutionTemplatePath + "\setup_log.txt"
 Start-Transcript -Path $setupLog -Append
 
-# cd $dataDirPath
-
-# # List of data files to be downloaded
-# $dataList = "Loan_Prod", "Borrower_Prod"
-# $dataExtn = ".csv"
-# # $hashExtn = ".hash"
-# foreach ($dataFile in $dataList)
-# {
-#     $down = $baseurl + '/' + $dataFile + $dataExtn
-#     Write-Host -ForeGroundColor 'magenta' "Downloading file $down..."
-#     Start-BitsTransfer -Source $down  
-# }
-
-
-
-#checkout setup scripts/code from github
-cd $solutionTemplateSetupPath
-if (Test-Path $checkoutDir)
-{
-    Remove-Item $checkoutDir -Force -Recurse
-}
 
 ### DON'T FORGET TO CHANGE TO MASTER LATER...
 git clone  --branch dev --single-branch https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
 
 
-$solutionBase = $solutionTemplateSetupPath + "\" + $checkoutDir 
+$solutionBase = $solutionTemplatePath + "\" + $checkoutDir 
 $solutionResourcePath = $solutionTemplatebase + "\Resources\ActionScripts"
 $helpShortCutFilePath = $solutionResourcePath + "\frauddetection_Help.url"
-cd $solutionResourcePath
 
+cd $solutionResourcePath
 
 $passwords = $password | ConvertTo-SecureString -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential("$serverName\$username", $passwords)
@@ -111,7 +83,7 @@ $command1 = "runDB.ps1"
 $command2 ="setupHelp.ps1"
 
 Enable-PSRemoting -Force
-Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command1 -ArgumentList $dataDirPath, $sqlsolutionBase, $sqlUsername, $sqlPassword
+Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command1 -ArgumentList $sqlsolutionBase, $sqlUsername, $sqlPassword, $checkoutDir
 Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command2 -ArgumentList $helpShortCutFilePath, $solutionBase
 Disable-PSRemoting -Force
 

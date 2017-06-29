@@ -46,6 +46,6 @@ cp -Verbose $down $desktop
 
 #create shortcut to solution folder on desktop
 $WsShell = New-Object -ComObject WScript.Shell
-$shortcut = $WsShell.CreateShortcut($desktop + "LoanChargeOff.lnk")
+$shortcut = $WsShell.CreateShortcut($desktop + "FraudDetection.lnk")
 $shortcut.TargetPath = $solutionPath
 $shortcut.Save()

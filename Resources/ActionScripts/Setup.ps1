@@ -99,10 +99,10 @@ if (Test-Path $checkoutDir)
 git clone  --branch dev --single-branch https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
 
 
-$sqlsolutionCodePath = $solutionTemplateSetupPath + "\" + $checkoutDir + "\SQLR"
-$sqlsolutionResourcePath = $solutionTemplateSetupPath + "\" + $checkoutDir + "\Resources\ActionScripts"
-$helpShortCutFilePath = $sqlsolutionResourcePath + "\frauddetection_Help.url"
-cd $sqlsolutionResourcePath
+$solutionBase = $solutionTemplateSetupPath + "\" + $checkoutDir 
+$solutionResourcePath = $solutionTemplatebase + "\Resources\ActionScripts"
+$helpShortCutFilePath = $solutionResourcePath + "\frauddetection_Help.url"
+cd $solutionResourcePath
 
 
 $passwords = $password | ConvertTo-SecureString -AsPlainText -Force
@@ -111,8 +111,8 @@ $command1 = "runDB.ps1"
 $command2 ="setupHelp.ps1"
 
 Enable-PSRemoting -Force
-Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command1 -ArgumentList $dataDirPath, $sqlsolutionCodePath, $sqlUsername, $sqlPassword
-Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command2 -ArgumentList $helpShortCutFilePath, $solutionTemplateSetupPath
+Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command1 -ArgumentList $dataDirPath, $sqlsolutionBase, $sqlUsername, $sqlPassword
+Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command2 -ArgumentList $helpShortCutFilePath, $solutionBase
 Disable-PSRemoting -Force
 
 Write-Host -ForeGroundColor magenta "Installing latest Power BI..."

@@ -33,7 +33,7 @@ Param(
 
 [parameter(Mandatory=$true, Position=2, ParameterSetName = "LCR")]
 [ValidateNotNullOrEmpty()] 
-[string]$scriptdir,
+[string]$basedir,
 
 [parameter(Mandatory=$true, Position=3, ParameterSetName = "LCR")]
 [ValidateNotNullOrEmpty()] 
@@ -48,6 +48,7 @@ Param(
 [string]$dbname="Loans"
 )
 
+$scriptdir = $basedir + '/SQLR'
 # Change SQL Server to mixed mode authentication
 ### Check and see if SQL Service is Running , if not start it 
 
@@ -97,11 +98,18 @@ try {
 }
 Write-Host -ForegroundColor 'Cyan' "Done creating database user"
 
-# Create database if doesn't exist
-$query = "IF NOT EXISTS(SELECT * FROM sys.databases WHERE NAME = '$dbname') CREATE DATABASE $dbname"
-Invoke-Sqlcmd -ServerInstance $ServerName -Username $sqlUsername -Password "$sqlPassword" -Query $query -ErrorAction SilentlyContinue
-if ($? -eq $false)
-{
-    Write-Host -ForegroundColor Red "Failed to execute sql query to create database."
-}
-.\OnlineFraudDetection.ps1 -ServerName $env:COMPUTERNAME -DBName $dbname -sqlUsername $sqlUsername -sqlPassword "$sqlPassword" -uninterrupted y -dataPath $datadir
+
+# Run the solution
+.\OnlineFraudDetection.ps1 -ServerName localhost -DBName $dbname -username $username -password $password 
+
+# copy Jupyter Notebook files
+cp $solutionPath\R\*.ipynb  c:\dsvm\notebooks
+cp $solutionPath\Data\*.csv  c:\dsvm\notebooks
+#  substitute real username and password in notebook file
+sed -i "s/XXYOURSQLPW/$password/g" c:\dsvm\notebooks\Fraud_Detection_Notebook.ipynb
+sed -i "s/XXYOURSQLUSER/$username/g" c:\dsvm\notebooks\Fraud_Detection_Notebook.ipynb
+
+
+#install files for website
+cd $solutionPath/Website
+npm install

@@ -21,13 +21,13 @@ param(
 [string]$solutionPath
 )
 
-#git clone 
+# find the desktop 
 $desktop = [Environment]::GetFolderPath("Desktop")
 
 $desktop = $desktop + '\'
 
-#copy the solution here
-cp 
+
+
 
 #create the help link in startup program 
 

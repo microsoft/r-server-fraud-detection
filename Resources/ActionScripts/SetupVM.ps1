@@ -11,7 +11,7 @@ This script checks out the solution from github and deploys it to SQL Server on 
 Name of the server with SQL Server with R Services (this is the DSVM server)
 
 .PARAMETER baseurl
-url from which to download data files
+url from which to download data files (if any)
 
 .PARAMETER username
 login username for the server
@@ -79,12 +79,12 @@ cd $solutionResourcePath
 
 $passwords = $password | ConvertTo-SecureString -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential("$serverName\$username", $passwords)
-$command1 = "runDB.ps1"
-$command2 ="setupHelp.ps1"
+$configure = "configureSolution.ps1"
+$shortcuts ="createShortcuts.ps1"
 
 Enable-PSRemoting -Force
-Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command1 -ArgumentList $solutionBase, $sqlUsername, $sqlPassword, $checkoutDir
-Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $command2 -ArgumentList $helpShortCutFilePath, $solutionBase
+Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $configure -ArgumentList $solutionBase, $sqlUsername, $sqlPassword, $checkoutDir
+Invoke-Command  -Credential $credential -ComputerName $serverName -FilePath $shortcuts -ArgumentList $helpShortCutFilePath, $solutionBase
 Disable-PSRemoting -Force
 
 Write-Host -ForeGroundColor magenta "Installing latest Power BI..."

@@ -45,6 +45,7 @@ $scriptdir = $basedir + '/SQLR'
 # Change SQL Server to mixed mode authentication
 ### Check and see if SQL Service is Running , if not start it 
 
+Write-Host -ForegroundColor 'Cyan' "Switch SQL Server to Mixed Mode"
 $ServiceName = 'MSSQLSERVER'
 $arrService = Get-Service -Name $ServiceName
 if ($arrService.Status -ne "Running"){
@@ -62,6 +63,7 @@ Start-Service $ServiceName
 ### Start SQL Launch Pad and SQL Server Agent as this is Dependent on the SQL Service and is stopped with -force
 Start-Service MSSQLLaunchpad
 Start-Service SQLSERVERAGENT
+Write-Host -ForegroundColor 'Cyan' "Done switching SQL Server to Mixed Mode"
 
 cd $scriptdir
 # create the database user

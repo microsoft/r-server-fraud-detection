@@ -93,16 +93,16 @@ Write-Host -ForegroundColor 'Cyan' "Done creating database user"
 
 
 # Run the solution
-.\OnlineFraudDetection.ps1 -ServerName localhost -DBName $dbname -username $username -password $password 
+.\OnlineFraudDetection.ps1 -ServerName localhost -DBName $dbname -username $sqlUsername -password $sqlPassword 
 
 # copy Jupyter Notebook files
-cp $solutionPath\R\*.ipynb  c:\dsvm\notebooks
-cp $solutionPath\Data\*.csv  c:\dsvm\notebooks
+cp $basedir\R\*.ipynb  c:\dsvm\notebooks
+cp $basedir\Data\*.csv  c:\dsvm\notebooks
 #  substitute real username and password in notebook file
-sed -i "s/XXYOURSQLPW/$password/g" c:\dsvm\notebooks\Fraud_Detection_Notebook.ipynb
-sed -i "s/XXYOURSQLUSER/$username/g" c:\dsvm\notebooks\Fraud_Detection_Notebook.ipynb
+sed -i "s/XXYOURSQLPW/$sqlPassword/g" c:\dsvm\notebooks\Fraud_Detection_Notebook.ipynb
+sed -i "s/XXYOURSQLUSER/$sqlUsername/g" c:\dsvm\notebooks\Fraud_Detection_Notebook.ipynb
 
 
 #install files for website
-cd $solutionPath/Website
+cd $basedir/Website
 npm install

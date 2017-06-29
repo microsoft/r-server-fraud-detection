@@ -95,9 +95,9 @@ if (Test-Path $checkoutDir)
     Remove-Item $checkoutDir -Force -Recurse
 }
 
-git clone -n https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
-cd $checkoutDir
-git checkout dev
+### DON'T FORGET TO CHANGE TO MASTER LATER...
+git clone  --branch dev --single-branch https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
+
 
 $sqlsolutionCodePath = $solutionTemplateSetupPath + "\" + $checkoutDir + "\SQLR"
 $sqlsolutionResourcePath = $solutionTemplateSetupPath + "\" + $checkoutDir + "\Resources\ActionScripts"

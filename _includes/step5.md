@@ -1,26 +1,34 @@
 
-<h2> Step 5: Interrupt Fraudulent</h2>
+<h2> Step 5: Use the Model during Online Transactions</h2>
 ----------------------------------------------------------------
 
-Now that the predictions are created  we will meet our last persona - Bernie, the Business Analyst. Bernie will use the Power BI Dashboard to examine the test data to find an appropriate score cutoff, then use that cutoff value for a new set of loan applicants.
+The final goal of this model is to interrupt a fraudulent transaction before it occurs.  Keep in mind that there will be false positives - transctions flagged that are not in fact fraud.  For that reason, the decision point when the model returns a high probability of fraud might be to require the purchaser contact a live person to complete the transaction, rather than simply deny the purchase.
 
-{% include pbix.md %}
+This solution contains an example of a website that does just that.  This example is not meant to be production-quality code, it is simply an example showing how a website might use such a model.  
+
+To try out this example site, you must first start the lightweight webserver for the example. Open a terminal window or powershell window and type the following command, substituting your own values for the path and username/password:
+
+```
+    cd C:\Solutions\Fraud\Website
+    node server.js YOUR_SQL_USERNAME YOUR_SQL_PASSWORD
+
+```
+
+You should see the following response:
+
+```
+    Example app listening on port 3000!
+    DB Connection Success
+```
+
+Now leave this window open and open the url http://localhost:3000 in your browser.  
+
+This site is set up to mimic a sale on a website.  "Log in" by selecting an account and then add some items to your shopping cart.  Finally, hit the `Purchase` button to trigger the model scoring.  If the model returns a low probability for the transaction, it is not likely to be fraudulent, and the purchase will be accepted. However, if the model returns a high probability, you will see a message that explains the purchaser must contact a support representative to continue. 
+
+You can view the model values by opening the Console window on your browser.
+
+* For Edge or Internet Explorer: Press `F12` to open Developer Tools, then click on the Console tab.
+* For FireFox or Chome: Press `Ctrl-Shift-i` to open Developer Tools, then click on the Console tab.
 
 
-
-
-
-### Test Data Tab 
-
-<img src="images/test.jpg">
-The output scores from the model have been binned according to the percentiles: the higher the percentile, and the most likely the risk of default. Bernie uses the checkboxes showing these percentiles at the top right to find a suitable level of risk for extending a loan.  He starts by unchecking all boxes, which shows the entire test set.  Then starting at the top (99%), he checks consecutive boxes to view characteristics of those loans whose scores fall into that percentile or above. This  corresponds to a specific choice of a score cutoff value which is shown directly below the checkboxes. For example, for percentiles of 81 and above, the score cutoff is .4680, which means that all scores higher than 0.4933 will be classified as bad. Among those loans classified as bad, the real or expected bad rate is indicated in the box below (40%). 
-
-The Loan Summary table divides those loans classified as bad in two: those that were indeed bad (Bad Loan = Yes) and those that were in fact good although they were classified as bad (Bad Loan = No). For each of those 2 categories, the table shows the number, total and average amount, and the average interest rate of the loans. This allows you to see the expected impact of choosing this cutoff value.
-
-### New Loans Tab 
-<img src="images/prod.jpg">
-Now Bernie switches to the New Loans tab to view some scored potential loans.  He uses the .4933 cutoff value and views information about these loans.  He sees he will reject 9 of the 22 potential loans based on this critera.
-
-<div class="alert alert-info" role="alert">
-The PowerBI file has cached data in it.  You can use these <a href="Visualize_Results.html">steps to refresh the PowerBI data</a>.
-</div>  
+Use the `Log In` button on the site to switch to a different account and try the same transaction again.  (Hint: the account number that begins with a "9" is most likely to have a high probability of fraud.)

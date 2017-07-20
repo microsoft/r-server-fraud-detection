@@ -22,6 +22,7 @@ solution.
         <li><a href="#step2">Step 2: Data Prep and Modeling</a></li>
         <li><a href="#step3">Step 3: Operationalize</a></li>
         <li><a href="#step4">Step 4: Deploy and Visualize</a></li>
+        <li><a href="#step5">Step 5: Use the Model during Online Transactions</a></li>
         </div>
     </div>
 
@@ -138,4 +139,6 @@ There you will see three files with the name <strong>{{ site.solution_name }}</s
 
     {% include step4.md %}
 
-    
+<a name="step5" id="step5"></a>
+
+    {% include step5.md %}

@@ -301,7 +301,7 @@ The trained model is serialized and uploaded to a SQL table <code>Models</code> 
 <h2>Production Stage</h2>
 <hr />
 <div class="sql">
-<p>The R code from each of the above steps is operationalized in the SQL Server as stored procedures.
+The R code from each of the above steps is operationalized in the SQL Server as stored procedures.
 See <a href="">For the Database Analyst</a> for more details.
 
 </div>

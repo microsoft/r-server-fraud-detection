@@ -1,2 +1,1 @@
-
-When a financial institution examines a request for a loan, it is crucial to assess the risk of default to determine whether to grant it. This solution is based on simulated data for a small personal loan financial institution, containing the borrower's financial history as well as information about the requested loan. 
+Fraudulent online transactions are becoming more and more of a problem to online merchants. This solution will show how to build a model to detect potential fraudulent transactions so that the transaction may be rejected or discouraged at the point of sale. 

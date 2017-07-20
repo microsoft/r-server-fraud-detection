@@ -28,11 +28,16 @@ Once the server is running, open the Mozilla Firefox web browser.  Type the foll
 You will get a security warning; hit the "Advanced" button and add this to your exceptions to access the Jupyter session.
 
 
- Once the Jupyter server is running on your VM, you can also connect to it from another computer by using the Public IP address in the url:
+ Once the Jupyter server is running on your VM, you can also connect to it from another computer by first opening the firewall: 
+
+```
+netsh advfirewall firewall add rule name="Jupyter" dir=in action=allow protocol=tcp localport=9999
+```
+ and then using the Public IP address in the url:
 
     https://ipaddress:9999
         
-The ipaddress can be found in the Azure Portal under the "Network interfaces" section - use the Public IP Address.##
+The ipaddress can be found in the Azure Portal under the "Network interfaces" section - use the Public IP Address.
 
 ## Using Jupyter
 

@@ -328,7 +328,7 @@ This step evaluates the performance on both account level and transaction level.
 
 ## Step 11: Production Scoring
 
-In this step, we showcase how to score one raw transaction to mimic the real scoring case.  
+In this step, we showcase how to score one raw transaction to mimic the real scoring case.  This procedure will be called from our example website when a transaction occurs.  See [Typical Workflow](Typical.html#step5) for more information.
 
 ### Input:
 

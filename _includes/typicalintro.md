@@ -1,0 +1,1 @@
+Fraudulent online transactions are becoming more and more of a problem to online merchants. This solution will show how to build a model to detect potential fraudulent transactions so that the transaction may be rejected or discouraged at the point of sale. 

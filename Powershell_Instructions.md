@@ -63,31 +63,19 @@ Running this PowerShell script will create stored procedures for the the operati
 
 4.  CD to the **{{ site.folder_name }}/SQLR** directory.
 
-5. You are now ready to run the PowerShell script.  Use one of the two following commands, inserting your server name, database name, username, and password.
+5. You are now ready to run the PowerShell script.  
 
-     * Run with no prompts: 
+    * Use  the following command, inserting your server name, database name, username, and password.
     
         ```
-        .\{{ site.ps1_name }} -ServerName "Server Name" -DBName "Database Name" -username "" -password "" -is_production "N" -uninterrupted "Y"  
-        ```
-        
-    * Run with prompts:
-
-        ```
-        .\{{ site.ps1_name }} -ServerName "Server Name" -DBName "Database Name" -username "" -password "" -is_production "N" -uninterrupted "N"  
+        .\{{ site.ps1_name }} -ServerName "Server Name" -DBName "Database Name" -username "" -password "" 
         ```
 
-    * For example, uninterrupted mode for the <code>rdemo</code> user created by the <strong>create_user.sql</strong> script on your local machine, the command would be: 
+    * For example, for the <code>rdemo</code> user with a password of <code>D@tascience</code> on his local computer, the command would be: 
 
         ```
-        .\{{ site.ps1_name }} -ServerName "localhost" -DBName "{{ site.db_name }}" -username "rdemo" -password "D@tascience" -is_production "N" -uninterrupted "Y"  
+        .\{{ site.ps1_name }} -ServerName "localhost" -DBName "{{ site.db_name }}" -username "rdemo" -password "D@tascience" 
         ```
-
-5.  If running uninterrupted (`-uninterrupted "Y"`), default names for tables are used.
-
-6.  If running with prompts (`-uninterrupted "N"`), you cannot complete a step until the previous step has been completed, so only skip steps that have previously been executed.  Running in this mode allows you to specify non default names for tables.
-
-7.  You can also optionally add the parameter -dataPath "your path\to\csv files".  If you omit this, it defaults to the Data folder in the current directory.
 
 <h2 id="score-production-data">Score Production Data</h2>
 <hr />

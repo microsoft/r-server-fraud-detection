@@ -22,16 +22,19 @@ Tagged_Training_Processed_Features_sql <- RxSqlServerData(table = "Tagged_Traini
 ##	The block below will make the formula used for the training.
 ##########################################################################################################################################
 # Write the formula after removing variables not used in the modeling.
-## We remove the id variables, the dates, and the variables for which we computed the risk values. 
+## We remove the id variables, the dates, variables used for risk values and for mismatch flags. 
 variables_all <- rxGetVarNames(Tagged_Training_Processed_Features_sql)
 
 risk_vars <- c("transactionCurrencyCode", "localHour", "ipState", "ipPostCode","ipCountryCode", "browserLanguage",
                "accountPostalCode", "accountState", "accountCountry", "paymentBillingPostalCode", "paymentBillingState",
                "paymentBillingCountryCode")
 
-variables_to_remove <- c("label", "accountID", "transactionID", "transactionDateTime", "transactionDate", "transactionTime", risk_vars)
+address_vars <- c("paymentBillingAddress", "accountAddress", "shippingAddress", "paymentBillingName", "accountOwnerName")
+
+variables_to_remove <- c("label", "accountID", "transactionID", "transactionDateTime", "transactionDate", "transactionTime", risk_vars, address_vars)
 training_variables <- variables_all[!(variables_all %in% c("label", variables_to_remove))]
 formula <- as.formula(paste("label ~", paste(training_variables, collapse = "+")))
+
 
 ##########################################################################################################################################
 ## The block below will do the following:
@@ -178,8 +181,13 @@ print("Evaluating the GBT model: Computing the AUC...")
 rxSetComputeContext('local')
 
 # Import the prediction table and convert label to numeric for correct evaluation. 
-predictions_table <- "Predict_Score"
-Predictions_sql <- RxSqlServerData(table = predictions_table, connectionString = connection_string)
+# We sort the predictions data in account_date_time order for the account level evaluation.
+Predictions_sql <- RxSqlServerData(sqlQuery = "SELECT accountID, transactionDateTime, transactionAmountUSD, label, labelProb
+                                   FROM Predict_Score
+                                   ORDER BY accountID, transactionDateTime",
+                                   connectionString = connection_string)
+
+# Import the prediction table and convert label to numeric for correct evaluation. 
 Predictions <- rxImport(Predictions_sql)
 Predictions$label <- as.numeric(as.character(Predictions$label))
 
@@ -189,6 +197,7 @@ AUC <- rxAuc(ROC)
 plot(ROC, title = "ROC Curve for GBT")
 
 print(sprintf("AUC = %s", AUC))
+
   
 ##########################################################################################################################################
 ## The block below will evaluate the model on the testing set by computing fraud level account metrics. 
@@ -221,7 +230,6 @@ scr2stat <- function(data, contactPeriod, sampleRateNF, sampleRateFrd)
   
   #1. Calculate the perf stats by score band.  
   prev_acct <- data$accountID[1]
-  prev_score <- 0
   is_frd_acct <- 0
   max_scr <- 0	
   
@@ -262,8 +270,6 @@ scr2stat <- function(data, contactPeriod, sampleRateNF, sampleRateFrd)
       nf_scr_rec_time <- vector("numeric", nBins)
       
       is_frd_acct <- 0
-      total_nf_dol <- 0
-      total_frd_dol <- 0
       max_scr <- 0
     }
     

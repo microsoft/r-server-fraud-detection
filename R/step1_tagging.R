@@ -98,7 +98,7 @@ Account_Info_text <- RxTextData(file = Account_Info, colClasses = column_types_a
 Fraud_Transactions_text <- RxTextData(file = Fraud_Transactions, colClasses = column_types_fraud)
 
 # Upload the data to SQL tables. 
-## At the same time, we create transactionDateTime. This is done by:
+## At the same time, we create transactionDateTime and recordDateTime. This is done by:
 ## converting transactionTime into a 6 digit time.
 ## concatenating transactionDate and transactionTime.
 ## converting it to a DateTime "%Y%m%d %H%M%S" format. 
@@ -114,7 +114,7 @@ rxDataStep(inData = Untagged_Transactions_text, outFile = Untagged_Transactions_
 
 rxDataStep(inData = Account_Info_text, outFile = Account_Info_sql, overwrite = TRUE, 
            transforms = list(
-             transactionDateTime = as.character(as.POSIXct(paste(transactionDate, sprintf("%06d", as.numeric(transactionTime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT"))
+             recordDateTime = as.character(as.POSIXct(paste(transactionDate, sprintf("%06d", as.numeric(transactionTime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT"))
            ))
 
 rxDataStep(inData = Fraud_Transactions_text, outFile = Fraud_Transactions_sql, overwrite = TRUE, 
@@ -140,14 +140,14 @@ print("Converting transactionDateTime to a datetime format in SQL Server ...")
 rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("ALTER TABLE Untagged_Transactions ALTER COLUMN transactionDateTime datetime;"
                                               , sep=""))
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("ALTER TABLE Account_Info ALTER COLUMN transactionDateTime datetime;"
+rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("ALTER TABLE Account_Info ALTER COLUMN recordDateTime datetime;"
                                               , sep=""))
 
 rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("ALTER TABLE Fraud_Transactions ALTER COLUMN transactionDateTime datetime;"
                                               , sep=""))
 
 
-# Sort Account_Info in descending order of accountID, transactionDateTime. 
+# Sort Account_Info in ascending order of accountID, and descending order of transactionDateTime. 
 # Note: SQL queries are used here because the rxSort function is not available for SQL data sources.
 print("Sorting the Account_Info table ...")
 
@@ -155,12 +155,12 @@ rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("DROP TABLE if exists Account_Info
                                               , sep=""))
 
 rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("SELECT * INTO Account_Info_Sort FROM Account_Info
-                                              ORDER BY accountID, transactionDateTime desc;"
+                                              ORDER BY accountID, recordDateTime desc;"
                                               , sep=""))
 
-# Inner join of the 2 tables Untagged_Transacations and Account_Info_Sort.
-# Note: SQL queries are used here becasue the rxMerge function is not available for SQL data sources.
-## the top 1 is the maximum transactionDateTime up to current transactionDateTime
+# Inner join of the 2 tables Untagged_Transactions and Account_Info_Sort.
+# Note: SQL queries are used here because the rxMerge function is not available for SQL data sources.
+## the top 1 is the maximum recordDateTime up to current transactionDateTime.
 
 print("Merging the 2 tables Untagged_Transacations and Account_Info_Sort ...")
 
@@ -175,7 +175,7 @@ rxExecuteSQLDDL(outOdbcDS, sSQLString = paste(
   FROM 
   (SELECT * FROM Untagged_Transactions) AS t1
   OUTER APPLY
-  (SELECT top 1 * FROM Account_Info_Sort AS t WHERE t.accountID = t1.accountID and t.transactionDateTime <= t1.transactionDateTime) AS t2
+  (SELECT top 1 * FROM Account_Info_Sort AS t WHERE t.accountID = t1.accountID and t.recordDateTime <= t1.transactionDateTime) AS t2
   WHERE t1.accountID = t2.accountID;"
   , sep=""))
 

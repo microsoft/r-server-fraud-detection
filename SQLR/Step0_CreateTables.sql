@@ -12,10 +12,7 @@ go
 set quoted_identifier on
 go
 
-if exists 
-(select * from sysobjects where name like 'Untagged_Transactions') 
-truncate table Untagged_Transactions
-else
+drop table if exists Untagged_Transactions
 create table Untagged_Transactions (
 transactionID varchar(255),
 accountID varchar(255),
@@ -59,10 +56,7 @@ physicalItemCount varchar(255),
 purchaseProductType varchar(255)
 );
 
-if exists 
-(select * from sysobjects where name like 'Account_Info') 
-truncate table Account_Info
-else
+drop table if exists Account_Info
 create table Account_Info (
 accountID varchar(255),
 transactionDate varchar(255),
@@ -80,11 +74,7 @@ paymentInstrumentAgeInAccount varchar(255),
 numPaymentRejects1dPerUser varchar(255)
 );
 
-
-if exists 
-(select * from sysobjects where name like 'Fraud') 
-truncate table Fraud
-else
+drop table if exists Fraud
 create table Fraud (
 transactionID varchar(255),
 accountID varchar(255),
@@ -97,10 +87,7 @@ transactionDeviceId varchar(255),
 transactionIPaddress varchar(255)
 );
 
-if exists 
-(select * from sysobjects where name like 'Transaction_History') 
-truncate table Transaction_History
-else
+drop table if exists Transaction_History
 create table Transaction_History
 (
 accountID varchar(255),

@@ -43,7 +43,7 @@ into ' + @table + '_Acct ' +
  outer apply 
  (select top 1 * -- the top 1 is the maximum transactionDateTime up to current transactionDateTime
   from Account_Info_Sort as t
-  where t.accountID = t1.accountID and t.transactionDateTime <= t1.transactionDateTime) as t2
+  where t.accountID = t1.accountID and t.recordDateTime <= t1.transactionDateTime) as t2
 where t1.accountID = t2.accountID
 '
 

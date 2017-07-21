@@ -38,7 +38,7 @@ TFPR varchar(255)
 
 /* specify the query to select data to be evaluated. this query will be used as input for following R script */
 declare @GetScoreData nvarchar(max) 
-set @GetScoreData =  'select accountID, transactionDateTime, transactionAmountUSD, label, [Probability.1] from ' + @table
+set @GetScoreData =  'select accountID, transactionDateTime, transactionAmountUSD, label, [Probability.1] from ' + @table + ' order by accountID, transactionDateTime'
 
 /* R script to generate account level metrics */
 insert into Performance

@@ -71,19 +71,11 @@ Running this PowerShell script will create stored procedures for the the operati
         .\{{ site.ps1_name }} -ServerName "Server Name" -DBName "Database Name" -username "" -password "" 
         ```
 
-    * For example, for the <code>rdemo</code> user with a password of <code>D@tascience</code> on his local computer, the command would be: 
+    * For example, for a user named <code>rdemo</code> with a password of <code>D@tascience</code> on his local computer, the command would be: 
 
         ```
         .\{{ site.ps1_name }} -ServerName "localhost" -DBName "{{ site.db_name }}" -username "rdemo" -password "D@tascience" 
         ```
-
-<h2 id="score-production-data">Score Production Data</h2>
-<hr />
-<p/>
-To score production data re-run the command from above, this time using `-is_production "Y"`.  Score production data in a different database by changing `-DBName` and specifying the development database name by adding `-development_db`. This let you use the model and other tables created during the development stage, and needed for batch scoring. If you do not specify the `-development_db`, its default value is set to `Loans`. For example, the following will score into database `Loans_Prod` in uninterrupted mode for the rdemo user on your local machine:
-
-        
-        .\{{ site.ps1_name }} -ServerName "localhost" -DBName "{{ site.db_name }}_Prod" -username "rdemo" -password "D@tascience" -is_production "Y" -uninterrupted "Y" -development_db "{{ site.db_name }}"
 
 
 ## Review Data

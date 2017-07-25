@@ -2,9 +2,9 @@
 
 # put R code in users home directory
 git clone  --branch dev --single-branch  https://github.com/Microsoft/r-server-fraud-detection.git  fraud
-cp loans/RSparkCluster/* /home/$1
+cp fraud/RSparkCluster/* /home/$1
 chmod 777 /home/$1/*.R
-rm -rf loans
+rm -rf fraud
 sed -i "s/XXYOURSQLPW/$2/g" /home/$1/*.R
 
 # Configure edge node as one-box setup for R Server Operationalization

@@ -1,7 +1,7 @@
 author:
         name: Microsoft
 
-description: Use SQL Server 2016 + R Services to build and deploy a machine learning model for loan credit risk.
+description: Use SQL Server 2016 + R Services to build and deploy a machine learning model for online fraud detection.
 
 # site variables
 solution_name: Fraud Detection 
@@ -23,7 +23,7 @@ deploy_url: "https://aka.ms/fraud-detection"
 deploy_url_hdi: "https://aka.ms/fraud-detection-hdi" 
 pbix_name: onlinefraud.pbix
 hdipbix_name: "onlinefraudHDI.pbx"
-pbix_hdidownload_url: "https://github.com/Microsoft/r-server-loan-credit-risk/blob/master/onlinefraudHDI.pbix"
-pbix_sqldownload_url: "https://github.com/Microsoft/r-server-loan-credit-risk/blob/master/onlinefraud.pbix"
+pbix_hdidownload_url: "https://github.com/Microsoft/r-server-fraud-detection/blob/master/onlinefraudHDI.pbix"
+pbix_sqldownload_url: "https://github.com/Microsoft/r-server-fraud-detection/blob/master/onlinefraud.pbix"
 pbix_view_url: "https://start.cortanaintelligence.com/TryItNow/Dashboard/frauddetection"
 pbix_hdiview_url: "https://start.cortanaintelligence.com/TryItNow/Dashboard/frauddetection"

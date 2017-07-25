@@ -22,11 +22,14 @@ solution.
         </div>
     </div>
     <div class="col-md-6">
-When a financial institution examines a request for a loan, it is crucial to assess the risk of default to determine whether to grant it. This solution is based on simulated data for a small personal loan financial institution, containing the borrower's financial history as well as information about the requested loan.  View <a href="input_data.html">more information about the data.</a>
+
+{% include typicalintro.md %}
+
+View <a href="input_data.html">more information about the data.</a>
           </div>
 </div>
 <p></p>
-This solution demonstrates the code with 1,000,000 borrowers for developing the model. Using HDInsight Spark clusters makes it simple to extend to very large data, both for training and scoring. As you increase the data size you may want to add more nodes but the code itself remains exactly the same.
+This solution demonstrates the code with XXHOWMANYXX transactions. Using HDInsight Spark clusters makes it simple to extend to very large data, both for training and scoring. As you increase the data size you may want to add more nodes but the code itself remains exactly the same.
 
 ## System Requirements
 -----------------------

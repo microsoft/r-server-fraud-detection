@@ -34,6 +34,7 @@ solution.
 </div>
 
 <p/>
+
 {% include typicalintro1.md %}
 
 To demonstrate a typical workflow, we'll introduce you to a few personas.  You can follow along by performing the same steps for each persona.  

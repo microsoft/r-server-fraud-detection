@@ -43,11 +43,6 @@ solution.
         </div>   
     </div>
 </div>
-<div class="sql">
-<p></p>
-In this template, we implemented all steps in SQL stored procedures: data preprocessing, and feature engineering are implemented in pure SQL, while data cleaning, and the model training, scoring and evaluation steps are implemented with SQL stored procedures calling R (Microsoft R Server) code. 
-<p></p>
-</div>
 
 <div class="sql">
 Data scientists who are testing and developing solutions can work from the convenience of their R IDE on their client machine, while <a href="https://msdn.microsoft.com/en-us/library/mt604885.aspx">setting the computation context to SQL</a> (see <strong>R</strong> folder for code).  They can also deploy the completed solutions to SQL Server 2016 by embedding calls to R in stored procedures (see <strong>SQLR</strong> folder for code). These solutions can then be further automated by the use of SQL Server Integration Services and SQL Server agent: a PowerShell script (.ps1 file) automates the running of the SQL code.
@@ -68,7 +63,7 @@ View [more information about the data](input_data.html).
 
 <div class="sql">
 <p></p>
-In this solution, the final scored database table <code>Scores</code> is created in SQL Server.  This data is then visualized in PowerBI. 
+In this solution, the final scored database table <code>Predict_Scores</code> is created in SQL Server.  This data is then visualized in PowerBI. 
 <p></p>
 </div>
 <div class="hdi">
@@ -96,7 +91,7 @@ The database is created if it does not not already exist, and the connection str
 <div class="sql">
 <p>In this step, the raw data is loaded into SQL in three tables called <code>Untagged_Transactions</code>, <code>Account_Info</code>, and <code>Fraud_Transactions</code>. The date time variable <code>transactionDateTime</code> is created during this upload.</p>
 
-<p>After sorting the table <code>Account_Info</code> into <code>Account_Info_Sort</code> in descendent order of <code>accountID</code>, <code>transactionDateTime</code>, we merge the two tables <code>Untagged_Transactions</code> and <code>Account_Info_Sort</code> into <code>Untagged_Transactions_Account</code>. (SQL queries are used here instead of the <code>rxMerge</code> function of RevoScaleR because it is not yet available for SQL data sources.) We then remove duplicate observations with another SQL query executed through <code>rxExecuteSQLddl</code>.</p>
+<p>After sorting the table <code>Account_Info</code> into <code>Account_Info_Sort</code> in decreasing order of <code>recordDateTime</code> for each <code>accountID</code>, we merge the two tables <code>Untagged_Transactions</code> and <code>Account_Info_Sort</code> into <code>Untagged_Transactions_Account</code>. (SQL queries are used here instead of the <code>rxMerge</code> function of RevoScaleR because it is not yet available for SQL data sources.) We then remove duplicate observations with another SQL query executed through <code>rxExecuteSQLddl</code>.</p>
 
 <p>Finally, we create labels for the untagged transactions by using the Fraud table. This is done by:</p>
 
@@ -265,6 +260,9 @@ The trained model is serialized and uploaded to a SQL table <code>Models</code> 
   </li>
 </ul>
 
+ {% include metrics.md %}
+
+
 
 <h3>Input:</h3>
 <ul>
@@ -328,7 +326,7 @@ The final scores for the test data reside in the Hive table <code>Predict_Score<
 
 The following are required to run the scripts in this solution:
 <ul>
-<li>SQL Server 2016 with Microsoft R Server  (version 9.0.1 or later) installed and configured.  </li>   
+<li>SQL Server 2016 with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
 <li>The SQL user name and password, and the user configured properly to execute R scripts in-memory.</li> 
 <li>SQL Database which the user has write permission and execute stored procedures.</li> 
 <li>For more information about SQL server 2016 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 

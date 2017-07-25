@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # put R code in users home directory
-git clone  --single-branch  https://github.com/Microsoft/r-server-fraud-detection.git  fraud
+git clone  --branch dev --single-branch  https://github.com/Microsoft/r-server-fraud-detection.git  fraud
 cp loans/RSparkCluster/* /home/$1
 chmod 777 /home/$1/*.R
 rm -rf loans

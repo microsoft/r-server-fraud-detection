@@ -8,7 +8,7 @@ title: Template Contents
 
 The following is the directory structure for this template:
 
-- [**Data**](#copy-of-input-datasets)  This contains the copy of the simulated input data with 100K unique customers. 
+- [**Data**](#copy-of-input-datasets)  This contains the copy of the input data.
 - [**R**](#model-development-in-r)  This contains the R code to simulate the input datasets, pre-process them, create the analytical datasets, train the models, identify the champion model and provide recommendations.
 - [**Resources**](#resources-for-the-solution-packet) This directory contains other resources for the solution package.
 - [**SQLR**](#operationalize-in-sql-2016) This contains T-SQL code to pre-process the datasets, train the models, identify the champion model and provide recommendations. It also contains a PowerShell script to automate the entire process, including loading the data into the database (not included in the T-SQL code).
@@ -30,7 +30,7 @@ In this template with SQL Server R Services, two versions of the SQL implementat
 
 ###  Model Development in R
 -------------------------
-These files  in the **R** directory for the SQL solution.  
+These files are in the **R** directory for development of the model.  
 
 <table class="table table-striped table-condensed">
 <tr><th> File </th><th> Description </th></tr>
@@ -38,7 +38,6 @@ These files  in the **R** directory for the SQL solution.
 <tr><td>FraudDetection.rxproj  </td><td>Used with the Visual Studio Solution File</td></tr>
 <tr><td>FraudDetection.sln  </td><td>Visual Studio Solution File</td></tr>
 <tr><td>{{ site.jupyter_name }}  </td><td> Contains the Jupyter Notebook file that runs all the .R scripts </td></tr>
-<tr>
 <tr><td> modeling_main.R </td><td> Defines parameters and sources the different scripts for the Development Stage</td></tr>
 <tr><td> step1_tagging.R </td><td>Tags transactions on account level  </td></tr>
 <tr><td> step2_splitting_preprocessing.R </td><td> Splits the tagged data set into a Training and a Testing set, cleans the training set and performs  preprocessing</td></tr>
@@ -56,7 +55,6 @@ These files  in the **R** directory for the SQL solution.
 These files are in the **SQLR** directory.
 
 <table class="table table-striped table-condensed">
-
 <tr><th> File </th><th> Description </th></tr>
 <tr><td>CreateRiskTable.sql </td><td>Stored procedure to create risk table for each input variable   </td></tr>
 <tr><td>.\OnlineFraudDetection.ps1  </td><td>Automates execution of all .sql files and creates stored procedures  </td></tr>
@@ -77,8 +75,6 @@ These files are in the **SQLR** directory.
 <tr><td> Step8_Training.sql  </td><td> Stored procedure to train and save a gradient boosted tree model  </td></tr>
 <tr><td> Step9_Prediction.sql  </td><td> Stored procedure to score and save results to a sql table  </td></tr>
 <tr><td> UtilityFunctions.sql  </td><td> Creates functions which will be used  </td></tr>
-<tr><td>   </td><td>   </td></tr>
-
 </table>
 
 * See [ For the Database Analyst](dba.html?path=cig) for more information about these files.

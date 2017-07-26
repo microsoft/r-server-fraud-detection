@@ -10,7 +10,7 @@ db_name: Fraud
 ps1_name: OnlineFraudDetection.ps1
 sql_image_url: images/fraudsql.jpg
 hdi_image_url: images/fraudhdi.jpg
-jupyter_name: XXX.ipynb
+jupyter_name: Fraud_Detection_Notebook.ipynb
 
 cig_text: SQL Server 2016 on Azure
 onp_text: SQL Server 2016 On-Prem 

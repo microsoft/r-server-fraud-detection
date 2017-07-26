@@ -141,6 +141,8 @@ Finally, the function in  **public/js/scoreClaim.js** uses this probabiity to di
 
 This site is set up to mimic a sale on a website.  "Log in" by selecting an account and then add some items to your shopping cart.  Finally, hit the `Purchase` button to trigger the model scoring.  If the model returns a low probability for the transaction, it is not likely to be fraudulent, and the purchase will be accepted. However, if the model returns a high probability, you will see a message that explains the purchaser must contact a support representative to continue. 
 
+<img src="images/webscore.png"/>
+
 You can view the model values by opening the Console window on your browser.
 
 * For Edge or Internet Explorer: Press `F12` to open Developer Tools, then click on the Console tab.

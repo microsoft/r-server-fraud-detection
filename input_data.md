@@ -7,47 +7,136 @@ title: Input Data
 --------------------------
 XXXX
 The **Data** folder contains the following data:
-* **Loan.csv** and **Borrower.csv**: data sets with 100K rows of the simulated data used to build the end-to-end Loan Credit Risk solution.
-* **Loan_Prod.csv** and **Borrower_Prod.csv**: data sets with about 20 rows of the simulated data used in the Production pipeline.
+* **Untagged_Transactions.csv**:  transaction data from on an online store
+* **Account_Info.csv**: Anonomyzed account information.
 
-**Loan.csv** and **Loan_Prod.csv** contain the following fields:
+**Untagged_Transactions** contain the following fields:
 <table class="table table-compressed table-striped">
-  <tr><th>Field</th><th>Type</th><th>Description</th></tr>
-  <tr><td>loanId</td><td>Integer</td><td>Unique Id of the loan</td></tr>
-  <tr><td>memberId</td><td>Integer</td><td>Unique Id of the borrower</td></tr>
-  <tr><td>date</td><td>Date</td><td>a) Historical data: the loan approval date <br/>b) Production data: the loan application date.  Format: M/D/YYYY (e.g. 3/9/2016, 3/13/2016)</td></tr>
-  <tr><td>purpose</td><td>String</td><td>Purpose of the loan e.g., debtconsolidation</td></tr>
-  <tr><td>isJointApplication</td><td>String</td><td>Flag about the nature of the application (joint or individual)</td></tr>
-  <tr><td>loanAmount</td><td>Float</td><td>Total amount to be borrowed</td></tr>
-  <tr><td>term</td><td>String</td><td>Number of months of payments on the loan e.g., 36 months</td></tr>
-  <tr><td>interestRate</td><td>String</td><td>Interest Rate on the loan e.g., 7.21 %</td></tr>
-  <tr><td>monthlyPayment</td><td>Float</td><td>Monthly payment owed by the borrower</td></tr>
-  <tr><td>grade</td><td>String</td><td>Loan grade (risk-related) e.g. A2</td></tr>
-  <tr><td>loanStatus</td><td>String</td><td>Status of the loan (Label) Values taken: Current, Charged Off (This field is not present in the Loan_Prod.csv file)</td></tr>
+<tr><th>Columns</th><th>Type</th><th>Description</th></tr>
+<tr><td>transactionID</td><td>String</td><td>Unique transaction Id</td></tr>
+<tr><td>accountID</td><td>String</td><td>Unique account Id</td></tr>
+<tr><td>transactionAmountUSD</td><td>Double</td><td>Transaction amount in USD
+e.g., 12345.00</td></tr>
+<tr><td>transactionAmount</td><td>Double</td><td>Transaction amount in currency expressed in transactionCurrencyCode
+e.g., 12345.00</td></tr>
+<tr><td>transactionCurrencyCode</td><td>String</td><td>Currency code of the transaction.
+3 alphabet letters, e.g., USD</td></tr>
+<tr><td>transactionCurrencyConversionRate</td><td>Double</td><td>Conversion rate to US Dollars</td></tr>
+e.g. 1.0000 for USD to USD</td></tr>
+<tr><td>responseCode</td><td>String</td><td>response code from card issuer payment authorization</td></tr>
+<tr><td>digitalItemCount</td><td>integer</td><td>Number of digital items purchased. (e.g. music, ebook, software, etc, that can be directly downloaded online)</td></tr>
+<tr><td>physicalItemCount</td><td>integer</td><td>Number of physical items purchased (that needs to be shipped)</td></tr>
+<tr><td>purchaseProductType</td><td>String</td><td>Type of product purchased</td></tr>
+<tr><td>shippingAddress</td><td>String</td><td>shipping street address</td></tr>
+<tr><td>shippingPostalCode</td><td>String</td><td>shipping postal code</td></tr>
+<tr><td>shippingCity</td><td>String</td><td>shipping city</td></tr>
+<tr><td>shippingState</td><td>String</td><td>shipping state</td></tr>
+<tr><td>shippingCountry</td><td>String</td><td>shipping country (3-alpha)</td></tr>
+<tr><td>cvvVerifyResult</td><td>String</td><td>M-- CVV2 Match
+N-- CVV2 No Match
+P--Not Processed
+S--Issuer indicates that CVV2 data should be present on the card, but the merchant has indicated data is not present on the card
+U--Issuer has not certified for CVV2 or Issuer has not provided Visa with the CVV2 encryption keys
+Empty--Transaction failed because wrong CVV2 number was entered or no CVV2 number was entered</td></tr>
+<tr><td>paymentInstrumentID</td><td>String</td><td>ID of payment Instrument:
+e.g. credit card number (hashed or encrypted)
+e.g. paypal account Id</td></tr>
+<tr><td>paymentBillingAddress</td><td>String</td><td>Street Address , hashed or encrypted</td></tr>
+<tr><td>paymentBillingPostalCode</td><td>String</td><td>payment billing postal code</td></tr>
+<tr><td>paymentBillingState</td><td>String</td><td>payment billing state</td></tr>
+<tr><td>paymentBillingCountryCode</td><td>String</td><td>payment billing country code</td></tr>
+<tr><td>paymentBillingName</td><td>String</td><td>Name, hashed or encrypted, 
+needs to be consistent with other names</td></tr>
+<tr><td>isProxyIP</td><td>String</td><td>Whether the IP address is a proxy or not
+<tr><td>browserType</td><td>String</td><td>I -- IE
+C -- Chrome
+F -- Firefox
+O -- Other</td></tr>
+<tr><td>browserLanguage</td><td>String</td><td>Similar to country code
+<tr><td>paymentInstrumentType</td><td>String</td><td>Type of payments:
+C -- Credit Card
+D -- Debit Card
+P  -- Paypal
+K  -- Check
+H -- Cash
+O -- Other</td></tr>
+<tr><td>cardType</td><td>String</td><td>Type of cards
+M -- Magnetic
+C   -- Chip</td></tr>
+<tr><td>cardNumberInputMethod</td><td>String</td><td>Input method of payment instrument number.
+K -- Keyed
+S -- Swiped
+C --- Chip
+D  -- Contactless</td></tr>
+<tr><td>transactionDeviceType</td><td>String</td><td>P -- PC
+M -- Mobile  Devices
+C   -- Console (e.g. Xbox, DVD)
+O -- Other</td></tr>
+<tr><td>transactionDeviceId</td><td>String</td><td>Mac Address, or Hardware
+ ID like serial number</td></tr>
+<tr><td>transactionIPaddress</td><td>String</td><td>Full IP Address for IPv4: 
+000.000.000.000 </td></tr>
+<tr><td>ipState</td><td>String</td><td>State of IP address originated from
+2 alphabet letters</td></tr>
+<tr><td>ipPostcode</td><td>String</td><td>Postal Code of IP address originated from</td></tr>
+<tr><td>ipCountryCode</td><td>String</td><td>Country code of IP address originated from</td></tr>
+<tr><td>transactionDate</td><td>String</td><td>Date when transaction occured Typically in the time zone of the processor</td></tr>
+Format: yyyymmdd, e.g., 20000101</td></tr>
+<tr><td>transactionTime</td><td>String</td><td>Time when transaction occurred. Typically in the time zone of processing end.
+Format: hhmmss, eg. 153059</td></tr>
+<tr><td>localHour</td><td>Integer</td><td>The hour in local time. Value of 0-23</td></tr>
+<tr><td>transactionScenario</td><td>String</td><td>A -- Authorization
+O --  Others</td></tr>
+<tr><td>transactionType</td><td>String</td><td>Type of tranacation.
+P -- Purchase
+R -- Refund
+T -- Transfer
+O -- Other</td></tr>
+<tr><td>transactionMethod</td><td>String</td><td>I -- Internet (Online) Order
+P  -- Phone order
+M -- Mail order
+O  -- Other</td></tr>
 </table>
 
-**Borrower.csv** and **Borrower_Prod.csv** contain the following fields:
-<table class="table table-compressed table-striped">
-  <tr><th>Field</th><th>Type</th><th>Description</th> </tr>
-  <tr><td>memberId</td><td>Integer</td><td>Unique Id of the borrower</td></tr>
- <tr><td>residentialState</td><td>String</td><td>Residential state of the borrower
-e.g., MA</td></tr>
- <tr><td>yearsEmployment</td><td>String</td><td>Number of years of employment of the borrower
-e.g., 10+ years</td></tr>
- <tr><td>homeOwnership</td><td>String</td><td>Home ownership status of the borrower
-Values taken: own, rent, mortgage</td></tr>
- <tr><td>annualIncome</td><td>Float</td><td>Annual income of the borrower</td></tr>
- <tr><td>incomeVerified</td><td>String</td><td>Flag indicating if the income was verified or not</td></tr>
-<tr><td>dtiRatio</td><td>Float</td><td>Debt to income ratio: borrower’s total monthly debt payments (without mortgage and the requested loan) divided by the monthly income.  It is expressed in percentage</td></tr>
- <tr><td>lengthCreditHistory</td><td>Integer</td><td>Length of the credit history in terms of years</td></tr>
- <tr><td>numTotalCreditLines</td><td>Integer</td><td>Total number of credit lines in the borrower's credit file</td></tr>
- <tr><td>numOpenCreditLines</td><td>Integer</td><td>Number of open credit lines in the borrower's credit file</td></tr>
- <tr><td>numOpenCreditLines1Year</td><td>Integer</td><td>Number of credit lines in the borrower's credit file that were opened in the past year</td></tr>
- <tr><td>revolvingBalance</td><td>Float</td><td>Total credit revolving balance</td></tr>
- <tr><td>revolvingUtilizationRate</td><td>Float</td><td>Amount of credit the borrower is using relative to all available revolving credit e.g., 7.30%</td></tr>
- <tr><td>numDerogatoryRec</td><td>Integer</td><td>Number of derogatory public records (includes tax liens, bankruptcies, and other judgements such as civil lawsuits)</td></tr>
- <tr><td>numDelinquency2Years</td><td>Integer</td><td>Number of 30+ days past-due incidences of delinquency in the borrower's credit file for the past 2 years</td></tr>
- <tr><td>numChargeoff1year</td><td>Integer</td><td>Number of charge-offs within 1 year</td></tr>
- <tr><td>numInquiries6Mon</td><td>Integer</td><td>Number of inquiries in past 6 months</td></tr>
- </table>
 
+**Account_Info.csv** contain the following fields:
+<table class="table table-compressed table-striped">
+<tr><th>Columns</th><th>Type</th><th>Description</th></tr>
+<tr><td>transactionDate</td><td>String</td><td>Date when transaction occured Typically in the time zone of the processor.
+Format: yyyymmdd, e.g., 20000101</td></tr>
+<tr><td>transactionTime</td><td>String</td><td>Time when transaction occurred. Typically in the time zone of processing end.  
+Format: hhmmss, eg. 153059</td></tr>
+<tr><td>accountOwnerName</td><td>String</td><td>User name (hashed/encrypted)</td></tr>
+<tr><td>accountAddress</td><td>String</td><td>User street address</td></tr>
+<tr><td>accountPostalCode</td><td>String</td><td>User postal code</td></tr>
+<tr><td>paymentInstrumentAgeInAccount</td><td>Double</td><td>Age of payment instrument in the account </td></tr>
+<tr><td>numPaymentRejects1dPerUser</td><td>Integer</td><td>Number of payment rejection in one day of this user</td></tr>
+<tr><td>accountCity</td><td>String</td><td>User city</td></tr>
+<tr><td>accountState</td><td>String</td><td>User state</td></tr>
+<tr><td>accountCountry</td><td>String</td><td>User country (3-alpha)</td></tr>
+<tr><td>accountOpenDate</td><td>String</td><td>Account open date. 
+Format: yyyymmdd</td></tr>
+<tr><td>accountAge</td><td>Integer</td><td>Age of user account in number of days</td></tr>
+<tr><td>isUserRegistered</td><td>String</td><td>Whether the user is registered or not</td></tr>
+</table>
+
+
+**Fraud.csv** contain the following fields:
+<table class="table table-compressed table-striped">
+<tr><th>Columns</th><th>Type</th><th>Description</th></tr>
+<tr><td>transactionID</td><td>String</td><td>Unique transaction Id</td></tr>
+<tr><td>accountID</td><td>String</td><td>Unique account Id</td></tr>
+<tr><td>transactionAmount</td><td>Double</td><td>Transaction amount in currency expressed in transactionCurrencyCode
+e.g., 12345.00</td></tr>
+<tr><td>transactionCurrencyCode</td><td>String</td><td>Currency code of the transaction.
+3 alphabet letters, e.g., USD</td></tr>
+<tr><td>transactionDate</td><td>String</td><td>Date when transaction occured Typically in the time zone of the processor.
+Format: yyyymmdd, e.g., 20000101</td></tr>
+<tr><td>transactionTime</td><td>String</td><td>Time when transaction occurred. Typically in the time zone of processing end.  
+Format: hhmmss, eg. 153059</td></tr>
+<tr><td>localHour</td><td>Integer</td><td>The hour in local time. Value of 0-23</td></tr>
+<tr><td>transactionDeviceId</td><td>String</td><td>Mac Address, or Hardware
+ ID like serial number</td></tr>
+<tr><td>transactionIPaddress</td><td>String</td><td>Full IP Address for IPv4: 
+000.000.000.000 </td></tr>
+</table>

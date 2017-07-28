@@ -35,14 +35,16 @@ tagging <- function(Input_Hive_Table,
   if(class(Fraud_Transactions) == "character"){
     
     # Text pointers to the inputs. 
-    Fraud_Transactions_txt <- RxTextData(Fraud_Transactions, firstRowIsColNames = T, fileSystem = RxHdfsFileSystem()) 
+    Fraud_Transactions_txt <- RxTextData(Fraud_Transactions, firstRowIsColNames = TRUE, fileSystem = RxHdfsFileSystem()) 
     
     # Conversion to Hive tables. 
     ## At the same time, we create transactionDateTime. This is done by:
     ## converting transactionTime into a 6 digit time.
     ## concatenating transactionDate and transactionTime.
     ## converting it to a DateTime "%Y%m%d %H%M%S" format. 
-    rxDataStep(inData = Fraud_Transactions_txt, outFile = Fraud_Transactions_hive, overwrite = T, 
+    rxDataStep(inData = Fraud_Transactions_txt, 
+               outFile = Fraud_Transactions_hive,
+               overwrite = TRUE, 
                transforms = list(
                  transactionDateTime = as.character(as.POSIXct(paste(transactionDate, sprintf("%06d", as.numeric(transactionTime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT"))
                ))

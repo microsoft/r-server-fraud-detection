@@ -23,8 +23,7 @@ evaluation <- function(HDFSWorkDir,
   
   rxDataStep(inData = Predict_Score_Xdf, 
              outFile = Predict_Score_New_Xdf, 
-             overwrite = T, 
-             #rowsPerRead = 200000,
+             overwrite = TRUE, 
              transforms = list(
                transactiondatetime = as.character(as.POSIXct(paste(transactiondate, sprintf("%06d", as.numeric(transactiontime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT")),
                transactiondate = NULL, 

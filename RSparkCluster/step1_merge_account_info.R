@@ -46,20 +46,20 @@ merge_account_info <- function(Untagged_Transactions,
   if((class(Untagged_Transactions) == "character") & (class(Account_Info) == "character")){
     
     # Text pointers to the inputs. 
-    Untagged_Transactions_txt <- RxTextData(Untagged_Transactions, firstRowIsColNames = T, fileSystem = RxHdfsFileSystem())
-    Account_Info_txt <- RxTextData(Account_Info, firstRowIsColNames = T, fileSystem = RxHdfsFileSystem()) 
+    Untagged_Transactions_txt <- RxTextData(Untagged_Transactions, firstRowIsColNames = TRUE, fileSystem = RxHdfsFileSystem())
+    Account_Info_txt <- RxTextData(Account_Info, firstRowIsColNames = TRUE, fileSystem = RxHdfsFileSystem()) 
     
     # Conversion to Hive tables. 
     ## At the same time, we create transactionDateTime and recordDateTime. This is done by:
     ## converting transactionTime into a 6 digit time.
     ## concatenating transactionDate and transactionTime.
     ## converting it to a DateTime "%Y%m%d %H%M%S" format. 
-    rxDataStep(inData = Untagged_Transactions_txt, outFile = Untagged_Transactions_hive, overwrite = T,
+    rxDataStep(inData = Untagged_Transactions_txt, outFile = Untagged_Transactions_hive, overwrite = TRUE,
                transforms = list(
                  transactionDateTime = as.character(as.POSIXct(paste(transactionDate, sprintf("%06d", as.numeric(transactionTime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT"))
                ))
     
-    rxDataStep(inData = Account_Info_txt, outFile = Account_Info_hive, overwrite = T,
+    rxDataStep(inData = Account_Info_txt, outFile = Account_Info_hive, overwrite = TRUE,
                transforms = list(
                  recordDateTime = as.character(as.POSIXct(paste(transactionDate, sprintf("%06d", as.numeric(transactionTime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT"))
                ))

@@ -137,26 +137,21 @@ print("Merging Untagged_Transactions and Account_Info into Untagged_Transactions
 # Convert transactionDateTime to a datetime format in SQL Server. 
 print("Converting transactionDateTime to a datetime format in SQL Server ...")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("ALTER TABLE Untagged_Transactions ALTER COLUMN transactionDateTime datetime;"
-                                              , sep=""))
+rxExecuteSQLDDL(outOdbcDS, sSQLString = "ALTER TABLE Untagged_Transactions ALTER COLUMN transactionDateTime datetime;")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("ALTER TABLE Account_Info ALTER COLUMN recordDateTime datetime;"
-                                              , sep=""))
+rxExecuteSQLDDL(outOdbcDS, sSQLString = "ALTER TABLE Account_Info ALTER COLUMN recordDateTime datetime;")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("ALTER TABLE Fraud_Transactions ALTER COLUMN transactionDateTime datetime;"
-                                              , sep=""))
+rxExecuteSQLDDL(outOdbcDS, sSQLString = "ALTER TABLE Fraud_Transactions ALTER COLUMN transactionDateTime datetime;")
 
 
 # Sort Account_Info in ascending order of accountID, and descending order of transactionDateTime. 
 # Note: SQL queries are used here because the rxSort function is not available for SQL data sources.
 print("Sorting the Account_Info table ...")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("DROP TABLE if exists Account_Info_Sort;"
-                                              , sep=""))
+rxExecuteSQLDDL(outOdbcDS, sSQLString = "DROP TABLE if exists Account_Info_Sort;")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("SELECT * INTO Account_Info_Sort FROM Account_Info
-                                              ORDER BY accountID, recordDateTime desc;"
-                                              , sep=""))
+rxExecuteSQLDDL(outOdbcDS, sSQLString = "SELECT * INTO Account_Info_Sort FROM Account_Info 
+                                         ORDER BY accountID, recordDateTime desc;")
 
 # Inner join of the 2 tables Untagged_Transactions and Account_Info_Sort.
 # Note: SQL queries are used here because the rxMerge function is not available for SQL data sources.
@@ -164,10 +159,9 @@ rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("SELECT * INTO Account_Info_Sort F
 
 print("Merging the 2 tables Untagged_Transacations and Account_Info_Sort ...")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("DROP TABLE if exists Untagged_Transactions_Account;"
-                                              , sep=""))
+rxExecuteSQLDDL(outOdbcDS, sSQLString = "DROP TABLE if exists Untagged_Transactions_Account;")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste(
+rxExecuteSQLDDL(outOdbcDS, sSQLString = 
   "SELECT t1.*, t2.accountOwnerName, t2.accountAddress, t2.accountPostalCode, t2.accountCity, t2.accountState,
   t2.accountCountry, t2.accountOpenDate, t2.accountAge, t2.isUserRegistered, 
   t2.paymentInstrumentAgeInAccount, t2.numPaymentRejects1dPerUser
@@ -176,8 +170,7 @@ rxExecuteSQLDDL(outOdbcDS, sSQLString = paste(
   (SELECT * FROM Untagged_Transactions) AS t1
   OUTER APPLY
   (SELECT top 1 * FROM Account_Info_Sort AS t WHERE t.accountID = t1.accountID and t.recordDateTime <= t1.transactionDateTime) AS t2
-  WHERE t1.accountID = t2.accountID;"
-  , sep=""))
+  WHERE t1.accountID = t2.accountID;")
 
 
 ############################################################################################################################################
@@ -191,21 +184,19 @@ print("Removing duplicates from Untagged_Transactions_Account and Fraud_Transact
 ## Note that it will be done with SQL queries and not with rx functions because evaluating if a row is a duplicate would not be possible 
 ## if the data is loaded chunk by chunk.
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste(
+rxExecuteSQLDDL(outOdbcDS, sSQLString = 
   "WITH cte_1
   AS (SELECT ROW_NUMBER() OVER (PARTITION BY transactionID, accountID, transactionDateTime, transactionAmount ORDER BY transactionID ASC) RN 
   FROM Untagged_Transactions_Account)
   DELETE FROM cte_1
-  WHERE  RN > 1;"
-  , sep=""))
+  WHERE  RN > 1;")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste(
+rxExecuteSQLDDL(outOdbcDS, sSQLString = 
   "WITH cte_2
   AS (SELECT ROW_NUMBER() OVER (PARTITION BY transactionID, accountID, transactionDateTime, transactionAmount ORDER BY transactionID ASC) RN 
   FROM Fraud_Transactions)
   DELETE FROM cte_2
-  WHERE  RN > 1;"
-  , sep=""))
+  WHERE  RN > 1;")
 
 ############################################################################################################################################
 ## The block below will generate the tagged data as follows:

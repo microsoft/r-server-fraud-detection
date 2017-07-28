@@ -55,7 +55,7 @@ feature_engineering <- function(LocalWorkDir,
     
     # Function to assign the risk values. It will be wrapped into rxDataStep. 
     assign_risk <- function(data) {
-      data <- data.frame(data, stringsAsFactors = F)
+      data <- data.frame(data, stringsAsFactors = FALSE)
       
       for(name in  risk_variables){
         
@@ -68,7 +68,7 @@ feature_engineering <- function(LocalWorkDir,
         colnames(data)[ncol(data)] <- new_name
         
         # If a new level was found in the data, the assigned risk is NULL. We convert it to 0. 
-        row_na <- which(is.na(data[, new_name]) == TRUE) 
+        row_na <- which(is.na(data[, new_name])) 
         data[row_na, new_name] <- 0
         
       }  
@@ -191,14 +191,14 @@ feature_engineering <- function(LocalWorkDir,
     
     # The transactions that had no other transactions in the 30 day time frame have missing values. We convert them to 0.
     for(new_name in c("sumpurchasecount1dperuser", "sumpurchasecount30dperuser", "sumpurchaseamount1dperuser", "sumpurchaseamount30dperuser")){
-      row_na <- which(is.na(Output_df[, new_name]) == TRUE) 
+      row_na <- which(is.na(Output_df[, new_name])) 
       Output_df[row_na, new_name] <- 0
     }
     
     # Save the result to text files. This will simplify combining the different results. 
     split_number <- Output_df$splitnumber[1]
     Output_df$splitnumber <- NULL
-    Output_txt <- RxTextData(file = file.path(HDFSIntermediateDir, sprintf("%sSplits/%spart%s.csv", OutputName, OutputName, split_number)), fileSystem = RxHdfsFileSystem(), firstRowIsColNames = F)
+    Output_txt <- RxTextData(file = file.path(HDFSIntermediateDir, sprintf("%sSplits/%spart%s.csv", OutputName, OutputName, split_number)), fileSystem = RxHdfsFileSystem(), firstRowIsColNames = FALSE)
     rxDataStep(inData = Output_df, outFile = Output_txt, overwrite = TRUE)
     
     ## Return the column names of the output, to be used when combining the txt files into xdf. 
@@ -251,11 +251,11 @@ feature_engineering <- function(LocalWorkDir,
     }else {
       list(index=i, newName = colname)
     }
-  }, 1:length(colNames), colNames, SIMPLIFY = F)
+  }, 1:length(colNames), colNames, SIMPLIFY = FALSE)
   
   
   # Pointer to the intput directory with all the txt files.
-  Tagged_Processed_Features_txt <- RxTextData(file = file.path(HDFSIntermediateDir, paste(HiveTable, "FeaturesSplits", sep = "")), fileSystem = RxHdfsFileSystem(), colInfo = newColInfo, firstRowIsColNames = F)
+  Tagged_Processed_Features_txt <- RxTextData(file = file.path(HDFSIntermediateDir, paste(HiveTable, "FeaturesSplits", sep = "")), fileSystem = RxHdfsFileSystem(), colInfo = newColInfo, firstRowIsColNames = FALSE)
   
   # Pointer to the output xdf file. 
   Tagged_Processed_Features_xdf <- RxXdfData(file = file.path(HDFSIntermediateDir, paste(HiveTable, "Features", sep = "")), fileSystem = RxHdfsFileSystem())
@@ -263,7 +263,7 @@ feature_engineering <- function(LocalWorkDir,
   # Merging the text files into 1 xdf file while converting characters to factors.
   rxDataStep(inData = Tagged_Processed_Features_txt, 
              outFile = Tagged_Processed_Features_xdf, 
-             overwrite = T)
+             overwrite = TRUE)
   
   # Check for debugging that the output xdf file has the correct types and levels of variables.
   # colInfo_new <- rxCreateColInfo(Tagged_Processed_Features_xdf, sortLevels = TRUE)

@@ -17,10 +17,10 @@ copy_dev_to_prod <- function(DevModelDir, ProdModelDir){
   
   # Clean or create a new directory in the Prodution directory. 
   if(dir.exists(ProdModelDir)){
-    system(paste("rm -rf ", ProdModelDir, sep="")) # remove the directory if exists
-    system(paste("mkdir -p -m 777 ", ProdModelDir, sep="")) # create a new directory
+    system(paste("rm -rf ", ProdModelDir, sep = "")) # remove the directory if exists
+    system(paste("mkdir -p -m 777 ", ProdModelDir, sep = "")) # create a new directory
   } else {
-    system(paste("mkdir -p -m 777 ", ProdModelDir, sep="")) # make new directory if doesn't exist
+    system(paste("mkdir -p -m 777 ", ProdModelDir, sep = "")) # make new directory if doesn't exist
   }
   
   # Copy the model, statistics and other data from the Development directory to the Production directory. 

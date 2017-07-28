@@ -33,7 +33,7 @@ preprocess <- function(HDFSWorkDir,
                              "accountstate",
                              "isuserregistered"
                            ) , 
-                           SIMPLIFY = F)
+                           SIMPLIFY = FALSE)
   
   Input_Table_hive <- RxHiveData(table = HiveTable)
   Input_Table_hivefactors <- RxHiveData(table = HiveTable, colInfo = factorRiskInfo) 
@@ -53,12 +53,12 @@ preprocess <- function(HDFSWorkDir,
   }
   
   preprocessing <- function(data) {
-    data <- data.frame(data, stringsAsFactors = F)
+    data <- data.frame(data, stringsAsFactors = FALSE)
     
     # Replace missing values with 0 except for localHour with -99. 
     if(length(var_with_NA) > 0){
       for(i in 1:length(var_with_NA)){
-        row_na <- which(is.na(data[, var_with_NA[i]]) == TRUE) 
+        row_na <- which(is.na(data[, var_with_NA[i]])) 
         if(var_with_NA[i] == c("localhour")){
           data[row_na, var_with_NA[i]] <- "-99"
         } else{
@@ -76,7 +76,7 @@ preprocess <- function(HDFSWorkDir,
                         "digitalitemcount", "physicalitemcount")
     for(i in 1:length(numeric_to_fix)){
       data[, numeric_to_fix[i]] <- as.numeric(data[, numeric_to_fix[i]])
-      row_na <- which(is.na(as.numeric(data[, numeric_to_fix[i]])) == TRUE)
+      row_na <- which(is.na(as.numeric(data[, numeric_to_fix[i]])))
       data[row_na, numeric_to_fix[i]] <- 0
     }
     return(data)  
@@ -89,7 +89,7 @@ preprocess <- function(HDFSWorkDir,
   print("preprocessing...")
   rxDataStep(inData = Input_Table_hive, 
              outFile = Output_Table_hive, 
-             overwrite = T, 
+             overwrite = TRUE, 
              transformFunc = preprocessing,
              transformObjects = list(var_with_NA = variables_NA)
   )

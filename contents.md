@@ -8,7 +8,7 @@ title: Template Contents
 
 The following is the directory structure for this template:
 
-- [**Data**](#copy-of-input-datasets)  This contains the copy of the simulated input data with 100K unique customers. 
+- [**Data**](#copy-of-input-datasets)  This contains the copy of the input data.
 - [**R**](#model-development-in-r)  This contains the R code to simulate the input datasets, pre-process them, create the analytical datasets, train the models, identify the champion model and provide recommendations.
 - [**Resources**](#resources-for-the-solution-packet) This directory contains other resources for the solution package.
 - [**SQLR**](#operationalize-in-sql-2016) This contains T-SQL code to pre-process the datasets, train the models, identify the champion model and provide recommendations. It also contains a PowerShell script to automate the entire process, including loading the data into the database (not included in the T-SQL code).
@@ -30,7 +30,7 @@ In this template with SQL Server R Services, two versions of the SQL implementat
 
 ###  Model Development in R
 -------------------------
-These files  in the **R** directory for the SQL solution.  
+These files are in the **R** directory for development of the model.  
 
 <table class="table table-striped table-condensed">
 <tr><th> File </th><th> Description </th></tr>
@@ -38,34 +38,11 @@ These files  in the **R** directory for the SQL solution.
 <tr><td>FraudDetection.rxproj  </td><td>Used with the Visual Studio Solution File</td></tr>
 <tr><td>FraudDetection.sln  </td><td>Visual Studio Solution File</td></tr>
 <tr><td>{{ site.jupyter_name }}  </td><td> Contains the Jupyter Notebook file that runs all the .R scripts </td></tr>
-<tr>
-    <td>01-generate-tagged-data.R</td>
-    <td>Tag data as fraud, non-fraud and pre-fraud on account level</td>
-  </tr>
-  <tr>
-    <td>02-data-preprocessing.R</td>
-    <td>Preprocess and clean the data. Split the data into training and testing sets</td>
-  </tr>
-  <tr>
-    <td>03-create-risk-table.R</td>
-    <td>Create risk table which will be used to assign risks for categorical variables</td>
-  </tr>
-  <tr>
-    <td>04-training-feature-generation.R</td>
-    <td>Feature engineering for training set</td>
-  </tr>
-  <tr>
-    <td>05-train.R</td>
-    <td>Model training</td>
-  </tr>
-  <tr>
-    <td>06-prediction.R</td>
-    <td>Prediction on testing set</td>
-  </tr>
-  <tr>
-    <td>07-evaluation.R</td>
-    <td>Evaluate performance</td>
-  </tr>
+<tr><td> modeling_main.R </td><td> Defines parameters and sources the different scripts for the Development Stage</td></tr>
+<tr><td> step1_tagging.R </td><td>Tags transactions on account level  </td></tr>
+<tr><td> step2_splitting_preprocessing.R </td><td> Splits the tagged data set into a Training and a Testing set, cleans the training set and performs  preprocessing</td></tr>
+<tr><td> step3_feature_engineering.R </td><td> Performs feature engineering  </td></tr>
+<tr><td> step4_training_evaluation.R </td><td> Trains a boosted tree classification model on the training set, scores and evaluates on testing set </td></tr>
 </table> 
 
 
@@ -78,21 +55,26 @@ These files  in the **R** directory for the SQL solution.
 These files are in the **SQLR** directory.
 
 <table class="table table-striped table-condensed">
-
 <tr><th> File </th><th> Description </th></tr>
-<tr><td>Load_Data.ps1 </td><td>Loads initial data into SQL Server  </td></tr>
-<tr><td>Loan_Credit_Risk.ps1  </td><td>Automates execution of all .sql files and creates stored procedures  </td></tr>
-<tr><td>create_tables_prod.sql   </td><td>Creates the production tables   </td></tr>
-<tr><td>create_user.sql  </td><td>Used during initial SQL Server setup to create the user and password and grant permissions </td></tr>
-<tr><td>modeling_proc.sql   </td><td>Stored procedure for the modeling/development pipeline  </td></tr>
-<tr><td>production_proc.sql   </td><td>Stored procedure for the production pipeline  </td></tr>
-<tr><td> step1_data_processing.sql  </td><td> Replaces Missing values in dataset with the modes or means </td></tr>
-<tr><td> step2a_splitting.sql </td><td> Splits the analytical dataset into Train and Test</td></tr>
-<tr><td> step2b_feature_engineering.sql </td><td> Performs Feature Engineering and creates the Analytical Dataset</td></tr>
-<tr><td> step3a_training.sql</td><td> Trains a Logistic Regression model</td></tr>
-<tr><td> step3b_scoring.sql </td><td> Scores data using the Logistic Regression model</td></tr>
-<tr><td> step3c_evaluating.sql </td><td> Evaluates the model </td></tr>
-<tr><td> step4_operational_metrics.sql </td><td> Computes operational metrics and performs scores transformations  </td></tr>
+<tr><td>CreateRiskTable.sql </td><td>Stored procedure to create risk table for each input variable   </td></tr>
+<tr><td>.\OnlineFraudDetection.ps1  </td><td>Automates execution of all .sql files and creates stored procedures  </td></tr>
+<tr><td>ParseString.sql   </td><td> Stored procedure to parse a string and to a sql table  </td></tr>
+<tr><td>example_user.sql  </td><td>Used during initial SQL Server setup to create the user and password and grant permissions </td></tr>
+<tr><td>ScoreOneTrans.sql  </td><td> Stored procedure to score one transaction   </td></tr>
+<tr><td>SortAcctTable.sql   </td><td> Stored procedure to create recordDateTime column for Account_Info table and sort the table  </td></tr>
+<tr><td> Step0_CreateTables.sql  </td><td> Creates initial tables from .csv files  </td></tr>
+<tr><td> Step10A_Evaluation.sql  </td><td> Stored procedure to generate fraud account level metrics  </td></tr>
+<tr><td> Step10B_Evaluation_AUC.sql  </td><td> Stored procedure to calculate AUC  </td></tr>
+<tr><td> Step1_MergeAcctInfo.sql  </td><td> Stored procedure to merge untagged transactions with account level infomation  </td></tr>
+<tr><td> Step2_Tagging.sql  </td><td> Stored procedure to tag transactions on account level  </td></tr>
+<tr><td> Step3_SplitData.sql  </td><td> Stored procedure to split data on account level   </td></tr>
+<tr><td> Step4_Preprocess.sql  </td><td> Stored procedure to clean data and remove prefraud transactions   </td></tr>
+<tr><td> Step5_Save2History.sql  </td><td> Stored procedure to save transactions to historical table   </td></tr>
+<tr><td> Step6_CreateRiskTables.sql  </td><td> Stored procedure to create all risk tables   </td></tr>
+<tr><td> Step7_FeatureEngineer.sql  </td><td> Stored procedure to perform feature engineering  </td></tr>
+<tr><td> Step8_Training.sql  </td><td> Stored procedure to train and save a gradient boosted tree model  </td></tr>
+<tr><td> Step9_Prediction.sql  </td><td> Stored procedure to score and save results to a sql table  </td></tr>
+<tr><td> UtilityFunctions.sql  </td><td> Creates functions which will be used  </td></tr>
 </table>
 
 * See [ For the Database Analyst](dba.html?path=cig) for more information about these files.
@@ -109,16 +91,19 @@ These files are in the **RSparkCluster** directory.
 <tr><td> copy_dev_to_prod.R</td><td>Defines function, copy_to_prod, used in development_main.R </td></tr>
 <tr><td> data_generation.R</td><td>Used to generate data, used in development_main.R</td></tr>
 <tr><td> deployment_main.R</td><td>Deploys web scoring function as a web service</td></tr>
-<tr><td> development_main.R</td><td> Full development process</td></tr>
 <tr><td> in_memory_scoring.R</td><td>Performs in-memory scoring for batch scoring or for scoring remotely with a web service  </td></tr>
 <tr><td> production_main.R</td><td> Scores new data using subset of development steps</td></tr>
 <tr><td> step0_directories_creation.R</td><td>Creates initial directories</td></tr>
-<tr><td> step1_preprocessing.R</td><td>Merges data and then cleans the merged data sets: replace NAs with the global mean (numeric variables) or global mode (character variables), used in both development and production</td></tr>
-<tr><td> step2_feature_engineering.R</td><td>Performs Feature Engineering, used in both development and production  </td></tr>
-<tr><td> step3_train_score_evaluate.R</td><td>Builds the logistic regression classification model, scores the test data and evaluates, used in both development and production </td></tr>
-<tr><td> step4_operational_metrics.R</td><td> Computes operational metrics and performs scores transformations in development, uses metrics and performs score transformations in production </td></tr>
-
-
+<tr><td> step1_merge_account_info.R</td><td>Merges the two tables Untagged_Transaction and Account_Info</td></tr>
+<tr><td> step2_tagging.R</td><td>Tags transactions on account level  </td></tr>
+<tr><td> step3_splitting.R</td><td>Splits the tagged data set into a Training and a Testing set </td></tr>
+<tr><td> step4_preprocessing.R</td><td> Performs preprocessing on an input data </td></tr>
+<tr><td> step5_create_risk_tables.R</td><td> Creates the risk tables for various character variables </td></tr>
+<tr><td> step6_feature_engineering.R </td><td>Performs feature engineering </td></tr>
+<tr><td> step7_training.R </td><td> Trains a gradient boosted trees (GBT) model on input data  </td></tr>
+<tr><td> step8_prediction.R </td><td> Performs batch scoring and evaluation </td></tr>
+<tr><td> step9_evaluation.R</td><td> Performs evaluation on a scored data set </td></tr>
+<tr><td> web_scoring_main.R</td><td> Defines and publishes the main web scoring function  </td></tr>
 </table>
 
 * See [For the Data Scientist](data-scientist.html?path=hdi) for more details about these files.

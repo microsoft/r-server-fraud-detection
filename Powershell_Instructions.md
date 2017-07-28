@@ -85,9 +85,9 @@ Once the PowerShell script has completed successfully, log into the SQL Server M
 Hit `Refresh` if necessary.
 <br/>
 
-* View [more information](tables.html)  about each of the tables created in the `Loans` database.
+* View [more information](tables.html)  about each of the tables created in the `{{ site.db_name }}` database.
 
-* Right click on `{{ site.db_name }}.dbo.Scores` and select `View Top 1000 Rows` to preview the testing scored data.
+* Right click on `{{ site.db_name }}.dbo.Predict_Scores` and select `View Top 1000 Rows` to preview the testing scored data.
 
 * Right click on `{{ site.db_name }}_Prod.dbo.Prod_Scores` and select `View Top 1000 Rows` to preview the production scored data.
 
@@ -95,7 +95,7 @@ Hit `Refresh` if necessary.
 ## Visualizing Results 
 ---------------------
 
-You've now  uploaded and processed borrower and loan data, created models, evaluated the model and scored new data as described  [here](data-scientist.html). 
+You've now  uploaded and processed transaction data, created models and evaluated the model  as described  [here](data-scientist.html). 
 
 Let's look at our current results. Proceed to <a href="Visualize_Results.html">Visualizing Results with PowerBI</a>.
 

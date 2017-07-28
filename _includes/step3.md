@@ -11,7 +11,7 @@ She has preprocessed the data, created features, built and evaluated a model.  F
 <p></p>
 
 <div class="sql">
-Now that we have a model, we will want to use it to predict future fraudulant behavior. Danny now operationalizes the code in the database as stored procedures, using embedded R code, or SQL queries.  You can see these procedures by logging into SSMS and opening the <code>Programmability>Stored Procedures</code> section of the <code>Loans</code> database.  Find more details about these procedures on the <a href="dba.html">For the Database Analyst</a> page.
+Now that we have a model, we will want to use it to predict future fraudulant behavior. Danny now operationalizes the code in the database as stored procedures, using embedded R code, or SQL queries.  You can see these procedures by logging into SSMS and opening the <code>Programmability>Stored Procedures</code> section of the <code>{{ site.db_name }}</code> database.  Find more details about these procedures on the <a href="dba.html">For the Database Analyst</a> page.
 <p></p>
 Finally, Danny has created a PowerShell script that will re-run the all the steps to train the model.
 You can find this script in the <strong>SQLR</strong> directory, and execute it yourself by following the <a href="Powershell_Instructions.html">PowerShell Instructions</a>.  

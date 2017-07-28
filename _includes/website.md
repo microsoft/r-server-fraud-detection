@@ -1,0 +1,3 @@
+The final goal of this solution is to interrupt a fraudulent transaction before it occurs.  Keep in mind that there will be false positives - transctions flagged that are not in fact fraud.  For that reason, the decision point when the model returns a high probability of fraud might be to require the purchaser contact a live person to complete the transaction, rather than simply deny the purchase.
+
+This solution contains an example of a website that does just that.  The example is not meant to be production-quality code, it is meant simply to show how a website might make use of such a model. The example shows the purchase page of a transaction, with the ability to try the same simulated purchase from multiple accounts.

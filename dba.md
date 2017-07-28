@@ -51,7 +51,7 @@ Fraudulent online transactions are becoming more and more of a problem to online
 <p/>
 All the steps can be executed on SQL Server client environment (such as SQL Server Management Studio). We provide a Windows PowerShell script, SQLR-Fraud-Detection.ps1, which invokes the SQL scripts and demonstrates the end-to-end modeling process.
 
-### System Requirements
+## System Requirements
 -----------------------
 
 To run the scriptsrequires the following:
@@ -62,7 +62,7 @@ To run the scriptsrequires the following:
  * For more information about SQL server 2016 and R service, please visit: https://msdn.microsoft.com/en-us/library/mt604847.aspx
 
 
-### Workflow Automation
+## Workflow Automation
 -------------------
 
 Follow the [PowerShell instructions](Powershell_Instructions.html) to execute all the scripts described below. [Click here](tables.html) to view the details of all tables created in this solution.

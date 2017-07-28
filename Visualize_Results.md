@@ -49,8 +49,7 @@ These instructions show you how to replace the cached data in the PowerBI dashbo
 
 <li  class="onp">On the Please specify how to connect alert, click on <code>Edit Credentials</code></li>
 <li class="sql">Next you will see a SQL Server database login. Select the second tab,  <code>Database</code> on the left.</li>
-<li class="sql">Enter your username and password (username <code>rdemo</code>, password <code>D@tascience</code> are the defaults for this solution, use these unless you've changed them.)  Then select the <code>Connect</code> button.</li>
-<li class="hdi">Enter your username and password,  Then select the <code>Connect</code> button.</li>
+<li>Enter your username and password.  Then select the <code>Connect</code> button.</li>
 <li class="sql">Select <code>OK</code> on the Encrypting Support alert.</li>
 <li class="onp hdi">The TestData table will appear.</li>
 <li class="onp"> Select each of the remaining queries on the left.  For each one use the <code>Advanced Editor</code> in the toolbar and replace <code>localhost</code> with your server name. You won't need to provide credentials again.</li>

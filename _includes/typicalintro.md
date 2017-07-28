@@ -1,1 +1,2 @@
-Fraudulent online transactions are becoming more and more of a problem to online merchants. This solution will show how to build a model to detect potential fraudulent transactions so that the transaction may be rejected or discouraged at the point of sale. 
+Fraud detection is one of the earliest industrial applications of data mining and machine learning.This solution enables data scientists to easily build and deploy an online transaction fraud detection solution. 
+

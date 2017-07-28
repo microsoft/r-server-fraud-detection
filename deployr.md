@@ -22,7 +22,7 @@ For instructions on how to use PuTTY to connect to your HDInsight Spark cluster,
 * **Linux, Unix, and OS X users**
 For instructions on how to use the terminal to connect to your HDInsight Spark cluster, visit this [Azure documentation](http://go.microsoft.com/fwlink/p/?LinkID=619886).  The edge node address is of the form `sshuser@CLUSTERNAME-ed-ssh.azurehdinsight.net`
 
-* **All platforms:** Your login name and password are the ones you created when you deployed this solution from the [Cortana Intelligence Gallery](http://aka.ms/loan-credit-risk-hdi)
+* **All platforms:** Your login name and password are the ones you created when you deployed this solution from the [Cortana Intelligence Gallery]({{ site.deploy_url_hdi }})
 
 
 ## Configure Deployment Server
@@ -33,7 +33,7 @@ For instructions on how to use the terminal to connect to your HDInsight Spark c
 sudo dotnet /usr/lib64/microsoft-deployr/9.1.0/Microsoft.DeployR.Utils.AdminUtil/Microsoft.DeployR.Utils.AdminUtil.dll
 ```
 
-Your server has been configuered with a password of  `D@tascience2017` for the  `admin` user.  You can use this utitlity to change the password if you wish. (If you do so, you will need to change the password in the  <strong>deployment_main.R</strong> script.)
+Your server has been configuered with the password you chose at deployment for the  `admin` user.  You can use this utitlity to change the password if you wish. (If you do so, you will need to change the password in the  <strong>deployment_main.R</strong> script.)
 
 You can also use this utility to check on the status of the web server. 
 

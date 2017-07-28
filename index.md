@@ -4,6 +4,8 @@ title: HOME
 ---
 {% include typicalintro.md %}
 
+Fraud detection is typically handled as a binary classification problem, but the class population is unbalanced because instances of fraud are usually very rare compared to the overall volume of transactions. Moreover, when fraudulent transactions are discovered, the business typically takes measures to block the accounts from transacting to prevent further losses. Therefore, model performance is measured by using account-level metrics, which is discussed in the [For the Data Scientist](data-scientist.html) page.
+
 <div class="alert alert-success">
 <h2>Select the method you wish to explore:</h2>
  <form style="margin-left:30px"> 

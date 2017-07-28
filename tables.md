@@ -10,25 +10,119 @@ Below are the different data sets that you will find in the `{{ site.db_name }}`
 
 <table class="table table-striped table-condensed">
    <tr>
-    <th>Table</th>
+    <th>File</th>
     <th>Description</th>
   </tr>
-
-<tr><td>Loan</td><td>Raw data about each loan </td></tr>
-<tr><td>Borrower</td><td>Raw data about each borrower </td></tr>
-<tr><td>Merged</td><td>The merged result of Loan and Borrower </td></tr>
-<tr><td>Stats</td><td>Modes or Means of variables of Merged for missing values replacement</td></tr>
-<tr><td>Merged_Cleaned</td><td>Merged table with missing values replaced</td></tr>
-<tr><td>Bins</td><td>Serialized list of cutoffs used to bin numeric variables</td></tr>
-<tr><td>Merged_Features</td><td>Analytical data set: cleaned merged table with new features</td></tr>
-<tr><td>Column_Info</td><td>Serialized list of variable information including factors and their levels</td></tr>
-<tr><td>Hash_Id</td><td>Loan Ids and Mapping through hash function for splitting</td></tr>
-<tr><td>Model</td><td>Serialized version of the trained logistic regression</td></tr>
-<tr><td>Logistic_Coeff</td><td>Coefficients of the logistic regression formula in decreasing order of magnitude</td></tr>
-<tr><td>Predictions_Logistic</td><td>Predictions made on the testing set</td></tr>
-<tr><td>Metrics</td><td>Performance metrics of the evaluated model</td></tr>
-<tr><td>Operational_Metrics</td><td>Percentiles of the scores, corresponding score thresholds and bad rates among scores higher than thresholds</td></tr>
-<tr><td>Scores_Average</td><td>Average of the predicted scores used in scores transformation</td></tr>
-<tr><td>Scores</td><td>Scores computed on the testing set, transformed with Operational_Metrics</td></tr>
-  
+  <tr>
+    <td>Account_Info</td>
+    <td>Raw account data </td>
+  </tr>
+    <tr>
+    <td>Untagged_Transactions</td>
+    <td>Raw transactions data without tags and without account data </td>
+  </tr>
+    <tr>
+    <td>Fraud</td>
+    <td>Raw fraudulent transactions data </td>
+  </tr>
+  <tr>
+    <td>Account_Info_Sort </td>
+    <td>Account_Info table, sorted in ascending order of accountID and descending order of the records date</td>
+  </tr>
+  <tr>
+    <td>Untagged_Transactions_Acct</td>
+    <td>Untagged transactions with account information</td>
+  </tr>
+  <tr>
+    <td>Tagged</td>
+    <td>Tagged transactions with account information</td>
+  </tr>
+    <tr>
+    <td>Hash_Id</td>
+    <td>Each account ID hashed to an integer</td>
+  </tr>
+    <tr>
+    <td>Tagged_Training</td>
+    <td>Training set with tagged data</td>
+  </tr>
+    <tr>
+    <td>Tagged_Training_Preprocessed (View)</td>
+    <td>Preprocessed training set</td>
+  </tr>
+  <tr>
+    <td>Tagged_Training_Preprocessed_Features1 (View)</td>
+    <td>Intermediate preprocessed training set with new features</td>
+  </tr>
+  <tr>
+    <td>Tagged_Training_Preprocessed_Features (View)</td>
+    <td>Preprocessed training set with new features</td>
+  </tr>
+  <tr>
+    <td>Risk Tables</td>
+    <td>Each one contains the risk value for every level of a given variable, computed on the training set</td>
+  </tr>
+  <tr>
+    <td>Risk_Var</td>
+    <td>Names of the risk tables and variables they correspond to</td>
+  </tr>
+  <tr>
+    <td>Transaction_History</td>
+    <td>Historical data to be used for aggregates computation</td>
+  </tr>
+  <tr>
+    <td>Trained_Model</td>
+    <td>Serialized GBT model trained on the training set</td>
+  </tr>
+  <tr>
+    <td>Tagged_Testing</td>
+    <td>Testing set with tagged data</td>
+  </tr>
+  <tr>
+    <td>Tagged_Testing_Preprocessed (View)</td>
+    <td>Preprocessed testing set</td>
+  </tr>
+  <tr>
+    <td>Tagged_Testing_Preprocessed_Features1 (View)</td>
+    <td>Intermediate preprocessed testing set with new features</td>
+  </tr>
+  <tr>
+    <td>Tagged_Testing_Preprocessed_Features (View)</td>
+    <td>Preprocessed testing set with new features</td>
+  </tr>
+  <tr>
+    <td>Predict_Score</td>
+    <td>Predicted scores on the testing set</td>
+  </tr>
+  <tr>
+    <td>Performance_Auc</td>
+    <td>Area under the curve (AUC) for predictions on the testing set</td>
+  </tr>
+  <tr>
+    <td>Performance</td>
+    <td>Account level evaluation metrics for predictions on the testing set</td>
+  </tr>
+  <tr>
+    <td>Parsed_String</td>
+    <td>Single transaction parsed into variables</td>
+  </tr>
+  <tr>
+    <td>Parsed_String_Acct</td>
+    <td>Single transaction parsed into variables, with added account information </td>
+  </tr>
+  <tr>
+    <td>Parsed_String_Acct_Preprocessed (View)</td>
+    <td>Single transaction parsed and preprocessed</td>
+  </tr>
+  <tr>
+    <td>Parsed_String_Acct_Preprocessed_Features1 (View)</td>
+    <td>Intermediate preprocessed single transaction parsed with new features</td>
+  </tr>
+  <tr>
+    <td>Parsed_String_Acct_Preprocessed_Features (View)</td>
+    <td>Single transaction parsed, preprocessed, and with new features</td>
+  </tr>
+  <tr>
+    <td>Predict_Score_Single_Transaction</td>
+    <td>Predicted score for the single transaction</td>
+  </tr>
 </table>

@@ -68,7 +68,7 @@ Start-Transcript -Path $setupLog -Append
 
 cd $solutionTemplatePath
 ### DON'T FORGET TO CHANGE TO MASTER LATER...
-git clone  --branch dev --single-branch https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
+git clone  --single-branch https://github.com/Microsoft/r-server-fraud-detection $checkoutDir
 
 
 $solutionBase = $solutionTemplatePath + "\" + $checkoutDir 

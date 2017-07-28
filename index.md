@@ -15,11 +15,10 @@ Fraud detection is typically handled as a binary classification problem, but the
     <label class="radio">
       <input type="radio" name="optradio" class="rb" value="onp"> {{ site.onp_text }}
     </label>
-<!-- >
    <label class="radio">
       <input type="radio" name="optradio" class="rb" value="hdi"> {{ site.hdi_text }}, deployed from <a href="{{ site.deploy_url_hdi }}">Cortana Intelligence Gallery</a>
     </label> 
-<  -->
+
 </form>
 </div>
 <p></p>

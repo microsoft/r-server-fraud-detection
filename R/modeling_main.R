@@ -27,25 +27,23 @@ Fraud_Transactions <- "../Data/fraudTransactions.csv"
 # Creating the connection string. Specify:
 ## Database name. If it already exists, tables will be overwritten. If not, it will be created.
 ## Server name. If conecting remotely to the DSVM, the full DNS address should be used with the port number 1433 (which should be enabled) 
-db_name <- "FraudR"
+## User ID and Password. Change them below if you modified the default values.  
+db_name <- "Fraud"
 server <- "localhost"
 connection_string <- sprintf("Driver=SQL Server;Server=%s;Database=%s;Trusted_Connection=TRUE", server, db_name)
-# Above connection is set up to use your Windows credentials
-# To use an id/password instead, add them in the lines below and uncomment 
-# user_id <- "XXXYOURID"
-# password <- "XXXYOURPW"
-# connection_string <- sprintf("Driver=SQL Server;Server=%s;Database=%s;UID=%s;PWD=%s", server, db_name, user_id, password)
+# connection is set up to use your Windows credentials
+# to use an id/password instead, add them in the lines below and uncomment 
+# user_id <- "XXXYOURSQLUSERID"
+# password <- "XXXYOUORSQLPW"
+#connection_string <- sprintf("Driver=SQL Server;Server=%s;Database=%s;UID=%s;PWD=%s", server, db_name, user_id, password)
 
 ##############################################################################################################################
 ## Database Creation. 
 ##############################################################################################################################
 
 # Open an Odbc connection with SQL Server master database only to create a new database with the rxExecuteSQLDDL function.
-
-connection_string_master <- sprintf("Driver=SQL Server;Server=%s;Database=master;Trusted_Connection=TRUE", server)
-# Or with id/password:
 # connection_string_master <- sprintf("Driver=SQL Server;Server=%s;Database=master;UID=%s;PWD=%s", server, user_id, password)
-
+connection_string_master <- sprintf("Driver=SQL Server;Server=%s;Database=master;Trusted_Connection=TRUE", server)
 outOdbcDS_master <- RxOdbcData(table = "Default_Master", connectionString = connection_string_master)
 rxOpen(outOdbcDS_master, "w")
 
@@ -73,19 +71,19 @@ sql <- RxInSqlServer(connectionString = connection_string)
 
 # Step 1: Tagging. 
 print("Step 1: Tagging.")
-source(paste(getwd(),"/step1_tagging.R", sep=""))
+source("./step1_tagging.R")
 
 # Step 2: Splitting & Preprocessing the training set. 
 print("Step 2: Splitting and Preprocessing the training set.")
-source(paste(getwd(),"/step2_splitting_preprocessing.R", sep=""))
+source("./step2_splitting_preprocessing.R")
 
 # Step 3: Feature Engineering. 
 print("Step 3: Feature Engineering on the training set.")
-source(paste(getwd(),"/step3_feature_engineering.R", sep=""))
+source("./step3_feature_engineering.R")
 
 # Step 4: training, preprocessing and feature engineering on the testing set, scoring and evaluation of GBT. 
 print("Step 4: Training, Scoring and Evaluating.")
-source(paste(getwd(),"/step4_training_evaluation.R", sep=""))
+source("./step4_training_evaluation.R")
 
 # Close the Obdc connection used for rxExecuteSQLddl functions. 
 rxClose(outOdbcDS)

@@ -148,7 +148,7 @@ in_memory_scoring <- function(Untagged_Transactions_df,
       colnames(data)[ncol(data)] <- new_name
       
       # If a new level was found in the data, the assigned risk is NULL. We convert it to 0. 
-      row_na <- which(is.na(data[, new_name]) == TRUE) 
+      row_na <- which(is.na(data[, new_name]))
       data[row_na, new_name] <- 0
       
     }  
@@ -170,7 +170,7 @@ in_memory_scoring <- function(Untagged_Transactions_df,
   Untagged_Account_Features1_df$shippingBillingAddressmismatchflag = ifelse(Untagged_Account_Features1_df$shippingaddress == Untagged_Account_Features1_df$paymentbillingaddress, "0", "1")
   
   # Create an artificial target variable label. This is for rxPredict to work. 
-  Untagged_Account_Features1_df$label <- sample(c("0", "1"), size = nrow(Untagged_Account_Features1_df), replace = T)
+  Untagged_Account_Features1_df$label <- sample(c("0", "1"), size = nrow(Untagged_Account_Features1_df), replace = TRUE)
   
   ############################################################################################################################################
   ## The block below will compute the aggregates.
@@ -244,7 +244,7 @@ in_memory_scoring <- function(Untagged_Transactions_df,
     Untagged_Account_Features_df <- merge(x = Untagged_Account_Features1_df, y = Aggregations_df, by = "transactionid", all.x = TRUE)
     # The transactions that had no other transactions in the 30 day time frame have missing values. We convert them to 0.
     for(new_name in c("sumpurchasecount1dperuser", "sumpurchasecount30dperuser", "sumpurchaseamount1dperuser", "sumpurchaseamount30dperuser")){
-      row_na <- which(is.na(Untagged_Account_Features_df[, new_name]) == TRUE) 
+      row_na <- which(is.na(Untagged_Account_Features_df[, new_name])) 
       Untagged_Account_Features_df[row_na, new_name] <- 0
     }
   }
@@ -284,10 +284,3 @@ in_memory_scoring <- function(Untagged_Transactions_df,
   return(Predictions)
   
 }
-
-
-
-
-
-
-

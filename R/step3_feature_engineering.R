@@ -61,7 +61,7 @@ risk_vars <- c("transactionCurrencyCode", "localHour", "ipState", "ipPostCode","
                "paymentBillingCountryCode")
 
 # Pointer to the preprocessed training set with stringsAsFactors = TRUE for correct summary computations. 
-Train_sqlstringsfactors <- RxSqlServerData(table = "Tagged_Training_Processed", connectionString = connection_string, stringsAsFactors = T)
+Train_sqlstringsfactors <- RxSqlServerData(table = "Tagged_Training_Processed", connectionString = connection_string, stringsAsFactors = TRUE)
 
 # We apply create_risk_table sequentially over the variables in risk_vars. 
 for(variable_name in risk_vars){
@@ -82,7 +82,7 @@ assign_risk_and_flags <- function(input_sql_name, output_sql_name){
   
   # Function to assign the risk values. It will be wrapped into rxDataStep. 
   assign_risk <- function(data) {
-    data <- data.frame(data, stringsAsFactors = F)
+    data <- data.frame(data, stringsAsFactors = FALSE)
     
     for(name in  risk_variables){
       # Import the Risk table from SQL Server. 
@@ -222,7 +222,7 @@ compute_aggregates <- function(input_sql_name, output_sql_name){
   
   # The transactions that had no other transactions in the 30 day time frame have missing values. We convert them to 0.
   for(new_name in c("sumPurchaseCount1dPerUser", "sumPurchaseCount30dPerUser", "sumPurchaseAmount1dPerUser", "sumPurchaseAmount30dPerUser")){
-    row_na <- which(is.na(Output_df[, new_name]) == TRUE) 
+    row_na <- which(is.na(Output_df[, new_name])) 
     Output_df[row_na, new_name] <- 0
   }
 

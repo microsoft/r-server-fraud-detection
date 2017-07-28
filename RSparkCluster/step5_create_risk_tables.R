@@ -26,7 +26,7 @@ create_risk_tables <- function(LocalWorkDir,
                  "paymentbillingcountrycode")
   
   # Point to the input hive table, while converting the strings to factors for correct computations with rxSummary. 
-  factorRiskInfo <- mapply(function(names){list(type = "factor")}, risk_vars, SIMPLIFY = F)
+  factorRiskInfo <- mapply(function(names){list(type = "factor")}, risk_vars, SIMPLIFY = FALSE)
   Tagged_Processed_hivefactors <- RxHiveData(table = HiveTable, colInfo = factorRiskInfo) 
   
   # Count the number of fraud and non-fraud observations for each level of the variables in risk_vars. 
@@ -60,7 +60,7 @@ create_risk_tables <- function(LocalWorkDir,
   Non_Fraud_Counts_list <- lapply(Non_Fraud_Counts_list, FUN = function(df){setNames(df, c(colnames(df)[1],"nonFraudCount"))})
   
   # Merging the results into 1 list of data frames. 
-  Counts_list <- mapply(FUN = function(df1, df2){merge(df1, df2, all = TRUE)}, Fraud_Counts_list, Non_Fraud_Counts_list, SIMPLIFY = F)
+  Counts_list <- mapply(FUN = function(df1, df2){merge(df1, df2, all = TRUE)}, Fraud_Counts_list, Non_Fraud_Counts_list, SIMPLIFY = FALSE)
   
   # Replace NA with 0 (case when a level was not present for one of the labels).
   Counts_list <- lapply(Counts_list, FUN = function(df){df[is.na(df)] <- 0; return(df)})

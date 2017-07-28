@@ -21,12 +21,12 @@ print("Randomly splitting into a training and a testing set...")
 # The advantage of using a hashing function for splitting is to:
 # - ensure that the same accountID ends up in the same split.
 # - permit repeatability of the experiment.  
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste("DROP TABLE if exists Hash_Id;", sep = ""))
+rxExecuteSQLDDL(outOdbcDS, sSQLString = "DROP TABLE if exists Hash_Id;")
 
-rxExecuteSQLDDL(outOdbcDS, sSQLString = paste(
+rxExecuteSQLDDL(outOdbcDS, sSQLString = 
   "SELECT accountID, ABS(CAST(CAST(HashBytes('MD5', accountID) AS VARBINARY(64)) AS BIGINT) % 100) AS hashCode  
   INTO Hash_Id
-  FROM Tagged ;", sep = ""))
+  FROM Tagged ;")
 
 # Point to the training set. 
 # At the same time, we remove:
@@ -61,8 +61,8 @@ clean_preprocess <- function(input_data_query, output_sql_name){
   
   # Detect variables with missing values. 
   # No missing values in accountID, transactionID and transactionDateTime since we already filtered out missing values in the query above. 
-  # For rxSummary to give correct info on characters, stringsAsFactors = T should be used in the pointer to the SQL Tagged_Training table.
-  Tagged_Data_sql_stringsfactors <- RxSqlServerData(sqlQuery = input_data_query, connectionString = connection_string, stringsAsFactors = T)
+  # For rxSummary to give correct info on characters, stringsAsFactors = TRUE should be used in the pointer to the SQL Tagged_Training table.
+  Tagged_Data_sql_stringsfactors <- RxSqlServerData(sqlQuery = input_data_query, connectionString = connection_string, stringsAsFactors = TRUE)
   var <- rxGetVarNames(Tagged_Data_sql_stringsfactors)
   formula <- as.formula(paste("~", paste(var, collapse = "+")))
   summary <- rxSummary(formula, Tagged_Data_sql_stringsfactors, byTerm = TRUE)
@@ -79,12 +79,12 @@ clean_preprocess <- function(input_data_query, output_sql_name){
   
   # Function to replace missing values with 0. It will be wrapped into rxDataStep. 
   preprocessing <- function(data) {
-    data <- data.frame(data, stringsAsFactors = F)
+    data <- data.frame(data, stringsAsFactors = FALSE)
     
     # Replace missing values with 0 except for localHour with -99. 
     if(length(var_with_NA) > 0){
       for(i in 1:length(var_with_NA)){
-        row_na <- which(is.na(data[, var_with_NA[i]]) == TRUE) 
+        row_na <- which(is.na(data[, var_with_NA[i]])) 
         if(var_with_NA[i] == c("localHour")){
           data[row_na, var_with_NA[i]] <- "-99"
         } else{
@@ -102,7 +102,7 @@ clean_preprocess <- function(input_data_query, output_sql_name){
                         "digitalItemCount", "physicalItemCount")
     for(i in 1:length(numeric_to_fix)){
       data[, numeric_to_fix[i]] <- as.numeric(data[, numeric_to_fix[i]])
-      row_na <- which(is.na(as.numeric(data[, numeric_to_fix[i]])) == TRUE)
+      row_na <- which(is.na(as.numeric(data[, numeric_to_fix[i]])))
       data[row_na, numeric_to_fix[i]] <- 0
     }
     return(data)  
@@ -120,7 +120,7 @@ clean_preprocess <- function(input_data_query, output_sql_name){
   ## To preserve the type of transactionDateTime, we recreate it.
   rxDataStep(inData = Input_sql, 
              outFile = Output_sql, 
-             overwrite = T, 
+             overwrite = TRUE, 
              rowsPerRead = 200000,
              transformFunc = preprocessing,
              transformObjects = list(var_with_NA = variables_NA),

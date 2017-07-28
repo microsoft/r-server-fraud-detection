@@ -1,0 +1,16 @@
+@charset "UTF-8";
+body {
+  padding-top: 10px;
+}
+.start {
+  padding: 40px 15px;
+  text-align: center;
+}
+.bdba{
+	color:#DD4814;
+}
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}

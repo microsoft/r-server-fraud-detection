@@ -1,0 +1,184 @@
+<div class="container start">
+     <div class="row">
+         <div class="col-md-9"><!-- main div -->
+        <p></p><p></p>
+ 
+    
+    <div class="panel panel-info">
+        <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-shopping-cart"></span> Your Cart</h3>
+        </div>
+        <div class="panel-body">
+
+        <table id="myTable" class="table">
+            <tbody>
+            </tbody>
+            </table>
+            
+            <button class="btn btn-info" data-toggle='modal' href='#shopMore'> 
+                <span class="glyphicon glyphicon-plus-sign"></span> Add Items</button>
+        </div>
+    </div>
+
+
+         </div> <!-- /main div -->
+   	   <div class=" col-md-3 ">
+         
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button class="btn btn-info" data-toggle='modal' href='#loginDlg'>Login to Your Account</button>
+                <div class="form-group"><!-- ACCOUNT ID -->
+                <label for="claimantID" class="control-label">Account ID</label><br/>
+                <input type="text" class="form-control input-sm" id="claimantID" placeholder="Account ID" value="A1055521358474530">
+                </div>
+
+                <div id='result' >Total Purchase: $0</div>
+                <p>&nbsp;</p>
+                <button class="btn btn-info" id="submitBtn">Purchase</button>
+                <button class="btn btn-default" id="resetBtn">Reset</button>
+                <p>&nbsp;</p>
+                <div id='resultArea' class="alert alert-success" > </div>
+                <div id="status" class="hide">Processing your order... <br/>
+                </div>
+            
+                </div>
+            </div>
+   	   </div>
+        
+
+    
+    </div> <!-- /.row -->
+</div> <!-- /container -->
+    
+    
+    <!-- SHOPPING DIALOG -->
+    <div class="modal fade" id="shopMore" tabindex="-1" role="dialog" aria-labelledby="Select Items" aria-hidden="true">
+    <div class="modal-dialog" style="width: 80%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h1 class="modal-title" id="dlgTitle">Select Items to Purchase</h1>
+        </div>
+        <div class="modal-body" id="dlgContent">
+            <div class="container">
+                <div class="row">
+                    <!--ITEM -->                   
+                    <div class="col-md-3">
+                        <div class="thumbnail">
+                            <img src="img/heart.jpg" alt="Sample Image">
+                            <div class="caption">
+                                <h3>Black and White Diamond Heart</h3>
+                                <p>Price: $130</p>
+                                 <button class="btn btn-info addItem" id="heart" data-dismiss="modal" aria-hidden="true">
+                                     <span class="glyphicon glyphicon-shopping-cart"></span>Add to Cart
+                                 </button>
+                            </div>
+                        </div>
+                    </div>                    
+                    <!--ITEM -->     
+                    <div class="col-md-3">
+                        <div class="thumbnail">
+                            <img src="img/earrings.jpg" alt="Sample Image">
+                            <div class="caption">
+                                <h3>Diamond Pave Earrings</h3>
+                                <p>Price: $569</p>
+                                 <button class="btn btn-info addItem" id="earrings" data-dismiss="modal" aria-hidden="true">
+                                     <span class="glyphicon glyphicon-shopping-cart"></span>Add to Cart
+                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--ITEM -->
+                    <div class="col-md-3">
+                        <div class="thumbnail">
+                            <img src="img/bracelet.jpg" alt="Sample Image">
+                            <div class="caption">
+                                <h3>Diamond Tennis Bracelet</h3>
+                                <p>Price: $360 </p>
+                                 <button class="btn btn-info addItem" id="bracelet" data-dismiss="modal" aria-hidden="true">
+                                     <span class="glyphicon glyphicon-shopping-cart"></span>Add to Cart
+                                 </button>
+                            </div>
+                        </div>
+                    </div>                   
+                    <!--ITEM -->                   
+                    <!--ITEM -->
+                    <div class="col-md-3">
+                        <div class="thumbnail">
+                            <img src="img/ring.jpg" alt="Sample Image">
+                            <div class="caption">
+                                <h3>Diamond Engagement Ring</h3>
+                                <p>Price: $2100 </p>
+                                 <button class="btn btn-info addItem" id="ring" data-dismiss="modal" aria-hidden="true">
+                                     <span class="glyphicon glyphicon-shopping-cart"></span>Add to Cart
+                                 </button>
+                            </div>
+                        </div>
+                    </div>                   
+                    <!--ITEM -->                  
+                  
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row pull-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+           
+                
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- /SHOPPING DIALOG -->
+
+
+
+
+    <!-- LOGIN DIALOG -->
+    <div class="modal fade" id="loginDlg" tabindex="-1" role="dialog" aria-labelledby="Login to Your Account" aria-hidden="true">
+    <div class="modal-dialog" style="width: 90%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h1 class="modal-title" id="dlgTitle">Login to Your Account</h1>
+        </div>
+        <div class="modal-body" id="dlgContent">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                    <h2>Online Fraud Detection Demo</h2> 
+                    <p>This site demonstrates how a website might interact with a fraud prediction score.  When the user purchases from this site, the transaction is sent first to SQL Server to predict a score.  When the score is high, the transaction has a high probability of being fraudulent.  </p>
+                    <p>After you click <code>OK</code> below, try adding some items to your cart and purchase them. 
+                     Then use the <code>Login to Your Account</code> button on the shopping page to return here to select a different account, and try the purchase again.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Try an Account</h2>
+                         <p>Here are a few different accounts to try out for this demo.</p>
+                        <p>Select an account to try:&nbsp;
+                        <select  id=selAccount class="form-control form-group-lg form-control-inline">
+                        <option selected='y' value="A1055521358474530">A1055521358474530</option>
+                        <option value="A914800341525449">A914800341525449</option>
+                        <option value="A1688852355371910">A1688852355371910</option>
+                        <option value="A1688853633815290">A1688853633815290</option>
+                        </select>             
+                     </div>
+                    <p></p>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row pull-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">OK</button>
+                </div>
+            </div>
+            
+                
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- /LOGIN DIALOG -->
+    

@@ -230,16 +230,24 @@ in_memory_scoring <- function(Untagged_Transactions_df,
   # Bind the results into 1 data frame. 
   Aggregations_df <- do.call("rbind", Aggregations_list)
   
-  # Add the new variables to the initial data with a left outer join.  
-  Untagged_Account_Features_df <- merge(x = Untagged_Account_Features1_df, y = Aggregations_df, by = "transactionid", all.x = TRUE)
+  # Add the new variables to the initial data:  
   
-  # The transactions that had no other transactions in the 30 day time frame have missing values. We convert them to 0.
-  for(new_name in c("sumpurchasecount1dperuser", "sumpurchasecount30dperuser", "sumpurchaseamount1dperuser", "sumpurchaseamount30dperuser")){
-    row_na <- which(is.na(Untagged_Account_Features_df[, new_name]) == TRUE) 
-    Untagged_Account_Features_df[row_na, new_name] <- 0
+  ## If there was 1 transaction per account ID for all accounts, we simply add the 4 aggregate variables with values of 0.
+  if(is.null(Aggregations_df)){
+    Untagged_Account_Features_df <- Untagged_Account_Features1_df
+    for(new_name in c("sumpurchasecount1dperuser", "sumpurchasecount30dperuser", "sumpurchaseamount1dperuser", "sumpurchaseamount30dperuser")){
+      Untagged_Account_Features_df[, new_name] <- 0
+    } 
+    
+  }else{
+    ## Otherwise, add the new variables to the initial data with a left outer join.  
+    Untagged_Account_Features_df <- merge(x = Untagged_Account_Features1_df, y = Aggregations_df, by = "transactionid", all.x = TRUE)
+    # The transactions that had no other transactions in the 30 day time frame have missing values. We convert them to 0.
+    for(new_name in c("sumpurchasecount1dperuser", "sumpurchasecount30dperuser", "sumpurchaseamount1dperuser", "sumpurchaseamount30dperuser")){
+      row_na <- which(is.na(Untagged_Account_Features_df[, new_name]) == TRUE) 
+      Untagged_Account_Features_df[row_na, new_name] <- 0
+    }
   }
-  
-  
   
   ############################################################################################################################################
   ## The block below will convert character to factors for the prediction step.
@@ -251,6 +259,9 @@ in_memory_scoring <- function(Untagged_Transactions_df,
       Untagged_Account_Features_df[[name]] <- factor(Untagged_Account_Features_df[[name]])
     }
   }
+  
+  Untagged_Account_Features_df$isproxyip <- as.factor(as.character( Untagged_Account_Features_df$isproxyip))
+  Untagged_Account_Features_df$isuserregistered <- as.factor(as.character( Untagged_Account_Features_df$isuserregistered))
   
   
   ############################################################################################################################################

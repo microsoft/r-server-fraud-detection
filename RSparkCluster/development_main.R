@@ -59,18 +59,18 @@ fraud_dev <- function(Untagged_Transactions,
   
   # step0: intermediate directories creation.
   print("Creating Intermediate Directories on Local and HDFS...")
-  source(paste(getwd(),"/step0_directories_creation.R", sep =""))
+  source("./step0_directories_creation.R")
   
   ## Define and create the directory where Risk tables, models etc. will be saved in the Development stage.
   LocalModelsDir <- file.path(LocalWorkDir, "model")
   if(dir.exists(LocalModelsDir)){
-    system(paste("rm -rf ",LocalModelsDir,"/*", sep="")) # clean up the directory if exists
+    system(paste("rm -rf ",LocalModelsDir,"/*", sep = "")) # clean up the directory if exists
   } else {
     dir.create(LocalModelsDir, recursive = TRUE) # make new directory if doesn't exist
   }
   
   # step1: merging with account info
-  source(paste(getwd(),"/step1_merge_account_info.R", sep =""))
+  source("./step1_merge_account_info.R")
   print("Step 1: Merging with account info...")
   merge_account_info(Untagged_Transactions = Untagged_Transactions,
                      Account_Info = Account_Info,
@@ -78,7 +78,7 @@ fraud_dev <- function(Untagged_Transactions,
                      Stage = Stage)
   
   # step2: tagging
-  source(paste(getwd(),"/step2_tagging.R", sep =""))
+  source("./step2_tagging.R")
   print("Step 2: Tagging...")
   tagging(Input_Hive_Table = "UntaggedTransactionsAccountUnique",
           Fraud_Transactions = Fraud_Transactions,
@@ -86,11 +86,11 @@ fraud_dev <- function(Untagged_Transactions,
   
   # step3: splitting
   print("Step3: Splitting...")
-  source(paste(getwd(),"/step3_splitting.R", sep =""))
+  source("./step3_splitting.R")
   
   # step4: preprocessing
   print("Step4: Preprocessing...")
-  source(paste(getwd(),"/step4_preprocessing.R", sep =""))
+  source("./step4_preprocessing.R")
   preprocess(HDFSWorkDir = HDFSWorkDir,
              HiveTable = "TaggedTraining")
   preprocess(HDFSWorkDir = HDFSWorkDir,
@@ -98,7 +98,7 @@ fraud_dev <- function(Untagged_Transactions,
   
   # step5: creating risk tables
   print("Step5: Creating risk tables...")
-  source(paste(getwd(),"/step5_create_risk_tables.R", sep =""))
+  source("./step5_create_risk_tables.R")
   create_risk_tables(LocalWorkDir = LocalWorkDir,
                      HDFSWorkDir = HDFSWorkDir,
                      HiveTable = "TaggedTrainingProcessed",
@@ -107,7 +107,7 @@ fraud_dev <- function(Untagged_Transactions,
   
   # step6: feature engineering
   print("Step6: Feature Engineering...")
-  source(paste(getwd(),"/step6_feature_engineering.R", sep =""))
+  source("./step6_feature_engineering.R")
   feature_engineering(LocalWorkDir = LocalWorkDir,
                       HDFSWorkDir = HDFSWorkDir,
                       HiveTable = "TaggedTrainingProcessed",
@@ -120,7 +120,7 @@ fraud_dev <- function(Untagged_Transactions,
   
   # step7: training 
   print("Step7: Training...")
-  source(paste(getwd(),"/step7_training.R", sep =""))
+  source("./step7_training.R")
   training(HDFSWorkDir = HDFSWorkDir,
            LocalWorkDir = LocalWorkDir,
            Input_Data_Xdf = "TaggedTrainingProcessedFeatures")
@@ -132,13 +132,13 @@ fraud_dev <- function(Untagged_Transactions,
     # Development directory that holds data to be used in Production. 
     DevModelDir <- LocalModelsDir
     
-    source(paste(getwd(),"/copy_dev_to_prod.R", sep =""))
+    source("./copy_dev_to_prod.R")
     copy_dev_to_prod(DevModelDir, ProdModelDir)
   } 
   
   # step8: prediction
   print("Step8: Prediction...")
-  source(paste(getwd(),"/step8_prediction.R", sep =""))
+  source("./step8_prediction.R")
   prediction(HDFSWorkDir = HDFSWorkDir,
              LocalWorkDir = LocalWorkDir,
              Input_Data_Xdf = "TaggedTestingProcessedFeatures",
@@ -146,7 +146,7 @@ fraud_dev <- function(Untagged_Transactions,
   
   # step9: evaluation
   print("Step9: Evaluation...")
-  source(paste(getwd(),"/step9_evaluation.R", sep =""))
+  source("./step9_evaluation.R")
   evaluation(HDFSWorkDir = HDFSWorkDir,
              Scored_Data_Xdf = "PredictScore")
 }

@@ -64,7 +64,7 @@ fraud_batch_scoring <- function(Untagged_Transactions,
   LocalModelsDir <- file.path(LocalWorkDir, "model")
   
   if((class(Untagged_Transactions) == "data.frame") & (class(Account_Info) == "data.frame")){ # In-memory scoring. 
-    source(paste(getwd(),"/in_memory_scoring.R", sep =""))
+    source("./in_memory_scoring.R")
     print("Scoring in-memory...")
     return(in_memory_scoring(Untagged_Transactions, Account_Info, Stage = Stage))
     
@@ -74,10 +74,10 @@ fraud_batch_scoring <- function(Untagged_Transactions,
     
     # step0: intermediate directories creation.
     print("Creating Intermediate Directories on Local and HDFS...")
-    source(paste(getwd(), "/step0_directories_creation.R", sep=""))
+    source("./step0_directories_creation.R")
     
     # step1: merging the raw data. 
-    source(paste(getwd(), "/step1_merge_account_info.R", sep=""))
+    source("./step1_merge_account_info.R")
     print("Step 1: Production data merging.")
     
     merge_account_info(Untagged_Transactions = Untagged_Transactions,
@@ -86,7 +86,7 @@ fraud_batch_scoring <- function(Untagged_Transactions,
                        Stage = Stage)
     
     # step2: additional preprocessing. 
-    source(paste(getwd(), "/step4_preprocessing.R", sep=""))
+    source("./step4_preprocessing.R")
     print("Step 2: Additional preprocessing of the production data.")
     
     preprocess(HDFSWorkDir = HDFSWorkDir,
@@ -94,7 +94,7 @@ fraud_batch_scoring <- function(Untagged_Transactions,
     
     
     # step3: feature engineering
-    source(paste(getwd(), "/step6_feature_engineering.R", sep=""))
+    source("./step6_feature_engineering.R")
     print("Step 3: Feature Engineering.")
     
     feature_engineering(LocalWorkDir = LocalWorkDir,
@@ -103,7 +103,7 @@ fraud_batch_scoring <- function(Untagged_Transactions,
                         Stage = Stage)
     
     # step4: making predictions. 
-    source(paste(getwd(),"/step8_prediction.R", sep=""))
+    source("./step8_prediction.R")
     print("Step 4: Making Predictions.")
     
     prediction(HDFSWorkDir = HDFSWorkDir,

@@ -73,19 +73,19 @@ sql <- RxInSqlServer(connectionString = connection_string)
 
 # Step 1: Tagging. 
 print("Step 1: Tagging.")
-source(paste(getwd(),"/step1_tagging.R", sep=""))
+source("./step1_tagging.R")
 
 # Step 2: Splitting & Preprocessing the training set. 
 print("Step 2: Splitting and Preprocessing the training set.")
-source(paste(getwd(),"/step2_splitting_preprocessing.R", sep=""))
+source("./step2_splitting_preprocessing.R")
 
 # Step 3: Feature Engineering. 
 print("Step 3: Feature Engineering on the training set.")
-source(paste(getwd(),"/step3_feature_engineering.R", sep=""))
+source("./step3_feature_engineering.R")
 
 # Step 4: training, preprocessing and feature engineering on the testing set, scoring and evaluation of GBT. 
 print("Step 4: Training, Scoring and Evaluating.")
-source(paste(getwd(),"/step4_training_evaluation.R", sep=""))
+source("./step4_training_evaluation.R")
 
 # Close the Obdc connection used for rxExecuteSQLddl functions. 
 rxClose(outOdbcDS)

@@ -123,7 +123,7 @@ clean_preprocess(input_data_query = query_testing,
                  output_sql_name = "Tagged_Testing_Processed")
 
 # Apply the feature engineering on the testing set. 
-print("Perform feature engineering the testing set...")
+print("Perform feature engineering on the testing set...")
 
 print("Assigning risk values to the variables, and creating address mismatch and high amount flags...")
 assign_risk_and_flags(input_sql_name = "Tagged_Testing_Processed",
@@ -150,7 +150,7 @@ Predict_Score1_sql <- RxSqlServerData(table = "Predict_Score1", connectionString
 rxPredict(modelObject = boosted_fit,
           data = Tagged_Testing_Processed_Features_sql,
           outData = Predict_Score1_sql,
-          overwrite = T,
+          overwrite = TRUE,
           extraVarsToWrite = c("accountID", "transactionID", "transactionDate", "transactionTime", "transactionAmountUSD", "label"))
 
 
@@ -159,7 +159,7 @@ rxPredict(modelObject = boosted_fit,
 Predict_Score_sql <- RxSqlServerData(table = "Predict_Score", connectionString = connection_string)
 rxDataStep(inData = Predict_Score1_sql, 
            outFile = Predict_Score_sql, 
-           overwrite = T, 
+           overwrite = TRUE, 
            rowsPerRead = 200000,
            transforms = list(
              transactionDateTime = as.character(as.POSIXct(paste(transactionDate, sprintf("%06d", as.numeric(transactionTime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT")),

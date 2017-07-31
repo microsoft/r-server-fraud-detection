@@ -44,7 +44,7 @@ prediction <- function(HDFSWorkDir,
   rxPredict(modelObject = boosted_fit,
             data = Score_Data_Xdf,
             outData = Predict_Score_Xdf,
-            overwrite = T,
+            overwrite = TRUE,
             extraVarsToWrite = c("accountid", "transactionid", "transactiondate","transactiontime", "transactionamountusd", "label"))
   
   if(Stage == "Dev"){

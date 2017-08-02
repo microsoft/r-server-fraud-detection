@@ -22,6 +22,7 @@ website_url: "https://microsoft.github.io/r-server-fraud-detection"
 deploy_url: "https://aka.ms/fraud-detection" 
 deploy_url_hdi: "https://aka.ms/fraud-detection-hdi" 
 pbix_name: onlinefraud.pbix
+pbix_hdiname: onlinefraudHDI.pbix 
 hdipbix_name: "onlinefraudHDI.pbx"
 pbix_hdidownload_url: "https://github.com/Microsoft/r-server-fraud-detection/blob/master/onlinefraudHDI.pbix"
 pbix_sqldownload_url: "https://github.com/Microsoft/r-server-fraud-detection/blob/master/onlinefraud.pbix"

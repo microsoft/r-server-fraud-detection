@@ -27,13 +27,10 @@ You can find this script in the <strong>SQLR</strong> directory, and execute it 
 Now that we have evaluated the model, it is time to put it to use in predicting fraud during an online transaction. 
 Debra now creates an analytic web service  with <a href="https://msdn.microsoft.com/en-us/microsoft-r/operationalize/about">R Server Operationalization</a> that incorporates these same steps: data processing, feature engineering, and scoring.
 <p/>
- <strong>deployment_main.R</strong> will create a web service and test it on the edge node.  
+ <strong>web_scoring_main.R</strong> will create a web service and test it on the edge node.  
 <p/>
 <div class="alert alert-info" role="alert">
 The operationalization server has been configured for you on the edge node of your cluster.
 Follow <a href="deployr.html">instructions here</a> if you wish to connect to the edge node and/or use the admin utility.
 </div>
-<p></p>
-STEPS TO USE THIS MODEL FROM WEBSITE... 
-<p></p>
 </div>

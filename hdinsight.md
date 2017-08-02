@@ -23,7 +23,7 @@ If you would like to continue using the solution, you can delete the cluster whi
 HDInsight Spark cluster billing starts once a cluster is created and stops when the cluster is deleted. Billing is pro-rated per minute, so you should always <strong>delete your cluster</strong> when it is no longer in use.
 
 
-Before you delete the cluster, <a href="Typical.html#rstudiologin?path=hdi">login to RStudio</a> on the cluster edge node and save your files. 
+Before you delete the cluster, <a href="Typical.html?path=hdi#rstudiologin">login to RStudio</a> on the cluster edge node and save your files. 
 <img src="images/rstudio_export.png" width="50%" />
 <ol>
 <li>
@@ -43,8 +43,6 @@ Once you've saved your files you can [use these steps to delete your cluster.](h
 ## Re-Using the Storage Account on a New Cluster
 
 You can use the Azure portal to  [create a new cluster by following these steps](https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-r-server-get-started).  Make sure you select your existing storage account instead of creating a new one, and you can pick up where you left off.
-
-When creating your cluster, use the default names in the blades: `admin` for the cluster login, and `sshuser` for the ssh login if you want to be consistent with the original cluster created for you from the Cortana Intelligence Gallery.
 
 Once your cluster is ready, go to RStudio and Import the files by with the <code>Upload</code> button.  Select the zip file that you exported prior to deleting the original cluster.
 

@@ -29,7 +29,7 @@ View <a href="input_data.html">more information about the data.</a>
           </div>
 </div>
 <p></p>
-This solution demonstrates the code with XXHOWMANYXX transactions. Using HDInsight Spark clusters makes it simple to extend to very large data, both for training and scoring. As you increase the data size you may want to add more nodes but the code itself remains exactly the same.
+This solution demonstrates the code with approximately 200,000 transactions. Using HDInsight Spark clusters makes it simple to extend to very large data, both for training and scoring. As you increase the data size you may want to add more nodes but the code itself remains exactly the same.
 
 ## System Requirements
 -----------------------

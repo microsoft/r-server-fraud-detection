@@ -22,7 +22,7 @@ solution.
         <li><a href="#step2">Step 2: Data Prep and Modeling</a></li>
         <li><a href="#step3">Step 3: Operationalize</a></li>
         <li><a href="#step4">Step 4: Deploy and Visualize</a></li>
-        <li><a href="#step5">Step 5: Use the Model during Online Transactions</a></li>
+        <li><a href="#step5" class="sql">Step 5: Use the Model during Online Transactions</a></li>
         </div>
     </div>
 
@@ -84,6 +84,7 @@ Now let's meet Debra, the Data Scientist. Debra's job is to use historical data 
 
 
 <div class="sql">
+<p/>
 Debra will work on her own machine, using  <a href = "https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows">R Client</a> to execute these R scripts. <span class="cig">R Client is already installed on the VM.</span>  She will also use an IDE to run R.  
 </div>
 
@@ -101,7 +102,6 @@ When you first visit the url to access RStudio, you will see two different login
 
 
 
-</div>
 
 <div class="alert alert-info cig" role="alert">
 On your VM, both R Tools for Visual Studio and RStudio are installed.  (You will  have to either log in or create a new account for if you wish to use Visual Studio.)  
@@ -140,6 +140,9 @@ There you will see three files with the name <strong>{{ site.solution_name }}</s
 
     {% include step4.md %}
 
+<div class="sql">
 <a name="step5" id="step5"></a>
+{% include step5.md %}
+</div>
 
-    {% include step5.md %}
+

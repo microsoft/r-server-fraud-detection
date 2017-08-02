@@ -34,6 +34,4 @@ The operationalization server has been configured for you on the edge node of yo
 Follow <a href="deployr.html">instructions here</a> if you wish to connect to the edge node and/or use the admin utility.
 </div>
 <p></p>
-STEPS TO USE THIS MODEL FROM WEBSITE... 
-<p></p>
 </div>

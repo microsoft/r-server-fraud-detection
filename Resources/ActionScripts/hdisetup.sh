@@ -4,8 +4,7 @@
 # WARNING: This script is only meant to be run from the solution template deployment process.
 
 # put R code in users home directory
-# XXX SWITCH to master branch when ready to publish!! XXX
-git clone  --branch dev --single-branch  https://github.com/Microsoft/r-server-fraud-detection.git  fraud
+git clone  --branch master --single-branch  https://github.com/Microsoft/r-server-fraud-detection.git  fraud
 cp fraud/RSparkCluster/* /home/$1
 chmod 777 /home/$1/*.R
 rm -rf fraud

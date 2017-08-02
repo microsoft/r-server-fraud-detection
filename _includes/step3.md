@@ -1,7 +1,7 @@
 
 
 <h2> Step 3: Operationalize with Debra <span class="sql">and Danny</span></h2>
----------------------
+<hr/>
 
 Debra has completed her tasks.  <span class="sql">She has connected to the SQL database, executed code from her R IDE that pushed (in part) execution to the SQL machine to create the fraud model.
 </span>

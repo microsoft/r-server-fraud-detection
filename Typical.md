@@ -100,7 +100,7 @@ Debra will develop her R scripts in  the Open Source Edition of RStudio Server, 
 When you first visit the url to access RStudio, you will see two different logins.  Use the username and  password you created when you deployed the HDInsight solution for both of these prompts.
 </div>
 
-
+</div>
 
 
 <div class="alert alert-info cig" role="alert">
@@ -127,18 +127,18 @@ There you will see three files with the name <strong>{{ site.solution_name }}</s
 </div>
 
 
-    {% include step2.md %}
+{% include step2.md %}
 
 
 
  <a name="step3" id="step3"></a>
 
-   {% include step3.md %}
+{% include step3.md %}
 
 
 <a name="step4" id="step4"></a>
 
-    {% include step4.md %}
+{% include step4.md %}
 
 <div class="sql">
 <a name="step5" id="step5"></a>

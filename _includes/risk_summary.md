@@ -1,4 +1,4 @@
-<p>The risk table stores risk (log of smoothed odds ratio) for each level of one categorical variable. For example, variable <code>X</code> has two levels: <code>A</code> and <strong>B</strong>. For level <strong>A</strong>, we compute the following:</p>
+<p>The risk table stores risk (log of smoothed odds ratio) for each level of one categorical variable. For example, variable <code>X</code> has two levels: <code>A</code> and <code>B</code>. For level <code>A</code>, we compute the following:</p>
 
 <ul>
   <li>Total number of good transactions, <code>n_good(A)</code>,</li>

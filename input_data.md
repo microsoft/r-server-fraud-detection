@@ -6,11 +6,11 @@ title: Input Data
 ## CSV File Description
 --------------------------
 The **Data** folder contains the following data:
-* **Untagged_Transactions.csv**:  transaction data from on an online store
-* **Account_Info.csv**: Anonomyzed account information.
-* **Fraud.csv**: transactions identified as fraud                                                                                          
+* **untaggedTransactions.csv**:  transaction data from on an online store
+* **accountInfo.csv**: Anonomyzed account information
+* **fraudTransactions.csv**: transactions identified as fraud                                                                                          
 
-**Untagged_Transactions** contain the following fields:
+**untaggedTransactions.csv** contain the following fields:
 
 
 <table class="table table-compressed table-striped">
@@ -100,7 +100,7 @@ The **Data** folder contains the following data:
     O  -- Other</td></tr>
     </table>
 
-**Account_Info.csv** contain the following fields:
+**accountInfo.csv** contain the following fields:
 
 <table class="table table-compressed table-striped">
 <tr><th>Columns</th><th>Type</th><th>Description</th></tr>
@@ -123,7 +123,7 @@ Format: yyyymmdd</td></tr>
 </table>
 
 
-**Fraud.csv** contain the following fields:
+**fraudTransactions.csv** contain the following fields:
 <table class="table table-compressed table-striped">
 <tr><th>Columns</th><th>Type</th><th>Description</th></tr>
 <tr><td>transactionID</td><td>String</td><td>Unique transaction Id</td></tr>

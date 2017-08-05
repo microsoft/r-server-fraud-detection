@@ -6,7 +6,7 @@
 <h3>Related Files</h3>
 
 <ul>
-  <li>step0_directories_creation.R</li>
+  <li><strong>step0_directories_creation.R</strong></li>
 </ul>
 
 <h2 id="step-1">Step 1: Merge with Account Information</h2>
@@ -129,7 +129,7 @@ In this step, we create risk tables for categorical variables, such as location 
   <li>Risk tables embedded in a list <code>Risk_list</code>, saved on the edge node.</li>
 </ul>
 
-<h3">Related Files</h3>
+<h3>Related Files</h3>
 
 <ul>
   <li><strong>step5_create_risk_tables.R</strong></li>
@@ -186,7 +186,7 @@ In this step, we create risk tables for categorical variables, such as location 
   <li>Trained GBT model object.</li>
 </ul>
 
-<h3">Related Files</h3>
+<h3>Related Files</h3>
 
 <ul>
   <li><strong>step7_training.R</strong></li>
@@ -195,7 +195,7 @@ In this step, we create risk tables for categorical variables, such as location 
 <h2 id="step-8">Step 8: Prediction</h2>
 <hr />
 
-<p>In this step, we do prediction (scoring) on the model created in step 7. If Stage is “Dev” or “Prod”, the model object is loaded from model directory on edge node. If Stage is “Web Scoring”, the model object is directly passed. In “Dev” Stage, we will also create a hive table for the scored data set. The hive table will be ingested by PowerBI for visualization.</p>
+<p>In this step, we do prediction (scoring) on the model created in step 7. If Stage is “Dev” or “Prod”, the model object is loaded from model directory on edge node. If Stage is “Web", the model object is directly passed. In “Dev” Stage, we will also create a hive table for the scored data set. The hive table will be ingested by PowerBI for visualization.</p>
 
 <h3>Input</h3>
 
@@ -248,7 +248,7 @@ In this step, we create risk tables for categorical variables, such as location 
 
 <p>At the end of the main function of the script <strong>development_main.R</strong>, the <strong>copy_dev_to_prod.R</strong> script is invoked in order to copy (overwrite if it already exists) the model, statistics and other data from the Development Stage to a directory of the Production or Web Scoring stage.</p>
 
-<p>If you do not wish to overwrite the model currently in use in a Production stage, you can either save them to a different directory, or set <code>update_prod_flag</code> to <code>0</code> inside the main function. If you are running the solution at the very first time, make sure to set the flag to 1.</p>
+<p>If you do not wish to overwrite the model currently in use in a Production stage, you can either save them to a different directory, or set <code>update_prod_flag</code> to <code>0</code>. If you are running the solution at the very first time, make sure to set the flag to 1.</p>
 
 <h2 id="production">Production Stage</h2>
 <hr />

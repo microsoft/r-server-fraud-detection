@@ -238,14 +238,3 @@ The final scores for the test data reside in the Hive table <code>Predict_Score<
   <li>See <a href="business-manager.html">For the Business Manager</a> for details of the PowerBI dashboard.</li>
 </ul>
 
-<div id="requirements" class="sql">
-<h2> System Requirements</h2>
-
-The following are required to run the scripts in this solution:
-<ul>
-<li>SQL Server 2016 with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
-<li>The SQL user name and password, and the user configured properly to execute R scripts in-memory.</li> 
-<li>SQL Database which the user has write permission and execute stored procedures.</li> 
-<li>For more information about SQL server 2016 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
-</ul>
-</div>

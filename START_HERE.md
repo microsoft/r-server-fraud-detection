@@ -17,7 +17,7 @@ title: Quick Start
 
     * Or you can run all the R Scripts following the path for Debra the data scientist in the <a href="Typical.html?platform=onp">Typical Workflow</a>
 
-<!--
+
 * For **{{ site.hdi_text }}**: Visit the [Cortana Intelligence Gallery](({{ site.deploy_url-hdi }})) and use the `Deploy` button.  All necessary software will be installed and configured for you.  You will be all set to follow along with the [Typical Workflow](Typical.html?platform=hdi) using the deployed cluster.
--->
+
 

@@ -54,12 +54,13 @@ All the steps can be executed on SQL Server client environment (such as SQL Serv
 ## System Requirements
 -----------------------
 
-To run the scriptsrequires the following:
-
- * SQL server 2016 CTP 3 with Microsoft R server installed and configured;
- * The SQL user name and password, and the user is configured properly to execute R scripts in-memory;
- * SQL Database which the user has write permission and execute stored procedures;
- * For more information about SQL server 2016 and R service, please visit: https://msdn.microsoft.com/en-us/library/mt604847.aspx
+The following are required to run the scripts in this solution:
+<ul>
+<li>SQL Server 2016 with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
+<li>The SQL user name and password, and the user configured properly to execute R scripts in-memory.</li> 
+<li>SQL Database which the user has write permission and execute stored procedures.</li> 
+<li>For more information about SQL server 2016 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
+</ul>
 
 
 ## Workflow Automation
@@ -70,27 +71,11 @@ Follow the [PowerShell instructions](Powershell_Instructions.html) to execute al
 <a id="step0"/>
 
 ## Step 0: Data Preparation
+-------------------
 
 The following data are provided in the Data directory:
 
-<table class="table table-condensed">
-  <tr>
-    <th>File</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>.\Data\accountInfo.csv</td>
-    <td>Account information </td>
-  </tr>
-  <tr>
-    <td>.\Data\fraudTransactions.csv</td>
-    <td>Raw fraud transaction data</td>
-  </tr>
-  <tr>
-    <td>.\Data\untaggedTransactions.csv</td>
-    <td>Raw untagged transaction data without fraud tag</td>
-  </tr>
-</table>
+{% include data.md %}
 
 In this step, we'll create four tables. The first three are: `Untagged_Transactions`, `Account_Info` and `Fraud`, corresponding to the three data sets in **Data** folder. Once tables have been created, data is uploaded to these tables using bcp command in the powershell script. The fourth table `Transaction_History` is created for storing historical transactions which will be used to calculate aggregates. This table will be filled in later steps.
 
@@ -110,6 +95,8 @@ In this step, we'll create four tables. The first three are: `Untagged_Transacti
 <a id="step1"/>
 
 ## Step 1: Merging with Account Information
+-------------------
+
 In this step, we merge the `Untagged_Transactions` table with `Account_Info` table by `accountID` to get account information for each transaction. Before merging, we will create utility functions and table `Account_Info` will be sorted in descent order of `accountID` and `transactionDateTime`.
 
 ### Input:
@@ -130,6 +117,8 @@ In this step, we merge the `Untagged_Transactions` table with `Account_Info` tab
 <a id="step2"/>
 
 ## Step 2: Tagging
+---------------
+
 In this step, we tag the untagged data on account level based on the fraud data. The tagging logic is the following. In fraud data, we group it by account ID and sort by time, thus, we have the fraud time period for each fraud account. For each transaction in untagged data, if the account ID is not in fraud data, this transaction is labeled as non fraud (`label = 0`); if the account ID is in fraud data and the transaction time is within the fraud time period of this account, this transaction is labeled as fraud (`label = 1`); if the account ID is in fraud data and the transaction time is out of the fraud time period of this account, this transaction is labeled as pre-fraud or unknown (`label = 2`) which will be removed later. We will also perform re-formatting for some columns. For example, uniform the `transactionTime` filed to 6 digits. 
 
 ### Input:
@@ -148,6 +137,8 @@ In this step, we tag the untagged data on account level based on the fraud data.
 <a id="step3"/>
 
 ## Step 3: Splitting Data
+-------------------
+
 In this step, we will hash accountID into 100 different hash code and split the whole data into training(70%) and testing(30%) based on the hash code, e.g., training = hash code <=70 and testing = hash code >70.
 
 ### Input: 
@@ -166,6 +157,8 @@ In this step, we will hash accountID into 100 different hash code and split the 
 <a id="step4"/>
 
 ## Step 4: Preprocessing
+-------------------
+
 In this step, we clean the tagged training data, i.e., filling missing values with 0 and removing transactions with invalid transaction time and amount. 
 
 ### Input:
@@ -183,6 +176,8 @@ In this step, we clean the tagged training data, i.e., filling missing values wi
 <a id="step5"/>
 
 ## Step 5: Saving Transactions to Historical Table
+-------------------
+
 In this step, we save the transactions to `Transaction_History` table which will be used for calculating aggregates.
 
 ### Input:
@@ -200,31 +195,11 @@ In this step, we save the transactions to `Transaction_History` table which will
 <a id="step6"/>
 
 ## Step 6: Create Risk Tables
-In this step, we create risk tables for bunch of categorical variables, such as location related variables. This is related to the method called "weight of evidence". The risk table stores risk (log of smoothed odds ratio) for each level of one categorical variable. For example, variable `X` has two levels: `A`` and `B`. For each level (e.g., `A`), we compute the following:
+-------------------
 
-* Total number of good transactions, `n_good(A)`, 
-* Total number of bad transactions, `n_bad(A)`. 
-* The smoothed odds, `odds(A) = (n_bad(A)+10)/(n_bad(A)+n_good(A)+100)`. 
-* The the risk of level `A`, `risk(A) = log(odds(A)/(1-odds(A))`. 
+In this step, we create risk tables for bunch of categorical variables, such as location related variables. This is related to the method called "weight of evidence". 
 
-Thus, the risk table of variable `X` looks like the following:
-
-<table class="table table-condensed">
-  <tr>
-    <th>X</th>
-    <th>Risk</th>
-  </tr>
-  <tr>
-    <td>A</td>
-    <td>Risk(A)</td>
-  </tr>
-  <tr>
-    <td>B</td>
-    <td>Risk(B)</td>
-  </tr>
-</table>
-
-With the risk table, we can assign the risk value to each level. This is how we transform the categorical variable into numerical variable. 
+{% include risk_summary.md %}
 
 ### Input:
 
@@ -243,6 +218,8 @@ With the risk table, we can assign the risk value to each level. This is how we 
 <a id="step7"/>
 
 ## Step 7: Feature Engineering
+-------------------
+
 This step does feature engineering to training data set. We will generate three groups of new features:
 
 * Binary variables. For example, address mismatch flags.
@@ -266,6 +243,8 @@ This step does feature engineering to training data set. We will generate three 
 <a id="step8"/>
 
 ## Step 8: Model Training
+-------------------
+
 In this step, we train a gradient boosting tree model with the training data set.
 
 ### Input:
@@ -283,6 +262,7 @@ In this step, we train a gradient boosting tree model with the training data set
 <a id="step9"/>
 
 ## Step 9: Batch Scoring
+-------------------
 
 In this step we will do the batch scoring on testing data set including
 
@@ -307,6 +287,7 @@ In this step we will do the batch scoring on testing data set including
 <a id="step10"/>
 
 ## Step 10: Evaluation
+-------------------
 
 This step evaluates the performance on both account level and transaction level.
 
@@ -327,6 +308,7 @@ This step evaluates the performance on both account level and transaction level.
 <a id="step11"/>
 
 ## Step 11: Production Scoring
+-------------------
 
 In this step, we showcase how to score one raw transaction to mimic the real scoring case.  This procedure will be called from our example website when a transaction occurs.  See [Typical Workflow](Typical.html#step5) for more information.
 

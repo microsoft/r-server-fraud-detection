@@ -19,12 +19,12 @@ solution.
     <div class="col-md-6">
         <div class="toc sql">
           <li><a href="#intro">Fraud Detection</a></li>
+          <li class="onp"><a href="#requirements">System Requirements</a></li>
           <li><a href="#step0" class="hdi">Step 0: Create Intermediate Directories</a></li>
           <li><a href="#step1">Step 1: Tagging</a></li>
           <li><a href="#step2">Step 2: Splitting and Preprocessing</a></li>
           <li><a href="#step3">Step 3: Feature Engineering</a></li>
           <li><a href="#step4">Step 4: Training, Testing and Evaluating</a></li>
-          <li class="sql"><a href="#requirements">System Requirements</a></li>
           <li><a href="#template-contents">Template Contents</a></li>
         </div>
         <div class="toc hdi">
@@ -116,6 +116,19 @@ enables the user to define the input and call all the steps.
   <li>Lets the user specify the paths to the working directories on the edge node and HDFS. We assume they already exist.</li>
   <li>Creates a directory, LocalModelsDir, that will store the model and other tables for use in the Production or Web Scoring stages (inside the fraud_dev main function).</li>
   <li>Updates the tables of the Production stage directory, ProdModelDir, with the contents of LocalModelsDir (inside the fraud_dev main function).</li>
+</ul>
+</div>
+
+<div id="requirements" class="onp">
+<h2> System Requirements</h2>
+<hr/>
+
+The following are required to run the scripts in this solution:
+<ul>
+<li>SQL Server 2016 with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
+<li>The SQL user name and password, and the user configured properly to execute R scripts in-memory.</li> 
+<li>SQL Database which the user has write permission and execute stored procedures.</li> 
+<li>For more information about SQL server 2016 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
 </ul>
 </div>
 

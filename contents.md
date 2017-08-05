@@ -9,10 +9,10 @@ title: Template Contents
 The following is the directory structure for this template:
 
 - [**Data**](#copy-of-input-datasets)  This contains the copy of the input data.
-- [**R**](#model-development-in-r)  This contains the R code to simulate the input datasets, pre-process them, create the analytical datasets, train the models, identify the champion model and provide recommendations.
+- [**R**](#model-development-in-r)  This contains the R code to upload the input datasets, pre-process them, create the analytical datasets, train and evaluate a model, and score data.
 - [**Resources**](#resources-for-the-solution-packet) This directory contains other resources for the solution package.
-- [**SQLR**](#operationalize-in-sql-2016) This contains T-SQL code to pre-process the datasets, train the models, identify the champion model and provide recommendations. It also contains a PowerShell script to automate the entire process, including loading the data into the database (not included in the T-SQL code).
-- [**RSparkCluster**](#hdinsight-solution-on-spark-cluster) This contains the R code to pre-process the datasets, train the models, identify the champion model and provide recommendations on a Spark cluster. 
+- [**SQLR**](#operationalize-in-sql-2016) This contains T-SQL code to pre-process the datasets, train the models, and score data. It also contains a PowerShell script to automate the entire process, including loading the data into the database (not included in the T-SQL code).
+- [**RSparkCluster**](#hdinsight-solution-on-spark-cluster) This contains the R code to pre-process the datasets, train ttrain and evaluate a model, and score data on a Spark cluster. 
 
 In this template with SQL Server R Services, two versions of the SQL implementation, and another version for HDInsight implementation:
 
@@ -63,8 +63,6 @@ These files are in the **SQLR** directory.
 <tr><td>ScoreOneTrans.sql  </td><td> Stored procedure to score one transaction   </td></tr>
 <tr><td>SortAcctTable.sql   </td><td> Stored procedure to create recordDateTime column for Account_Info table and sort the table  </td></tr>
 <tr><td> Step0_CreateTables.sql  </td><td> Creates initial tables from .csv files  </td></tr>
-<tr><td> Step10A_Evaluation.sql  </td><td> Stored procedure to generate fraud account level metrics  </td></tr>
-<tr><td> Step10B_Evaluation_AUC.sql  </td><td> Stored procedure to calculate AUC  </td></tr>
 <tr><td> Step1_MergeAcctInfo.sql  </td><td> Stored procedure to merge untagged transactions with account level infomation  </td></tr>
 <tr><td> Step2_Tagging.sql  </td><td> Stored procedure to tag transactions on account level  </td></tr>
 <tr><td> Step3_SplitData.sql  </td><td> Stored procedure to split data on account level   </td></tr>
@@ -74,6 +72,8 @@ These files are in the **SQLR** directory.
 <tr><td> Step7_FeatureEngineer.sql  </td><td> Stored procedure to perform feature engineering  </td></tr>
 <tr><td> Step8_Training.sql  </td><td> Stored procedure to train and save a gradient boosted tree model  </td></tr>
 <tr><td> Step9_Prediction.sql  </td><td> Stored procedure to score and save results to a sql table  </td></tr>
+<tr><td> Step10A_Evaluation.sql  </td><td> Stored procedure to generate fraud account level metrics  </td></tr>
+<tr><td> Step10B_Evaluation_AUC.sql  </td><td> Stored procedure to calculate AUC  </td></tr>
 <tr><td> UtilityFunctions.sql  </td><td> Creates functions which will be used  </td></tr>
 </table>
 
@@ -90,7 +90,6 @@ These files are in the **RSparkCluster** directory.
 <tr><th> File </th><th> Description </th></tr> 
 <tr><td> copy_dev_to_prod.R</td><td>Defines function, copy_to_prod, used in development_main.R </td></tr>
 <tr><td> data_generation.R</td><td>Used to generate data, used in development_main.R</td></tr>
-<tr><td> deployment_main.R</td><td>Deploys web scoring function as a web service</td></tr>
 <tr><td> in_memory_scoring.R</td><td>Performs in-memory scoring for batch scoring or for scoring remotely with a web service  </td></tr>
 <tr><td> production_main.R</td><td> Scores new data using subset of development steps</td></tr>
 <tr><td> step0_directories_creation.R</td><td>Creates initial directories</td></tr>
@@ -101,7 +100,7 @@ These files are in the **RSparkCluster** directory.
 <tr><td> step5_create_risk_tables.R</td><td> Creates the risk tables for various character variables </td></tr>
 <tr><td> step6_feature_engineering.R </td><td>Performs feature engineering </td></tr>
 <tr><td> step7_training.R </td><td> Trains a gradient boosted trees (GBT) model on input data  </td></tr>
-<tr><td> step8_prediction.R </td><td> Performs batch scoring and evaluation </td></tr>
+<tr><td> step8_prediction.R </td><td> Performs scoring </td></tr>
 <tr><td> step9_evaluation.R</td><td> Performs evaluation on a scored data set </td></tr>
 <tr><td> web_scoring_main.R</td><td> Defines and publishes the main web scoring function  </td></tr>
 </table>
@@ -114,8 +113,8 @@ These files are in the **RSparkCluster** directory.
 ------------------------------------
 
 <table class="table table-striped table-condensed">
-<tr><th> File </th><th> Description </th></tr>
-<tr><td> Images </td><td> Directory of images used for the  Readme.md  in this package </td></tr>
+<tr><th> Directory </th><th> Description </th></tr>
+<tr><td> ActionScripts</td><td> Contains scripts that are only meant to be run from the solution template deployment process</td></tr>
 </table>
 
 

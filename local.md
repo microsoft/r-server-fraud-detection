@@ -37,18 +37,6 @@ Perform these steps on your local computer.
 
 * This will create a folder **{{ site.folder_name }}** containing the full solution package.
 
-## On your local computer:  Install Packages
 
-There are R Packages required for this solution.  The following steps will install these packages into your R Client.
-
-1.  Open a terminal window or Windows PowerShell window.
-
-2.  CD to the **{{ site.folder_name }}/R** directory.
-
-3.  Run the following to install the required packages into SQL Server:
-
-    ```
-    Rscript install_local.R
-    ```
 
 <a href="Typical.html#step2">Return to Typical Workflow<a>

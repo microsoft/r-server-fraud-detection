@@ -3,6 +3,8 @@
 # Fraud Detection 
 ## Implemented on SQL Server 2016 R Services and HDInsight Spark
 
+> Discover more examples at [Microsoft Machine Learning Server](https://github.com/Microsoft/ML-Server)
+
 For all documentation, visit the [Fraud Detection website](https://microsoft.github.io/r-server-fraud-detection/).
 
 **NOTE:** Please don't use "Download ZIP" to get this repository, as it will change the line endings in the data files. Use "git clone" to get a local copy of this repository. 

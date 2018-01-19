@@ -185,11 +185,11 @@ Write-Host -ForeGroundColor 'cyan' (" Finished loading .csv File(s).")
 
 Write-Host -ForeGroundColor 'Cyan' (" Training Model and Scoring Data...")
 
+####TMpory Taking out of Training
 
-
-$query = "EXEC Initial_Run_Once_R"
+##$query = "EXEC Initial_Run_Once_R"
 #SqlServer\Invoke-Sqlcmd -ServerInstance $ServerName -Database $dbName -Query $query -ConnectionTimeout  0 -QueryTimeout 0
-SqlServer\Invoke-Sqlcmd -ServerInstance LocalHost -Database $dbName -Query $query -ConnectionTimeout  0 -QueryTimeout 0
+##SqlServer\Invoke-Sqlcmd -ServerInstance LocalHost -Database $dbName -Query $query -ConnectionTimeout  0 -QueryTimeout 0
 
 $Rend = Get-Date
 

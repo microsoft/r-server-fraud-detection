@@ -26,8 +26,8 @@ if (args.length>0) {
     var pw = args[1];    
 }
 else {
-    var user = 'XXYOURSQLPW';
-    var pw = 'XXYOURSQLUSER'; 
+    var user = 'XXYOURSQLUSER';
+    var pw = 'XXYOURSQLPW'; 
 }
 
 

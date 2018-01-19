@@ -30,10 +30,10 @@ All the steps can be executed on SQL Server client environment (such as SQL Serv
 
 To run the scripts, it requires the following:
 
- * SQL server 2016 CTP 3 with Microsoft R server installed and configured;
+ * SQL server (2016 or higher) with Microsoft R server installed and configured;
  * The SQL user name and password, and the user is configured properly to execute R scripts in-memory;
  * SQL Database which the user has write permission and execute stored procedures;
- * For more information about SQL server 2016 and R service, please visit: https://msdn.microsoft.com/en-us/library/mt604847.aspx
+ * For more information about SQL server 2017 and R service, please visit: https://msdn.microsoft.com/en-us/library/mt604847.aspx
 
 ### Workflow Automation
 -------------------

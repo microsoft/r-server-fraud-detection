@@ -24,7 +24,7 @@ Fraud detection is typically handled as a binary classification problem, but the
 <p></p>
 
 <div class="cig">
-On the VM created for you from the <a href="{{ site.deploy_url }}">Azure AI Gallery</a>, the SQL Server 2016 database <code>{{ site.folder_name }}</code> contains all the data and results of the end-to-end modeling process.  
+On the VM created for you from the <a href="{{ site.deploy_url }}">Azure AI Gallery</a>, the SQL Server 2017 database <code>{{ site.folder_name }}</code> contains all the data and results of the end-to-end modeling process.  
 <img src="images/diagramcig.jpg">
 
 </div>

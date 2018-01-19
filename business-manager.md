@@ -19,7 +19,7 @@ solution.
 
 <p></p>
 <div class="sql"> 
-SQL Server R Services takes advantage of the power of SQL Server 2016 and ScaleR (Microsoft R Server package) by allowing R to run on the same server as the database. It includes a database service that runs outside the SQL Server process and communicates securely with the R runtime. 
+SQL Server R Services takes advantage of the power of SQL Server (2016 or higher) and ScaleR (Microsoft R Server package) by allowing R to run on the same server as the database. It includes a database service that runs outside the SQL Server process and communicates securely with the R runtime. 
 <p></p>
 This solution shows how to preprocess data, create new features, train R models, and perform predictions in-database. The final table in the SQL Server database provides a predicted value for each transaction. This predicted value, which can be interpreted as a probability of fraud, can help you determine whether you wish to try to interrupt the transaction.
 <p></p>

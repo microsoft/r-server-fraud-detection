@@ -77,7 +77,7 @@ The cluster has been created and data loaded for you when you used the <code>Dep
 -----------------------------------------------------------------
 
 Now let's meet Debra, the Data Scientist. Debra's job is to use historical data to predict a model to detect fraud. 
-<span class="sql">Debra's preferred language for developing the models is using R and SQL. She uses Microsoft R Services with SQL Server 2016 as it provides the capability to run large datasets and also is not constrained by memory restrictions of Open Source R.
+<span class="sql">Debra's preferred language for developing the models is using R and SQL. She uses Microsoft R Services with SQL Server 2017 as it provides the capability to run large datasets and also is not constrained by memory restrictions of Open Source R.
 </span>
 <span class="hdi">Debra will develop these models using <a href="https://azure.microsoft.com/en-us/services/hdinsight/">HDInsight</a>, the managed cloud Hadoop solution with integration to Microsoft R Server.
 </span>  

@@ -16,12 +16,19 @@ app.use(express.static('public'));
 
 
 
+
 //
 // DB Connection
 //
 var args = process.argv.slice(2);
-var user = args[0];
-var pw = args[1];
+if (args.length>0) {
+    var user = args[0];
+    var pw = args[1];    
+}
+else {
+    var user = 'XXYOURSQLPW';
+    var pw = 'XXYOURSQLUSER'; 
+}
 
 
 var con = new Connection({ //fix this with fraud db info
@@ -29,7 +36,7 @@ var con = new Connection({ //fix this with fraud db info
     password: pw,
     server: 'localhost',
     // When you connect to Azure SQL Database, you need encrypt: true
-     options: {  encrypt: true, database: 'Fraud' }
+     options: {  encrypt: true, database: 'Fraud_R' }
 });
 
 con.on('connect', function(err) {

@@ -54,7 +54,7 @@ If you want to follow along and have <strong>not</strong> run the PowerShell scr
 
 <div class="cig">
 <p/><p>
-This step has already been done on your deployed Cortana Intelligence Gallery VM.
+This step has already been done on your deployed Azure AI Gallery VM.
 </p>
 </div>
 
@@ -66,7 +66,7 @@ You can perform these steps in your environment by using the instructions  <a hr
 
 <div class="hdi">
 <p/><p>
-The cluster has been created and data loaded for you when you used the <code>Deploy</code> button in the <a href="{{ site.deploy_url_hdi }}">Cortana Intelligence Gallery</a>. <strong>Once you complete the walkthrough, you will want to delete this cluster as it incurs expense whether it is in use or not - see <a href="hdinsight">HDInsight Cluster Maintenance</a> for more details.</strong>
+The cluster has been created and data loaded for you when you used the <code>Deploy</code> button in the <a href="{{ site.deploy_url_hdi }}">Azure AI Gallery</a>. <strong>Once you complete the walkthrough, you will want to delete this cluster as it incurs expense whether it is in use or not - see <a href="hdinsight">HDInsight Cluster Maintenance</a> for more details.</strong>
 </p>
 </div>
 

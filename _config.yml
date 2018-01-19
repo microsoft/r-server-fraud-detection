@@ -6,7 +6,7 @@ description: Use SQL Server 2016 + R Services to build and deploy a machine lear
 # site variables
 solution_name: Fraud Detection 
 folder_name: Fraud
-db_name: Fraud
+db_name: Fraud_R
 ps1_name: OnlineFraudDetection.ps1
 sql_image_url: images/fraudsql.jpg
 hdi_image_url: images/fraudhdi.jpg

@@ -19,10 +19,10 @@ library(RevoScaleR)
 ##########################################################################################################################################
 
 # Data sets full path. The paths below work if the working directory is set to the R scripts location. 
-Untagged_Transactions <- "../Data/untagged_Transactions.csv"
+Untagged_Transactions <- "../Data/Untagged_Transactions.csv"
 Account_Info <- "../Data/Account_Info.csv"
 #Fraud <- "../Data/Fraud.csv"
-Fraud_Transactions <- "../Data/fraudTransactions.csv"
+Fraud_Transactions <- "../Data/Fraud_Transactions.csv"
 
 
 # Creating the connection string. Specify:

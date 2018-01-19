@@ -35,7 +35,7 @@ WRITE-HOST " ServerName set to $ServerName"
 
 $db = if ($Prompt -eq 'Y') {Read-Host  -Prompt "Enter Desired Database Base Name"} else {$SolutionName} 
 
-$dataList = ("Account_Info", "Fraud", "Untagged_Transactions")
+$dataList = ("Account_Info", "Fraud_Transactions", "Untagged_Transactions")
 
 
 

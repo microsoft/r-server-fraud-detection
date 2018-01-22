@@ -66,7 +66,7 @@ Running this PowerShell script will create the data tables and stored procedures
 ## Review Data
 --------------
 
-Once the PowerShell script has completed successfully, log into the SQL Server Management Studio to view all the datasets that have been created in the `{{ site.db_name }}` and the `{{ site.db_name }}_Prod` databases.  
+Once the PowerShell script has completed successfully, log into the SQL Server Management Studio to view all the datasets that have been created in the `{{ site.db_name }}`  database.  
 Hit `Refresh` if necessary.
 <br/>
 

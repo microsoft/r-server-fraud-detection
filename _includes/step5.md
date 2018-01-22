@@ -11,7 +11,7 @@
 
 <pre class="highlight"><code>
     cd C:\Solutions\Fraud\Website
-    node server.js YOUR_SQL_USERNAME YOUR_SQL_PASSWORD
+    node server.js
 </code></pre>
 
 

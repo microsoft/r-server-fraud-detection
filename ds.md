@@ -58,15 +58,15 @@ The following data are provided in the Data directory:
     <th>Description</th>
   </tr>
   <tr>
-    <td>.\Data\accountInfo.csv</td>
+    <td>.\Data\Account_Info.csv</td>
     <td>Account information </td>
   </tr>
   <tr>
-    <td>.\Data\fraudTransactions.csv</td>
+    <td>.\Data\Fraud_Transactions.csv</td>
     <td>Raw fraud transaction data</td>
   </tr>
   <tr>
-    <td>.\Data\untaggedTransactions.csv</td>
+    <td>.\Data\Untagged_Transactions.csv</td>
     <td>Raw untagged transaction data without fraud tag</td>
   </tr>
 </table>
@@ -75,9 +75,9 @@ In this step, we'll create four tables. The first three are: `Untagged\_Transact
 
 Input:
 
-* untagged data: **untaggedTransactions.csv**
-* fraud data: **fraudTransactions.csv**
-* account data: **accountInfo.csv**
+* untagged data: **Untagged_Transactions.csv**
+* fraud data: **Fraud_Transactions.csv**
+* account data: **Account_Info.csv**
 
 Output:
 

@@ -81,14 +81,14 @@ In this step, we'll create four tables. The first three are: `Untagged_Transacti
 
 ### Input:
 
-* untagged data: **untaggedTransactions.csv**
-* fraud data: **fraudTransactions.csv**
-* account data: **accountInfo.csv**
+* untagged data: **Untagged_Transactions.csv**
+* fraud data: **Fraud_Transactions.csv**
+* account data: **Account_Info.csv**
 
 ### Output:
 
 * `Untagged_Transactions` table in SQL server
-* `Fraud` table in SQL server
+* `Fraud_Transactions` table in SQL server
 * `Account_Info` table in SQL server
 * `Transaction_History` table in SQL server
 

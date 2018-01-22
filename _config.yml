@@ -1,19 +1,19 @@
 author:
         name: Microsoft
 
-description: Use SQL Server 2016 + R Services to build and deploy a machine learning model for online fraud detection.
+description: Use SQL Server 2017 + R Services to build and deploy a machine learning model for online fraud detection.
 
 # site variables
 solution_name: Fraud Detection 
 folder_name: Fraud
-db_name: Fraud
+db_name: Fraud_R
 ps1_name: OnlineFraudDetection.ps1
 sql_image_url: images/fraudsql.jpg
 hdi_image_url: images/fraudhdi.jpg
 jupyter_name: Fraud_Detection_Notebook.ipynb
 
-cig_text: SQL Server 2016 on Azure
-onp_text: SQL Server 2016 On-Prem 
+cig_text: SQL Server 2017 on Azure
+onp_text: SQL Server 2017 On-Prem 
 hdi_text: HDInsight Spark 
 
 # urls, etc

@@ -65,7 +65,7 @@ solution.
 </div>
 
 <div class="sql">
-Data scientists who are testing and developing solutions can work from the convenience of their R IDE on their client machine, while <a href="https://msdn.microsoft.com/en-us/library/mt604885.aspx">setting the computation context to SQL</a> (see <strong>R</strong> folder for code).  They can also deploy the completed solutions to SQL Server 2016 by embedding calls to R in stored procedures (see <strong>SQLR</strong> folder for code). These solutions can then be further automated by the use of SQL Server Integration Services and SQL Server agent: a PowerShell script (.ps1 file) automates the running of the SQL code.
+Data scientists who are testing and developing solutions can work from the convenience of their R IDE on their client machine, while <a href="https://msdn.microsoft.com/en-us/library/mt604885.aspx">setting the computation context to SQL</a> (see <strong>R</strong> folder for code).  They can also deploy the completed solutions to SQL Server (2016 or higher) by embedding calls to R in stored procedures (see <strong>SQLR</strong> folder for code). These solutions can then be further automated by the use of SQL Server Integration Services and SQL Server agent: a PowerShell script (.ps1 file) automates the running of the SQL code.
 </div>
 <div class="hdi">
 Data scientists who are testing and developing solutions can work from the browser-based Open Source Edition of RStudio Server on the HDInsight Spark cluster edge node, while <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-r-server-compute-contexts">using a compute context</a> to control whether computation will be performed locally on the edge node, or whether it will be distributed across the nodes in the HDInsight Spark cluster. 
@@ -125,10 +125,10 @@ enables the user to define the input and call all the steps.
 
 The following are required to run the scripts in this solution:
 <ul>
-<li>SQL Server 2016 with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
+<li>SQL Server (2016 or higher) with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
 <li>The SQL user name and password, and the user configured properly to execute R scripts in-memory.</li> 
 <li>SQL Database which the user has write permission and execute stored procedures.</li> 
-<li>For more information about SQL server 2016 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
+<li>For more information about SQL server 2017 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
 </ul>
 </div>
 

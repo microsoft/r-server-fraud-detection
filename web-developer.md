@@ -40,7 +40,7 @@ To start the website, type the following commands into  a terminal window or pow
 
 ```
     cd C:\Solutions\Fraud\Website
-    node server.js YOUR_SQL_USERNAME YOUR_SQL_PASSWORD
+    node server.js
 ```
 
 You should see the following response:

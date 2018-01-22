@@ -32,7 +32,7 @@
 
 <h3>Input:</h3>
 <ul>
-  <li>Raw data: <strong>untaggedTransactions.csv</strong>, <strong>accountInfo.csv</strong>, and <strong>fraudTransactions.csv</strong>.</li>
+  <li>Raw data: <strong>Untagged_Transactions.csv</strong>, <strong>Account_Info.csv</strong>, and <strong>Fraud_Transactions.csv</strong>.</li>
 </ul>
 
 <h3>Output:</h3>

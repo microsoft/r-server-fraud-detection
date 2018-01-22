@@ -13,7 +13,7 @@ solution.
 
 Visual Studio needs to use R Server for the code for this solution.  Follow the instructions below to set up Visual Studio to use R Server. 
 <div class = "label label-info">
-On the VM deployed from <a href="{{ site.deploy_url }}">Cortana Intelligence Gallery</a> you may see an alert that the path for R is no longer found. There is no need to install R Client, simply update the path as shown below.
+On the VM deployed from <a href="{{ site.deploy_url }}">Azure AI Gallery</a> you may see an alert that the path for R is no longer found. There is no need to install R Client, simply update the path as shown below.
 </div>
 <p></p>
 <ol>
@@ -32,4 +32,4 @@ On the VM deployed from <a href="{{ site.deploy_url }}">Cortana Intelligence Gal
 
  
 
-<a href="CIG_Workflow.html#step2">Return to Typical Workflow for Cortana Intelligence Gallery Deployment<a>
+<a href="CIG_Workflow.html#step2">Return to Typical Workflow for Azure AI Gallery Deployment<a>

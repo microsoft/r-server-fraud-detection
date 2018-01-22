@@ -56,10 +56,10 @@ All the steps can be executed on SQL Server client environment (such as SQL Serv
 
 The following are required to run the scripts in this solution:
 <ul>
-<li>SQL Server 2016 with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
+<li>SQL Server (2016 or higher) with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
 <li>The SQL user name and password, and the user configured properly to execute R scripts in-memory.</li> 
 <li>SQL Database which the user has write permission and execute stored procedures.</li> 
-<li>For more information about SQL server 2016 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
+<li>For more information about SQL server 2017 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
 </ul>
 
 
@@ -81,14 +81,14 @@ In this step, we'll create four tables. The first three are: `Untagged_Transacti
 
 ### Input:
 
-* untagged data: **untaggedTransactions.csv**
-* fraud data: **fraudTransactions.csv**
-* account data: **accountInfo.csv**
+* untagged data: **Untagged_Transactions.csv**
+* fraud data: **Fraud_Transactions.csv**
+* account data: **Account_Info.csv**
 
 ### Output:
 
 * `Untagged_Transactions` table in SQL server
-* `Fraud` table in SQL server
+* `Fraud_Transactions` table in SQL server
 * `Account_Info` table in SQL server
 * `Transaction_History` table in SQL server
 
@@ -108,11 +108,16 @@ In this step, we merge the `Untagged_Transactions` table with `Account_Info` tab
 
 * `Untagged_Transactions_Acct` table
 
-### Related Files: 
+### Related Files:
 
 * **UtilityFunctions.sql**: Create utility functions to uniform transactionTime to 6 digit
 * **SortAcctTable.sql**: Create SQL stored procedure named `sortAcctTable` to sort `Account_Info` table.
 * **Step1_MergeAcctInfo.sql**: Create stored procedure named `MergeAcctInfo` to merge `Untagged_Transactions` table with `Account_Info` table.
+
+### Example:
+
+    EXEC sortAcctTable 'Account_Info'
+    EXEC MergeAcctInfo 'Untagged_Transactions'
 
 <a id="step2"/>
 
@@ -123,8 +128,9 @@ In this step, we tag the untagged data on account level based on the fraud data.
 
 ### Input:
 
+
 * `Untagged_Transactions_Acct` table
-* `Fraud` table
+* `Fraud_Transactions` table
 
 ### Output:
 
@@ -134,6 +140,10 @@ In this step, we tag the untagged data on account level based on the fraud data.
 
 * **Step2_Tagging.sql**: Create SQL stored procedure named `Tagging` to tag the data in account level.
 
+### Example:
+
+    EXEC Tagging 'Untagged_Transactions_Acct', 'Fraud_Transactions'
+
 <a id="step3"/>
 
 ## Step 3: Splitting Data
@@ -141,7 +151,8 @@ In this step, we tag the untagged data on account level based on the fraud data.
 
 In this step, we will hash accountID into 100 different hash code and split the whole data into training(70%) and testing(30%) based on the hash code, e.g., training = hash code <=70 and testing = hash code >70.
 
-### Input: 
+
+### Input:
 
 * `Tagged` table
 
@@ -153,6 +164,10 @@ In this step, we will hash accountID into 100 different hash code and split the 
 ### Related Files:
 
 * **Step3_SplitData.sql**: Create SQL stored procedure named `SplitData` to split data into training and testing set.
+
+### Example:
+
+    EXEC SplitData 'Tagged'
 
 <a id="step4"/>
 
@@ -173,6 +188,10 @@ In this step, we clean the tagged training data, i.e., filling missing values wi
 
 * **Step4_Preprocess.sql**: Create SQL stored procedure named `Preprocess` to do preprocessing
 
+### Example:
+
+    EXEC Preprocess 'Tagged_Training'
+
 <a id="step5"/>
 
 ## Step 5: Saving Transactions to Historical Table
@@ -191,6 +210,10 @@ In this step, we save the transactions to `Transaction_History` table which will
 ### Related Files:
 
 * **Step5_Save2History.sql**: Create SQL stored procedure named `Save2TransactionHistory` to save transactions to historical table. You may use the flag to control whether the historical table need to be truncated or not. e.g., `Exec Save2TransactionHistory 'Tagged_Training_Processed' ,'1'` means truncating historical table and saving transactions from table `Tagged_Training_Processed` to historical table.
+
+### Example:
+
+    EXEC Save2TransactionHistory 'Tagged_Training_Processed' ,'1'
 
 <a id="step6"/>
 
@@ -214,6 +237,10 @@ In this step, we create risk tables for bunch of categorical variables, such as 
 
 * **CreateRiskTable.sql**: Create SQL stored procedure named `CreateRiskTable` to generate one certain risk table for a certain variable.
 * **Step6_CreateRiskTables.sql**: Create SQL stored procedure named `CreateRiskTable_ForAll` to generate risk tables for all required variables.
+
+### Example:
+
+    EXEC CreateRiskTable_ForAll
 
 <a id="step7"/>
 
@@ -240,6 +267,10 @@ This step does feature engineering to training data set. We will generate three 
 
 * **Step7_FeatureEngineer.sql**: Create SQL stored procedure named `FeatureEngineer` to do feature engineering.
 
+### Example:
+
+    EXEC FeatureEngineer 'Tagged_Training_Processed'
+
 <a id="step8"/>
 
 ## Step 8: Model Training
@@ -258,6 +289,10 @@ In this step, we train a gradient boosting tree model with the training data set
 ### Related Files:
 
 * **Step8_Training.sql**: Create SQL stored procedure named `TrainModelR` to train gradient boosting tree model. 
+
+### Example:
+
+    EXEC TrainModelR 'Tagged_Training_Processed_Features'
 
 <a id="step9"/>
 
@@ -284,6 +319,11 @@ In this step we will do the batch scoring on testing data set including
 
 * **Step9_Prediction.sql**: Create SQL stored procedure named `PredictR` to do merging, preprocessing, feature engineering and scoring for new coming transactions.
 
+### Example:
+
+    EXEC PredictR 'Tagged_Testing', 'Predict_Score', '0'
+
+
 <a id="step10"/>
 
 ## Step 10: Evaluation
@@ -305,6 +345,11 @@ This step evaluates the performance on both account level and transaction level.
 * **Step10A_Evaluation.sql**: Create SQL stored procedure named `EvaluateR` to evaluate performance on account level. 
 * **Step10B_Evaluation_AUC.sql**: Create SQL stored procedure named `EvaluateR_auc` to evaluate performance on transaction level.
 
+### Example:
+
+    EXEC EvaluateR 'Predict_Score'
+    EXEC EvaluateR_auc 'Predict_Score'
+
 <a id="step11"/>
 
 ## Step 11: Production Scoring
@@ -320,3 +365,7 @@ In this step, we showcase how to score one raw transaction to mimic the real sco
 ### Output:
 
 * `Predict_Score_Single_Transaction` table: table stores the score of the new input transaction above.
+
+### Example:
+
+    EXEC ScoreOneTrans 'C34F7C20-6203-42F5-A41B-AF26177345BE,A1055521358474530,2405.33,2405.33,USD,NULL,20130409,102958,14,A,P,NULL,NULL,NULL,92.97,dubayy,0,ae,FALSE,NULL,en-US,CREDITCARD,AMEX,NULL,NULL,NULL,33071,FL,US,NULL,NULL,NULL,NULL,NULL,NULL,M,NULL,0,4,NULL'

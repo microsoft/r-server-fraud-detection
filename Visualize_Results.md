@@ -61,7 +61,7 @@ These instructions show you how to replace the cached data in the PowerBI dashbo
 </ol>
 
 <div class="alert alert-info onp" role="alert">
-Return to the <a href="Visualize_Results.html?path=cig">{{ site.cig_text }} instruction</a> if you have deployed your solution from the Cortana Intelligence Gallery.
+Return to the <a href="Visualize_Results.html?path=cig">{{ site.cig_text }} instruction</a> if you have deployed your solution from the Azure AI Gallery.
 </div>
 
 [&lt; Home](index.html)

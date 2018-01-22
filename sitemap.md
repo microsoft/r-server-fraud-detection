@@ -18,7 +18,7 @@ title: Site Map
 * [HDInsight Cluster Maintenance (HDI)](hdinsight.html)
 * [Configuring Operationalization with R Server (HDI)](deployr.html) 
 * [Quick Start](START_HERE.html)
-    * [On-Prem: Setup SQL Server 2016 ](SetupSQL.html)
+    * [On-Prem: Setup SQL Server ](SetupSQL.html)
     * [PowerShell Instructions (SQL)](Powershell_Instructions.html)
 * [Visualizing Results with PowerBI](Visualize_Results.html)
 * [Input Data](input_data.html)

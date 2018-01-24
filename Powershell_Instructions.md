@@ -45,7 +45,7 @@ Running this PowerShell script will create the data tables and stored procedures
 
 1. Log onto the machine that contains the SQL Server you wish to use.
 
-2. Download  <a href="https://raw.githubusercontent.com/Microsoft/r-server-campaign-optimization/master/Resources/ActionScripts/SetupVM.ps1" download>SetupVM.ps1</a> to your computer.
+2. Download  <a href="https://raw.githubusercontent.com/Microsoft/r-server-fraud-detection/master/Resources/ActionScripts/SetupVM.ps1" download>SetupVM.ps1</a> to your computer.
 
 1.  Right click on SetupVM.ps1 and select `Run with PowerShell`.
 

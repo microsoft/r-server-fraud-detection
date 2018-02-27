@@ -2,7 +2,7 @@
 
 [CmdletBinding()]
 param(
-[parameter(Mandatory=$True, Position=1)]
+[parameter(Mandatory=$False, Position=1)]
 [ValidateNotNullOrEmpty()] 
 [string]$serverName,
 

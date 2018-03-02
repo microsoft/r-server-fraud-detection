@@ -62,7 +62,7 @@ Running this PowerShell script will create the data tables and stored procedures
     * Elevates the login user's credentials to SA.
     * Reconfigures SQL Server to allow running of external scripts.
     * Clones the solution code and data into the c:\Solutions\{{ site.folder_name }} directory
-    * Creates the solution database `{{ site.db_name }}_R` and configures an ODBC connection to the database.
+    * Creates the solution database `{{ site.db_name }}` and configures an ODBC connection to the database.
     * Executes the stored procedure `Initial_Run_Once_R` to run the entire workflow for this solution.
 
 

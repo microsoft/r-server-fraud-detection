@@ -226,7 +226,7 @@ $shortcut.Save()
 # install modules for sample website
 if($SampleWeb  -eq "Yes")
 {
-cd $SolutionPath\Website\
+Set-Location $SolutionPath\Website\
 npm install
 (Get-Content $SolutionPath\Website\server.js).replace('XXYOURSQLPW', $password) | Set-Content $SolutionPath\Website\server.js
 (Get-Content $SolutionPath\Website\server.js).replace('XXYOURSQLUSER', $username) | Set-Content $SolutionPath\Website\server.js

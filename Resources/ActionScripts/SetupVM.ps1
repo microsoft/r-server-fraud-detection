@@ -20,6 +20,21 @@ param(
 )
 
 
+###Check to see if user is Admin
+
+$isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
+        [Security.Principal.WindowsBuiltInRole] "Administrator")
+        
+if ($isAdmin -eq 'True') {
+
+
+
+
+    $setupLog = "c:\tmp\setup_log.txt"
+    Start-Transcript -Path $setupLog -Append
+    $startTime = Get-Date
+    Write-Host "Start time:" $startTime 
+
 #################################################################
 ##DSVM Does not have SQLServer Powershell Module Install or Update 
 #################################################################
@@ -56,6 +71,7 @@ $InstallR = 'Yes'  ## If Solution has a R Version this should be 'Yes' Else 'No'
 $InstallPy = 'No' ## If Solution has a Py Version this should be 'Yes' Else 'No'
 $SampleWeb = 'Yes' ## If Solution has a Sample Website  this should be 'Yes' Else 'No' 
 $EnableFileStream = 'No' ## If Solution Requires FileStream DB this should be 'Yes' Else 'No' 
+$isMixedMode = 'Yes'
 $Prompt = 'N'
 
 
@@ -73,14 +89,7 @@ $SolutionData = $SolutionPath + "\Data\"
 
 
 
-####$Query = "SELECT SERVERPROPERTY('ServerName')"
-##$si = invoke-sqlcmd -Query $Query
-##$si = $si.Item(0)
 
-
-###$serverName = if($serverName -eq $null) {$si}
-
-##WRITE-HOST " ServerName set to $ServerName"
 
 
 
@@ -125,18 +134,26 @@ If ($EnableFileStream -eq 'Yes')
 #Configure SQL to Run our Solutions 
 ############################################################################################
 
-#Write-Host -ForegroundColor 'Cyan' " Switching SQL Server to Mixed Mode"
+    $Query = "SELECT SERVERPROPERTY('ServerName')"
+    $si = invoke-sqlcmd -Query $Query
+    $si = $si.Item(0)
+    $serverName = if ($serverName -eq $null) {$si}
+    WRITE-HOST " ServerName set to $ServerName"
 
-$setupLog = "c:\tmp\setup_log.txt"
-Start-Transcript -Path $setupLog -Append
-$startTime = Get-Date
-Write-Host -ForegroundColor 'Green'  "  Start time:" $startTime 
 
+    ### Change Authentication From Windows Auth to Mixed Mode 
+    if ($isMixedMode = 'Yes') {
+        Write-Host ("Switching SQL Server to Mixed Mode")
+        Invoke-Sqlcmd -Query "EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'LoginMode', REG_DWORD, 2;" -ServerInstance "LocalHost" 
 
-### Change Authentication From Windows Auth to Mixed Mode 
-Invoke-Sqlcmd -Query "EXEC xp_instance_regwrite N'HKEY_LOCAL_MACHINE', N'Software\Microsoft\MSSQLServer\MSSQLServer', N'LoginMode', REG_DWORD, 2;" -ServerInstance "LocalHost" 
+        $Query = "CREATE LOGIN $username WITH PASSWORD=N'$password', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF"
+        Invoke-Sqlcmd -Query $Query -ErrorAction SilentlyContinue
 
-Write-Host -ForeGroundColor 'cyan' " Configuring SQL to allow running of External Scripts "
+        $Query = "ALTER SERVER ROLE [sysadmin] ADD MEMBER $username"
+        Invoke-Sqlcmd -Query $Query -ErrorAction SilentlyContinue
+    }
+
+Write-Host ("Configuring SQL to allow running of External Scripts")
 ### Allow Running of External Scripts , this is to allow R Services to Connect to SQL
 Invoke-Sqlcmd -Query "EXEC sp_configure  'external scripts enabled', 1"
 
@@ -163,33 +180,26 @@ if ($EnableFileStream -eq 'Yes')
     }
 ELSE
     { 
-    Write-Host -ForeGroundColor 'cyan' " Restarting SQL Services "
+    Write-Host ("Restarting SQL Services")
     ### Changes Above Require Services to be cycled to take effect 
     ### Stop the SQL Service and Launchpad wild cards are used to account for named instances  
     Restart-Service -Name "MSSQ*" -Force
 }
-### Start the SQL Service 
-#Start-Service -Name "MSSQ*"
-#Write-Host -ForegroundColor 'Cyan' " SQL Services Restarted"
 
 
-$Query = "CREATE LOGIN $username WITH PASSWORD=N'$password', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF"
-Invoke-Sqlcmd -Query $Query -ErrorAction SilentlyContinue
 
-$Query = "ALTER SERVER ROLE [sysadmin] ADD MEMBER $username"
-Invoke-Sqlcmd -Query $Query -ErrorAction SilentlyContinue
 
 
 ####Run Configure SQL to Create Databases and Populate with needed Data
 $ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $ServerName $SolutionName $InstallPy $InstallR $Prompt"
 Invoke-Expression $ConfigureSQL 
 
-Write-Host -ForegroundColor 'Cyan' " Done with configuration changes to SQL Server"
+Write-Host ("Done with configuration changes to SQL Server")
 
 
 
 
-Write-Host -ForeGroundColor cyan " Installing latest Power BI..."
+Write-Host ("Installing latest Power BI...")
 # Download PowerBI Desktop installer
 Start-BitsTransfer -Source "https://go.microsoft.com/fwlink/?LinkId=521662&clcid=0x409" -Destination powerbi-desktop.msi
 
@@ -213,37 +223,13 @@ $shortcut.TargetPath = $solutionPath
 $shortcut.Save()
 
 
-
-## copy Jupyter Notebook files
-Move-Item $SolutionPath\R\$JupyterNotebook  c:\tmp\
-sed -i "s/XXYOURSQLPW/$password/g" c:\tmp\$JupyterNotebook
-sed -i "s/XXYOURSQLUSER/$username/g" c:\tmp\$JupyterNotebook
-Move-Item  c:\tmp\$JupyterNotebook $SolutionPath\R\
-
-
-
-
-#cp $SolutionData*.csv  c:\dsvm\notebooks
- # substitute real username and password in notebook file
-#XXXXXXXXXXChange to NEw NotebookNameXXXXXXXXXXXXXXXXXX# 
-
-if ($InstallPy -eq "Yes")
-{
-    Move-Item $SolutionPath\Python\$JupyterNotebook  c:\tmp\
-    sed -i "s/XXYOURSQLPW/$password/g" c:\tmp\$JupyterNotebook
-    sed -i "s/XXYOURSQLUSER/$username/g" c:\tmp\$JupyterNotebook
-    Move-Item  c:\tmp\$JupyterNotebook $SolutionPath\Python\
-}
-
 # install modules for sample website
 if($SampleWeb  -eq "Yes")
 {
 cd $SolutionPath\Website\
 npm install
-Move-Item $SolutionPath\Website\server.js  c:\tmp\
-sed -i "s/XXYOURSQLPW/$password/g" c:\tmp\server.js
-sed -i "s/XXYOURSQLUSER/$username/g" c:\tmp\server.js
-Move-Item  c:\tmp\server.js $SolutionPath\Website
+(Get-Content $SolutionPath\Website\server.js).replace('XXYOURSQLPW', $password) | Set-Content $SolutionPath\Website\server.js
+(Get-Content $SolutionPath\Website\server.js).replace('XXYOURSQLUSER', $username) | Set-Content $SolutionPath\Website\server.js
 }
 
 $endTime = Get-Date
@@ -257,10 +243,18 @@ Stop-Transcript
 
 ##Launch HelpURL 
 Start-Process "https://microsoft.github.io/$SolutionFullName/Typical.html"
+    
 
+## Close Powershell if not run on 
+   ## if ($baseurl)
+   Exit-PSHostProcess
+   EXIT
+}
 
-
-
+ELSE 
+{ 
+   Write-Host "To install this Solution you need to run Powershell as an Administrator. This program will close automatically in 20 seconds"
+   Start-Sleep -s 20
 ## Close Powershell 
 Exit-PSHostProcess
-EXIT 
+EXIT }

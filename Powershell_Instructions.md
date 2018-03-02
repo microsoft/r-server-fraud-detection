@@ -45,13 +45,15 @@ Running this PowerShell script will create the data tables and stored procedures
 
 1. Log onto the machine that contains the SQL Server you wish to use.
 
-2. Download  <a href="https://raw.githubusercontent.com/Microsoft/r-server-fraud-detection/master/Resources/ActionScripts/SetupVM.ps1" download>SetupVM.ps1</a> to your computer.
+1. Download  <a href="https://raw.githubusercontent.com/Microsoft/r-server-fraud-detection/master/Resources/ActionScripts/SetupVM.ps1" download>SetupVM.ps1</a> to your computer.
 
-1.  Right click on SetupVM.ps1 and select `Run with PowerShell`.
+1. Open a command or PowerShell window as Administrator.
 
-1.  Answer `Y` if asked if it is ok to execute this script.
+1. CD to the directory where you downloaded the above .ps1 file and execute the command:
 
-1.  When prompted, enter the servername, username, and password for your SQL 2016 or SQL 2017 server. Use the username and password of the user who will be creating the solution. 
+    .\SetupVM.ps1
+
+1. Answer the prompts.
 
 1. This will make the following modification to your SQL Server:
     * Installs the SQL Server PowerShell module. If this is already installed, it will update it if necessary.
@@ -60,7 +62,8 @@ Running this PowerShell script will create the data tables and stored procedures
     * Elevates the login user's credentials to SA.
     * Reconfigures SQL Server to allow running of external scripts.
     * Clones the solution code and data into the c:\Solutions\{{ site.folder_name }} directory
-    * Creates the solution database `{{ site.db_name }}` and configures an ODBC connection to the database.
+    * Creates the solution database `{{ site.db_name }}_R` and configures an ODBC connection to the database.
+    * Executes the stored procedure `Initial_Run_Once_R` to run the entire workflow for this solution.
 
 
 ## Review Data

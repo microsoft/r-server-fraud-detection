@@ -140,7 +140,7 @@ BEGIN
 
 	ALTER ROLE [db_ddladmin] ADD MEMBER [<ui>]
 	'
-	SET @Qry = REPLACE(REPLACE(@qry,'<ui>', @ui),'<dbName>',@DbName) 
+	SET @Qry = REPLACE(REPLACE(@qry,'<ui>', @ui),'<db>',@DbName) 
 	
 	EXEC (@Qry)
 	--SELECT @Qry

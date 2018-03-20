@@ -52,12 +52,6 @@ Else
     Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
 
 
-
-
-#$Prompt= if ($Prompt -match '^y(es)?$') {'Y'} else {'N'}
-$Prompt = 'N'
-
-
 ##Change Values here for Different Solutions 
 $SolutionName = "Fraud"
 $SolutionFullName = "r-server-fraud-detection" 
@@ -66,7 +60,7 @@ $Shortcut = "frauddetection_Help.url"
 
 
 ### DON'T FORGET TO CHANGE TO MASTER LATER...
-$Branch = "master" 
+$Branch = "dev" 
 $InstallR = 'Yes'  ## If Solution has a R Version this should be 'Yes' Else 'No'
 $InstallPy = 'No' ## If Solution has a Py Version this should be 'Yes' Else 'No'
 $SampleWeb = 'Yes' ## If Solution has a Sample Website  this should be 'Yes' Else 'No' 
@@ -137,7 +131,7 @@ If ($EnableFileStream -eq 'Yes')
     $Query = "SELECT SERVERPROPERTY('ServerName')"
     $si = invoke-sqlcmd -Query $Query
     $si = $si.Item(0)
-    $serverName = if ($serverName -eq $null) {$si}
+    $serverName = if ($serverName -eq $null) {$si} else {$serverName}
     WRITE-HOST " ServerName set to $ServerName"
 
 

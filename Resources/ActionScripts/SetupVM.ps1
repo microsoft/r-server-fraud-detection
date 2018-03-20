@@ -131,7 +131,8 @@ If ($EnableFileStream -eq 'Yes')
     $Query = "SELECT SERVERPROPERTY('ServerName')"
     $si = invoke-sqlcmd -Query $Query
     $si = $si.Item(0)
-    $serverName = if ($serverName -eq $null) {$si} else {$serverName}
+
+    IF([string]::IsNullOrEmpty($serverName)) {$si} else {$serverName}
     WRITE-HOST " ServerName set to $ServerName"
 
 
@@ -185,7 +186,7 @@ ELSE
 
 
 ####Run Configure SQL to Create Databases and Populate with needed Data
-$ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $ServerName $SolutionName $InstallPy $InstallR $Prompt"
+$ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $ServerName $SolutionName $InstallPy $InstallR"
 Invoke-Expression $ConfigureSQL 
 
 Write-Host ("Done with configuration changes to SQL Server")

@@ -55,7 +55,7 @@ Else
 ##Change Values here for Different Solutions 
 $SolutionName = "Fraud"
 $SolutionFullName = "r-server-fraud-detection" 
-$JupyterNotebook = "Fraud_Detection_Notebook.ipynb"
+##$JupyterNotebook = "Fraud_Detection_Notebook.ipynb"
 $Shortcut = "frauddetection_Help.url"
 
 
@@ -180,8 +180,6 @@ ELSE
     ### Stop the SQL Service and Launchpad wild cards are used to account for named instances  
     Restart-Service -Name "MSSQ*" -Force
 }
-
-
 
 
 

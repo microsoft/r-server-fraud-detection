@@ -30,7 +30,12 @@ These instructions show you how to replace the cached data in the PowerBI dashbo
 <span class="cig"><strong>{{ site.cig_text }}</strong> solution. </span>
 <span class="onp"><strong>{{ site.onp_text }}</strong> solution, or any SQL Server other than `localhost`. </span>
 <span class="hdi"><strong>{{ site.hdi_text }}</strong> solution. </span>
-  
+
+First, try refreshing the data using the <code>Refresh</code> button on the toolbar.
+Use your Windows credentials if prompted.
+
+If this does not work, you may need to modify the connection information by using the steps below.
+
 <ol>
 <li class="cig">Open the <strong>{{ site.pbix_name }}</strong> file from the <strong>Desktop/{{ site.folder_name }}</strong> folder on your VM. </li>
 <li class="onp">Download and open the <a href="{{ site.pbix_sqldownload_url }}" target="_blank">{{ site.pbix_name }}</a> file</li>
@@ -41,7 +46,6 @@ These instructions show you how to replace the cached data in the PowerBI dashbo
 <li class="hdi">Replace <code>sdglcr2</code> with your cluster name and click on <code>Done</code>. (The full address will be <strong>http://CLUSTERNAME.azurehdinsight.net</strong>.)
 <img src="images/scoresdata.png"> </li>
 <li class="onp hdi">After a moment you'll see an alert asking for Permision to run the query.  Click on <code>Edit Permission</code> </li>
-
 
 <li class="cig">Press <code>Refresh</code> on the top toolbar. </li>
 

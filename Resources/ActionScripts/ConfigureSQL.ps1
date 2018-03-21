@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
 [parameter(Mandatory=$false, Position=1)]
-[string]$ServerName,
+[string]$serverName,
 
 [parameter(Mandatory=$true, Position=2)]
 [string]$SolutionName,

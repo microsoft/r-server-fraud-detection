@@ -36,12 +36,7 @@ if ($isAdmin -eq 'True') {
     Write-Host "Start time:" $startTime 
 
     
-    $Query = "SELECT SERVERPROPERTY('ServerName')"
-    $si = invoke-sqlcmd -ServerInstance LOCALHOST -Query $Query
-    IF([string]::IsNullOrEmpty($serverName)) 
-    {$si.Item(0)} else {$serverName}
 
-    Write-Host "Servername set to $serverName"
 
 
 
@@ -138,13 +133,12 @@ If ($EnableFileStream -eq 'Yes')
 ############################################################################################
 #Configure SQL to Run our Solutions 
 ############################################################################################
+$Query = "SELECT SERVERPROPERTY('ServerName')"
+$si = SqlServer\invoke-sqlcmd -ServerInstance LOCALHOST -Query $Query
+IF([string]::IsNullOrEmpty($serverName)) 
+{$si.Item(0)} else {$serverName}
 
-    # $Query = "SELECT SERVERPROPERTY('ServerName')"
-    # $si = invoke-sqlcmd -Query $Query
-    # $si = $si.Item(0)
-
-    # IF([string]::IsNullOrEmpty($serverName)) {$si} else {$serverName}
-    # WRITE-HOST " ServerName set to $ServerName"
+Write-Host "Servername set to $serverName"
 
 
     ### Change Authentication From Windows Auth to Mixed Mode 

@@ -13,7 +13,7 @@ param(
 [string]$InstallR
 )
 
-
+Write-Host "$serverName is the servername we are using" 
 $db = $SolutionName
 
 $dataList = ("Account_Info", "Fraud_Transactions", "Untagged_Transactions")

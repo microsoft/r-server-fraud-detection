@@ -89,9 +89,6 @@ $dbName = $SolutionName
 
 
 
-
-
-
 ##########################################################################
 #Clone Data from GIT
 ##########################################################################
@@ -104,14 +101,11 @@ ELSE {Invoke-Expression $clone}
 
 If ($InstalR -eq 'Yes')
 {
-Write-Host -ForeGroundColor magenta "Installing R Packages"
+Write-Host "Installing R Packages"
 Set-Location "C:\Solutions\$SolutionName\Resources\ActionScripts\"
 # install R Packages
 Rscript install.R 
 }
-
-
-
 
 
 ## if FileStreamDB is Required Alter Firewall ports for 139 and 445
@@ -119,13 +113,13 @@ if ($EnableFileStream -eq 'Yes')
     {
     netsh advfirewall firewall add rule name="Open Port 139" dir=in action=allow protocol=TCP localport=139
     netsh advfirewall firewall add rule name="Open Port 445" dir=in action=allow protocol=TCP localport=445
-    Write-Host -ForeGroundColor cyan " Firewall as been opened for filestream access..."
+    Write-Host "Firewall as been opened for filestream access..."
     }
 If ($EnableFileStream -eq 'Yes')
     {
     Set-Location "C:\Program Files\Microsoft\ML Server\PYTHON_SERVER\python.exe" 
     .\setup.py install
-    Write-Host -ForeGroundColor cyan " Py Instal has been updated to latest version..."
+    Write-Host "Py Instal has been updated to latest version..."
     }
 
 
@@ -161,7 +155,7 @@ Invoke-Sqlcmd -Query "EXEC sp_configure  'external scripts enabled', 1"
 
 ### Force Change in SQL Policy on External Scripts 
 Invoke-Sqlcmd -Query "RECONFIGURE WITH OVERRIDE" 
-Write-Host -ForeGroundColor 'cyan' " SQL Server Configured to allow running of External Scripts "
+Write-Host "SQL Server Configured to allow running of External Scripts "
 
 ### Enable FileStreamDB if Required by Solution 
 if ($EnableFileStream -eq 'Yes') 
@@ -215,7 +209,7 @@ if (!$?) {
 ##Create Shortcuts and Autostart Help File 
 Copy-Item "$ScriptPath\$Shortcut" C:\Users\Public\Desktop\
 Copy-Item "$ScriptPath\$Shortcut" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\"
-Write-Host -ForeGroundColor cyan " Help Files Copied to Desktop"
+Write-Host ("Help Files Copied to Desktop")
 
 
 $WsShell = New-Object -ComObject WScript.Shell
@@ -235,9 +229,9 @@ npm install
 
 $endTime = Get-Date
 
-Write-Host -foregroundcolor 'green'(" $SolutionFullName Workflow Finished Successfully!")
+Write-Host ("$SolutionFullName Workflow Finished Successfully!")
 $Duration = New-TimeSpan -Start $StartTime -End $EndTime 
-Write-Host -ForegroundColor 'green'(" Total Deployment Time = $Duration") 
+Write-Host ("Total Deployment Time = $Duration") 
 
 Stop-Transcript
 

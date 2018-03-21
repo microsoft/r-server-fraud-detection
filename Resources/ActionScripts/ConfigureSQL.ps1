@@ -48,7 +48,7 @@ if ($isCompatible -eq 'Yes' -and $InstallPy -eq 'Yes') {
     Write-Host "  Creating SQL Database for Py "
 
 
-    Write-Host -ForeGroundColor 'cyan' (" Using $ServerName SQL Instance") 
+    Write-Host ("Using $ServerName SQL Instance") 
 
     ## Create PY Server DB
     $dbName = $db + "_Py"
@@ -80,7 +80,7 @@ Add-OdbcDsn -Name $OdbcName -DriverName "ODBC Driver 13 for SQL Server" -DsnType
 else 
 {
     if ($isCompatible -eq 'Yes' -and $InstallPy -eq 'Yes') {"This Version of SQL is not compatible with Py , Py Code and DB's will not be Created "}
-    else {" There is not a py version of this solution"}
+    else {"There is not a py version of this solution"}
 }
 
  
@@ -168,7 +168,6 @@ Write-Host ("Training Model and Scoring Data...")
 
 
 $query = "EXEC Initial_Run_Once_R"
-#SqlServer\Invoke-Sqlcmd -ServerInstance $ServerName -Database $dbName -Query $query -ConnectionTimeout  0 -QueryTimeout 0
 SqlServer\Invoke-Sqlcmd -ServerInstance LocalHost -Database $dbName -Query $query -ConnectionTimeout  0 -QueryTimeout 0
 
 $Rend = Get-Date

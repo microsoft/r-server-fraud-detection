@@ -1,15 +1,15 @@
 [CmdletBinding()]
 param(
-[parameter(Mandatory=$true, Position=1)]
+[parameter(Mandatory=$false, Position=1)]
 [string]$ServerName,
 
 [parameter(Mandatory=$true, Position=2)]
 [string]$SolutionName,
 
-[parameter(Mandatory=$true, Position=3)]
+[parameter(Mandatory=$false, Position=3)]
 [string]$InstallPy,
 
-[parameter(Mandatory=$true, Position=4)]
+[parameter(Mandatory=$false, Position=4)]
 [string]$InstallR
 )
 

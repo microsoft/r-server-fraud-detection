@@ -20,7 +20,7 @@ $dataList = ("Account_Info", "Fraud_Transactions", "Untagged_Transactions")
 
 ##########################################################################
 
-# Create Database and BaseTables 
+# Create Database and BaseTables test
 
 #########################################################################
 

@@ -30,10 +30,15 @@ if ($isAdmin -eq 'True') {
 
 
 
-    $setupLog = "c:\tmp\setup_log.txt"
+    $setupLog = "c:\tmp\fraud_setup_log.txt"
     Start-Transcript -Path $setupLog -Append
     $startTime = Get-Date
     Write-Host "Start time:" $startTime 
+
+    
+
+
+
 
 #################################################################
 ##DSVM Does not have SQLServer Powershell Module Install or Update 
@@ -52,21 +57,14 @@ Else
     Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
 
 
-
-
-#$Prompt= if ($Prompt -match '^y(es)?$') {'Y'} else {'N'}
-$Prompt = 'N'
-
-
 ##Change Values here for Different Solutions 
 $SolutionName = "Fraud"
 $SolutionFullName = "r-server-fraud-detection" 
-$JupyterNotebook = "Fraud_Detection_Notebook.ipynb"
 $Shortcut = "frauddetection_Help.url"
 
 
 ### DON'T FORGET TO CHANGE TO MASTER LATER...
-$Branch = "master" 
+$Branch = "dev" 
 $InstallR = 'Yes'  ## If Solution has a R Version this should be 'Yes' Else 'No'
 $InstallPy = 'No' ## If Solution has a Py Version this should be 'Yes' Else 'No'
 $SampleWeb = 'Yes' ## If Solution has a Sample Website  this should be 'Yes' Else 'No' 
@@ -86,6 +84,7 @@ $SolutionPath = $solutionTemplatePath + '\' + $checkoutDir
 $desktop = "C:\Users\Public\Desktop\"
 $scriptPath = $SolutionPath + "\Resources\ActionScripts\"
 $SolutionData = $SolutionPath + "\Data\"
+$dbName = $SolutionName
 
 
 
@@ -133,12 +132,15 @@ If ($EnableFileStream -eq 'Yes')
 ############################################################################################
 #Configure SQL to Run our Solutions 
 ############################################################################################
+    IF([string]::IsNullOrEmpty($serverName))   
+        {$Query = "SELECT SERVERPROPERTY('ServerName')"
+        $si = invoke-sqlcmd  -Query $Query
+        $si = $si.Item(0)}
+    else 
+        {$si = $serverName}
+    $serverName = $si
 
-    $Query = "SELECT SERVERPROPERTY('ServerName')"
-    $si = invoke-sqlcmd -Query $Query
-    $si = $si.Item(0)
-    $serverName = if ($serverName -eq $null) {$si}
-    WRITE-HOST " ServerName set to $ServerName"
+    Write-Host "Servername set to $serverName"
 
 
     ### Change Authentication From Windows Auth to Mixed Mode 
@@ -188,10 +190,9 @@ ELSE
 
 
 
-
-
 ####Run Configure SQL to Create Databases and Populate with needed Data
-$ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $ServerName $SolutionName $InstallPy $InstallR $Prompt"
+
+$ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $serverName $dbName $InstallPy $InstallR"
 Invoke-Expression $ConfigureSQL 
 
 Write-Host ("Done with configuration changes to SQL Server")

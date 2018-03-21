@@ -37,7 +37,7 @@ if ($isAdmin -eq 'True') {
 
     
     $Query = "SELECT SERVERPROPERTY('ServerName')"
-    $si = invoke-sqlcmd -Query $Query
+    $si = invoke-sqlcmd -ServerInstance LOCALHOST -Query $Query
     IF([string]::IsNullOrEmpty($serverName)) 
     {$si.Item(0)} else {$serverName}
 

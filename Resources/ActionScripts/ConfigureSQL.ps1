@@ -1,20 +1,21 @@
 [CmdletBinding()]
 param(
-[parameter(Mandatory=$false, Position=1)]
+[parameter(Mandatory=$true, Position=1)]
 [string]$serverName,
 
 [parameter(Mandatory=$true, Position=2)]
 [string]$SolutionName,
 
-[parameter(Mandatory=$false, Position=3)]
+[parameter(Mandatory=$true, Position=3)]
 [string]$InstallPy,
 
-[parameter(Mandatory=$false, Position=4)]
+[parameter(Mandatory=$true, Position=4)]
 [string]$InstallR
 )
 
-Write-Host "$serverName is the servername we are using" 
-$db = $SolutionName
+Write-Host "$serverName is the servername we are using, $dbName is the dbName" 
+
+$db = $dbName
 
 $dataList = ("Account_Info", "Fraud_Transactions", "Untagged_Transactions")
 

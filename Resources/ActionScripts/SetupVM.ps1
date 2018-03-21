@@ -80,6 +80,7 @@ $SolutionPath = $solutionTemplatePath + '\' + $checkoutDir
 $desktop = "C:\Users\Public\Desktop\"
 $scriptPath = $SolutionPath + "\Resources\ActionScripts\"
 $SolutionData = $SolutionPath + "\Data\"
+$dbName = $SolutionName
 
 
 
@@ -184,7 +185,9 @@ ELSE
 
 
 ####Run Configure SQL to Create Databases and Populate with needed Data
-$ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $serverName $SolutionName $InstallPy $InstallR"
+
+Write-host " $serverName $dbName $InstallPy $InstallR are the powershell parameters should be dsvm, fraud, no yes"
+$ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $serverName $dbName $InstallPy $InstallR"
 Invoke-Expression $ConfigureSQL 
 
 Write-Host ("Done with configuration changes to SQL Server")

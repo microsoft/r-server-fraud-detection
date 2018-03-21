@@ -133,16 +133,15 @@ If ($EnableFileStream -eq 'Yes')
 ############################################################################################
 #Configure SQL to Run our Solutions 
 ############################################################################################
-IF([string]::IsNullOrEmpty($serverName))   
-{$Query = "SELECT SERVERPROPERTY('ServerName')"
-$si = invoke-sqlcmd  -Query $Query
-$si = $si.Item(0)}
-else 
-{$si = $serverName}
+    IF([string]::IsNullOrEmpty($serverName))   
+        {$Query = "SELECT SERVERPROPERTY('ServerName')"
+        $si = invoke-sqlcmd  -Query $Query
+        $si = $si.Item(0)}
+    else 
+        {$si = $serverName}
+    $serverName = $si
 
-$serverName = $si
-
-Write-Host "Servername set to $serverName"
+    Write-Host "Servername set to $serverName"
 
 
     ### Change Authentication From Windows Auth to Mixed Mode 

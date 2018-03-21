@@ -193,7 +193,6 @@ ELSE
 
 ####Run Configure SQL to Create Databases and Populate with needed Data
 
-Write-host " $serverName $dbName $InstallPy $InstallR are the powershell parameters should be dsvm, fraud, no yes"
 $ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $serverName $dbName $InstallPy $InstallR"
 Invoke-Expression $ConfigureSQL 
 

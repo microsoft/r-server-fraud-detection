@@ -13,7 +13,7 @@ param(
 [string]$InstallR
 )
 
-Write-Host "$serverName is the servername we are using, $dbName is the dbName" 
+
 
 $db = $dbName
 
@@ -21,7 +21,7 @@ $dataList = ("Account_Info", "Fraud_Transactions", "Untagged_Transactions")
 
 ##########################################################################
 
-# Create Database and BaseTables test
+# Create Database and BaseTables
 
 #########################################################################
 

@@ -49,7 +49,7 @@ Running this PowerShell script will create the data tables and stored procedures
 
 1. If you wish to install the sample website to demonstrate using the model, install [node.js](https://nodejs.org/en/) if it is not already present.
 
-1. Download  <a href="https://raw.githubusercontent.com/Microsoft/r-server-fraud-detection/master/Resources/ActionScripts/SetupVM.ps1" download>SetupVM.ps1</a> to your computer.
+1. Download  <a href="https://raw.githubusercontent.com/Microsoft/r-server-fraud-detection/master/Resources/ActionScripts/FraudSetup.ps1" download>FraudSetup.ps1</a> to your computer.
 
 1. Open a command or PowerShell window as Administrator.
 

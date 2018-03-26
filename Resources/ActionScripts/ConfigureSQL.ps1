@@ -42,7 +42,8 @@ $query =
 $isCompatible = Invoke-Sqlcmd -ServerInstance $ServerName -Database Master -Query $query
 $isCompatible = $isCompatible.Item(0)
 if ($isCompatible -eq 'Yes' -and $InstallPy -eq 'Yes') {
-    Write-Host " This Version of SQL is Compatible with SQL Py "
+    Write-Host 
+    ("This Version of SQL is Compatible with SQL Py"
 
     ## Create Py Database
     Write-Host 
@@ -101,13 +102,9 @@ else
 
 If ($InstallR -eq 'Yes')
 { 
-    {
     Write-Host 
     ("Creating SQL Database for R")
-
-    Write-Host 
-    ("Using $ServerName SQL Instance") 
-    }
+    
 
     $dbName = $db + "_R"
 

@@ -55,7 +55,7 @@ Running this PowerShell script will create the data tables and stored procedures
 
 1. CD to the directory where you downloaded the above .ps1 file and execute the command:
 
-    .\SetupVM.ps1
+    .\FraudSetup.ps1
 
 1. Answer the prompts.  Make sure to accept installation of NuGet if prompted.
 

@@ -43,7 +43,7 @@ $isCompatible = Invoke-Sqlcmd -ServerInstance $ServerName -Database Master -Quer
 $isCompatible = $isCompatible.Item(0)
 if ($isCompatible -eq 'Yes' -and $InstallPy -eq 'Yes') {
     Write-Host 
-    ("This Version of SQL is Compatible with SQL Py"
+    ("This Version of SQL is Compatible with SQL Py")
 
     ## Create Py Database
     Write-Host 

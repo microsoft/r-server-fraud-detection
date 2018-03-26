@@ -20,35 +20,15 @@ param(
 )
 
 
+
 ###Check to see if user is Admin
 
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
         [Security.Principal.WindowsBuiltInRole] "Administrator")
         
-if ($isAdmin -eq 'True') {
+if ($isAdmin -eq 'True') 
+{
 
-
-#################################################################
-##DSVM Does not have SQLServer Powershell Module Install or Update 
-#################################################################
-
-
-
-if (Get-Module -ListAvailable -Name SQLServer) 
-    {
-    Write-Host 
-    ("Updating SQLServer Power Shell Module")    
-    Update-Module -Name "SQLServer" -MaximumVersion 21.0.17199
-    }
-Else 
-    {
-    Write-Host 
-    ("Installing SQLServer Power Shell Module")  
-    Install-Module -Name SqlServer -RequiredVersion 21.0.17199 -Scope AllUsers -AllowClobber -Force
-    Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
-    }
-#Set-PSRepository -Name PSGallery -InstallationPolicy Untrusted
-###Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
 
 
 ##Change Values here for Different Solutions 
@@ -79,21 +59,51 @@ $SolutionData = $SolutionPath + "\Data\"
 $dbName = $SolutionName
 
 
-$setupLog = "c:\tmp\fraud_setup_log.txt"
-Start-Transcript -Path $setupLog -Append
+Start-Transcript -Path "c:\tmp\fraud_setup_log.txt"
+
 $startTime = Get-Date
-Write-Host "Start time:" $startTime 
+Write-Host 
+("Start time: $startTime ")
+
+####################################################################################
+##If this is a on premise install, display Security box to get SQL User and Password
+####################################################################################
+
+
 
 if ($SampleWeb -eq "Yes") 
-{
-    $Credential = if([string]::IsNullOrEmpty($username)) 
     {
-        Get-Credential -Message "Enter a UserName and Password for SQL to use"
+    if([string]::IsNullOrEmpty($username)) 
+        {
+        $Credential = $Host.ui.PromptForCredential("Need credentials", "Please supply an user name and password to configure SQL for mixed authentication.", "", "")
         $username = $credential.Username
-        $password = $credential.GetNetworkCredential().password
-    }   
+        $password = $credential.GetNetworkCredential().password 
+        }  
+    }
+ 
 
-}
+##################################################################
+##DSVM Does not have SQLServer Powershell Module Install or Update 
+##################################################################
+
+
+
+if (Get-Module -ListAvailable -Name SQLServer) 
+    {
+    Write-Host 
+    ("Updating SQLServer Power Shell Module")    
+    Update-Module -Name "SQLServer" -MaximumVersion 21.0.17199
+    }
+Else 
+    {
+    Write-Host 
+    ("Installing SQLServer Power Shell Module")  
+    Install-Module -Name SqlServer -RequiredVersion 21.0.17199 -Scope AllUsers -AllowClobber -Force
+    Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
+    }
+#Set-PSRepository -Name PSGallery -InstallationPolicy Untrusted
+###Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
+
 
 
 
@@ -107,13 +117,15 @@ $clone = "git clone --branch $Branch --single-branch https://github.com/Microsof
 
 if (Test-Path $SolutionPath) 
     { 
-    Write-Host ("Solution has already been cloned")
+    Write-Host 
+    ("Solution has already been cloned")
     }
     ELSE {Invoke-Expression $clone}
 
 If ($InstalR -eq 'Yes')
     {
-    Write-Host ("Installing R Packages")
+    Write-Host 
+    ("Installing R Packages")
     Set-Location "C:\Solutions\$SolutionName\Resources\ActionScripts\"
     # install R Packages
     Rscript install.R 
@@ -195,7 +207,8 @@ if ($EnableFileStream -eq 'Yes')
     }
 ELSE
     { 
-    Write-Host ("Restarting SQL Services")
+    Write-Host 
+    ("Restarting SQL Services")
     ### Changes Above Require Services to be cycled to take effect 
     ### Stop the SQL Service and Launchpad wild cards are used to account for named instances  
     Restart-Service -Name "MSSQ*" -Force

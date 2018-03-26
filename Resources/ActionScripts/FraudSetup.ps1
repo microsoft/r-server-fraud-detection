@@ -93,6 +93,7 @@ if (Get-Module -ListAvailable -Name SQLServer)
     Write-Host 
     ("Updating SQLServer Power Shell Module")    
     Update-Module -Name "SQLServer" -MaximumVersion 21.0.17199
+    Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
     }
 Else 
     {

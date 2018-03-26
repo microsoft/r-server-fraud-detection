@@ -6,11 +6,11 @@ param(
 [ValidateNotNullOrEmpty()] 
 [string]$serverName,
 
-[parameter(Mandatory=$True, Position=2)]
+[parameter(Mandatory=$false, Position=2)]
 [ValidateNotNullOrEmpty()] 
 [string]$username,
 
-[parameter(Mandatory=$True, Position=3)]
+[parameter(Mandatory=$false, Position=3)]
 [ValidateNotNullOrEmpty()] 
 [string]$password,
 

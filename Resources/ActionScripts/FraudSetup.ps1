@@ -19,8 +19,6 @@ param(
 [string]$Prompt
 )
 
-
-
 ###Check to see if user is Admin
 
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
@@ -28,14 +26,10 @@ $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIde
         
 if ($isAdmin -eq 'True') 
 {
-
-
-
 ##Change Values here for Different Solutions 
 $SolutionName = "Fraud"
 $SolutionFullName = "r-server-fraud-detection" 
 $Shortcut = "frauddetection_Help.url"
-
 
 ### DON'T FORGET TO CHANGE TO MASTER LATER...
 $Branch = "master" 
@@ -45,8 +39,6 @@ $SampleWeb = 'Yes' ## If Solution has a Sample Website  this should be 'Yes' Els
 $EnableFileStream = 'No' ## If Solution Requires FileStream DB this should be 'Yes' Else 'No' 
 $isMixedMode = 'Yes'
 $Prompt = 'N'
-
-
 
 ###These probably don't need to change , but make sure files are placed in the correct directory structure 
 $solutionTemplateName = "Solutions"
@@ -58,7 +50,6 @@ $scriptPath = $SolutionPath + "\Resources\ActionScripts\"
 $SolutionData = $SolutionPath + "\Data\"
 $dbName = $SolutionName
 
-
 Start-Transcript -Path "c:\tmp\fraud_setup_log.txt"
 
 $startTime = Get-Date
@@ -68,8 +59,6 @@ Write-Host
 ####################################################################################
 ##If this is a on premise install, display Security box to get SQL User and Password
 ####################################################################################
-
-
 
 if ($SampleWeb -eq "Yes") 
     {
@@ -85,8 +74,6 @@ if ($SampleWeb -eq "Yes")
 ##################################################################
 ##DSVM Does not have SQLServer Powershell Module Install or Update 
 ##################################################################
-
-
 
 if (Get-Module -ListAvailable -Name SQLServer) 
     {
@@ -105,14 +92,9 @@ Else
 #Set-PSRepository -Name PSGallery -InstallationPolicy Untrusted
 ###Import-Module -Name SqlServer -MaximumVersion 21.0.17199 -Force
 
-
-
-
-
 ##########################################################################
 #Clone Data from GIT
 ##########################################################################
-
 
 $clone = "git clone --branch $Branch --single-branch https://github.com/Microsoft/$SolutionFullName $solutionPath"
 
@@ -148,7 +130,6 @@ If ($EnableFileStream -eq 'Yes')
     Write-Host 
     ("Py Instal has been updated to latest version")
     }
-
 
 ############################################################################################
 #Configure SQL to Run our Solutions 
@@ -215,8 +196,6 @@ ELSE
     Restart-Service -Name "MSSQ*" -Force
 }
 
-
-
 ####Run Configure SQL to Create Databases and Populate with needed Data
 
     $ConfigureSql = "C:\Solutions\$SolutionName\Resources\ActionScripts\ConfigureSQL.ps1  $serverName $dbName $InstallPy $InstallR"
@@ -237,19 +216,16 @@ if (!$?) {
     ("Error installing Power BI Desktop. Please install latest Power BI manually.")
 }
 
-
 ##Create Shortcuts and Autostart Help File 
     Copy-Item "$ScriptPath\$Shortcut" C:\Users\Public\Desktop\
     Copy-Item "$ScriptPath\$Shortcut" "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\"
     Write-Host 
     ("Help Files Copied to Desktop")
 
-
 $WsShell = New-Object -ComObject WScript.Shell
 $shortcut = $WsShell.CreateShortcut($desktop + $checkoutDir + ".lnk")
 $shortcut.TargetPath = $solutionPath
 $shortcut.Save()
-
 
 # install modules for sample website
 if($SampleWeb  -eq "Yes")
@@ -270,11 +246,9 @@ if($SampleWeb  -eq "Yes")
 
 Stop-Transcript
 
-
 ##Launch HelpURL 
 Start-Process "https://microsoft.github.io/$SolutionFullName/Typical.html"
     
-
 ## Close Powershell if not run on 
    ## if ($baseurl)
    Exit-PSHostProcess

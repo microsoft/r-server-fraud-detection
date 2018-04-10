@@ -4,7 +4,7 @@
 ## Input : 1. LocalWorkDir and HDFSWorkDir: working directories on HDFS and local edge node.  
 ##         2. Input_Data_Xdf: training data.
 
-## Output: Trained GBT model object.
+## Output: Trained random forest model object.
 
 ##########################################################################################################################################
 
@@ -36,17 +36,27 @@ training <- function(HDFSWorkDir,
   equation <- paste("label ~ ", paste(training_variables, collapse = "+", sep=""), sep="")
   
   # Train the GBT model.
-  print("Training GBT model...")
-  boosted_fit <- rxFastTrees(formula = as.formula(equation),
-                             data = Tagged_Training_Processed_Features_Xdf,
-                             type = c("binary"),
-                             numTrees = 100,
-                             learningRate = 0.2,
-                             splitFraction = 5/24,
-                             featureFraction = 1,
-                             minSplit = 10,
-                             unbalancedSets = TRUE,
-                             randomSeed = 5)
+  print("Training random forest model...")
+  #rxSetComputeContext('local')
+  #boosted_fit <- rxFastTrees(formula = as.formula(equation),
+  #                            data = Tagged_Training_Processed_Features_Xdf,
+  #                           type = c("binary"),
+  #                           numTrees = 100,
+  #                           learningRate = 0.2,
+  #                           splitFraction = 5/24,
+  #                            featureFraction = 1,
+  #                           minSplit = 10,
+  #                           unbalancedSets = TRUE,
+  #                           randomSeed = 5)
+  
+  boosted_fit <- rxDForest(formula = as.formula(equation),
+                            data = Tagged_Training_Processed_Features_Xdf,
+                            nTree = 2, 
+                            timesToRun = 20,
+                            seed = 5,
+                            method = "class",
+                            scheduleOnce = TRUE, 
+                            computeOobError=-1 )
   
   # Save the fitted model to the local edge node 
   saveRDS(boosted_fit, file = paste(LocalModelsDir, "/gbt_model.rds", sep = ""))

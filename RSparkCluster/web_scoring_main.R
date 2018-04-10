@@ -199,7 +199,7 @@ result_frame <- api_frame$fraud_web_scoring(
 )
 
 ## To get the data frame result in a readable format: 
-rows_number <- length(result_frame$outputParameters$answer$score)
+rows_number <- length(result_frame$outputParameters$answer$prob)
 Scores <- data.frame(matrix(unlist(result_frame$outputParameters$answer), nrow = rows_number), stringsAsFactors = F)
 colnames(Scores) <- names(result_frame$outputParameters$answer)
 

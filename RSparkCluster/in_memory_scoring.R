@@ -270,6 +270,7 @@ in_memory_scoring <- function(Untagged_Transactions_df,
   
   # Make predictions. 
   Predictions <- rxPredict(boosted_fit, 
+                           type = c("prob"),
                            data = Untagged_Account_Features_df, 
                            extraVarsToWrite = c("accountid", "transactionid", "transactiondate.x", "transactiontime.x", "transactionamountusd"))
   
@@ -278,8 +279,8 @@ in_memory_scoring <- function(Untagged_Transactions_df,
   Predictions$transactiondate.x <- NULL
   Predictions$transactiontime.x <- NULL
   
-  Predictions <- Predictions[, c(1, 2, 3, 7, 6)]
-  colnames(Predictions)[5] <- c("score")
+  Predictions <- Predictions[, c(2, 3, 4,5,6,7)]
+  colnames(Predictions)[1] <- c("prob")
   
   return(Predictions)
   

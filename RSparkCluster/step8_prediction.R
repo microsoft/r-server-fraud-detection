@@ -32,7 +32,7 @@ prediction <- function(HDFSWorkDir,
     boosted_fit <- model_objects$boosted_fit
   }
   
-  print("Scoring the GBT...")
+  print("Scoring the Random Forest...")
   
   # Pointer to the Xdf data to be scored
   Score_Data_Xdf <- RxXdfData(file.path(HDFSIntermediateDir,Input_Data_Xdf), fileSystem = RxHdfsFileSystem())
@@ -43,6 +43,7 @@ prediction <- function(HDFSWorkDir,
   # Make predictions. 
   rxPredict(modelObject = boosted_fit,
             data = Score_Data_Xdf,
+            type = c("prob"),
             outData = Predict_Score_Xdf,
             overwrite = TRUE,
             extraVarsToWrite = c("accountid", "transactionid", "transactiondate","transactiontime", "transactionamountusd", "label"))

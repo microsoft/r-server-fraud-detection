@@ -28,10 +28,8 @@ evaluation <- function(HDFSWorkDir,
                transactiondatetime = as.character(as.POSIXct(paste(transactiondate, sprintf("%06d", as.numeric(transactiontime)), sep=""), format = "%Y%m%d %H%M%S", tz = "GMT")),
                transactiondate = NULL, 
                transactiontime = NULL,
-               PredictedLabel = NULL, 
-               Score.1 = NULL,
-               labelProb = Probability.1, 
-               Probability.1 = NULL,
+               label_Pred = NULL, 
+               '0_prob' = NULL,
                label = as.numeric(as.character(label))
              ))
   
@@ -39,7 +37,7 @@ evaluation <- function(HDFSWorkDir,
   # evaluation on transaction level
   print("Calculating transaction level metrics...")
   rxSetComputeContext('local')
-  ROC <- rxRoc(actualVarName = "label", predVarNames = "labelProb", data = Predict_Score_New_Xdf, numBreaks = 1000)
+  ROC <- rxRoc(actualVarName = "label", predVarNames = "1_prob", data = Predict_Score_New_Xdf, numBreaks = 1000)
   AUC <- rxAuc(ROC)
   plot(ROC, title = "ROC Curve for GBT")
   print(sprintf("AUC = %s", AUC))
@@ -226,6 +224,8 @@ evaluation <- function(HDFSWorkDir,
   
   # Import the scored data
   Predictions <- rxImport(Predict_Score_New_Xdf, reportProgress = 0)
+  names(Predictions)[names(Predictions) == '1_prob'] <- 'labelProb'
+
   
   # Sort data in acct_date_time order
   Predictions <- Predictions[with(Predictions, order(accountid,transactiondatetime)),]

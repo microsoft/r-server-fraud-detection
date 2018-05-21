@@ -2,6 +2,11 @@
 layout: default
 title: HOME
 ---
+<div class="alert alert-warning cig">
+Are you unable to connect to your Virtual Machine? See this important information for
+<a href="https://blogs.technet.microsoft.com/mckittrick/unable-to-rdp-to-virtual-machine-credssp-encryption-oracle-remediation/">how to resolve.</a>
+</div>
+
 {% include typicalintro.md %}
 
 Fraud detection is typically handled as a binary classification problem, but the class population is unbalanced because instances of fraud are usually very rare compared to the overall volume of transactions. Moreover, when fraudulent transactions are discovered, the business typically takes measures to block the accounts from transacting to prevent further losses. Therefore, model performance is measured by using account-level metrics, which is discussed in the [For the Data Scientist](data-scientist.html) page.

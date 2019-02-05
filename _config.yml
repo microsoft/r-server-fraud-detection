@@ -14,7 +14,7 @@ jupyter_name: Fraud_Detection_Notebook.ipynb
 
 cig_text: SQL Server VM on Azure
 onp_text: SQL Server On-Premises 
-hdi_text: HDInsight Spark \
+hdi_text: HDInsight Spark
 
 # urls, etc
 code_url: "https://github.com/Microsoft/r-server-fraud-detection"

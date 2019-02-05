@@ -11,6 +11,6 @@ Let me introduce you to  Danny, the Database Analyst. Danny is the main contact 
 <h2> Step 1: Server Setup and Configuration with Ivan the IT Administrator</h2>
 <hr />
 
-<p>Let me introduce you to Ivan, the IT Administrator. Ivan is responsible for implementation as well as ongoing administration of the Hadoop infrastructure at his company, which uses <a href="https://azure.microsoft.com/en-us/solutions/hadoop/">Hadoop in the Azure Cloud from Microsoft</a>. Ivan created the <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-r-server-get-started">HDInsight cluster with R Server</a> for Debra. He also uploaded the data onto the storage account associated with the cluster.</p>
+<p>Let me introduce you to Ivan, the IT Administrator. Ivan is responsible for implementation as well as ongoing administration of the Hadoop infrastructure at his company, which uses <a href="https://azure.microsoft.com/en-us/solutions/hadoop/">Hadoop in the Azure Cloud from Microsoft</a>. Ivan created the <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-r-server-get-started">HDInsight cluster with ML Server</a> for Debra. He also uploaded the data onto the storage account associated with the cluster.</p>
 
 </div>

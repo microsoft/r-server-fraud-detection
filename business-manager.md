@@ -19,13 +19,13 @@ solution.
 
 <p></p>
 <div class="sql"> 
-SQL Server R Services takes advantage of the power of SQL Server (2016 or higher) and ScaleR (Microsoft R Server package) by allowing R to run on the same server as the database. It includes a database service that runs outside the SQL Server process and communicates securely with the R runtime. 
+SQL Server ML Services takes advantage of the power of SQL Server (2016 or higher) and ScaleR (Microsoft ML Server package) by allowing R to run on the same server as the database. It includes a database service that runs outside the SQL Server process and communicates securely with the R runtime. 
 <p></p>
 This solution shows how to preprocess data, create new features, train R models, and perform predictions in-database. The final table in the SQL Server database provides a predicted value for each transaction. This predicted value, which can be interpreted as a probability of fraud, can help you determine whether you wish to try to interrupt the transaction.
 <p></p>
 </div>
 <div class="hdi">
-Microsoft R Server on HDInsight Spark clusters provides distributed and scalable machine learning capabilities for big data, leveraging the combined power of R Server and Apache Spark. This solution demonstrates how to develop machine learning models for online fraud detection (including data processing, feature engineering, training and evaluating models), deploy the models as a web service (on the edge node) and consume the web service remotely with Microsoft R Server on Azure HDInsight Spark clusters. 
+Microsoft ML Server on HDInsight Spark clusters provides distributed and scalable machine learning capabilities for big data, leveraging the combined power of ML Server and Apache Spark. This solution demonstrates how to develop machine learning models for online fraud detection (including data processing, feature engineering, training and evaluating models), deploy the models as a web service (on the edge node) and consume the web service remotely with Microsoft ML Server on Azure HDInsight Spark clusters. 
 
 <p></p>
 Hive tables are saved containing the predicted scores during both development and production. This data is then visualized in Power BI.

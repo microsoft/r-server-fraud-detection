@@ -12,7 +12,7 @@ solution.
 
 ## Setup for Local Code Execution
 
-You can execute code on your local computer and push the computations to the SQL Server on the VM  that was created by the Azure AI Gallery. But first you must perform the following steps. 
+You can execute code on your local computer and push the computations to the SQL Server on the VM  that was created using the 'Deploy to Azure' button on the <a href="START_HERE.html">Quick Start page</a>. But first you must perform the following steps. 
 
 ## On the VM: Configure VM for Remote Access
 
@@ -27,7 +27,7 @@ You must open the Windows firewall on the VM to allow a connection to the SQL Se
 
 Perform these steps on your local computer.
 
-* If you use your local computer you will need to [install R Client](https://msdn.microsoft.com/en-us/microsoft-r/r-client-get-started#installrclient) on your local machine.  
+* If you use your local computer you will need to [install R Client](https://docs.microsoft.com/en-us/machine-learning-server/r-client/what-is-microsoft-r-client) on your local machine.  
 
 * If you use Visual Studio, you can add <a href="https://www.visualstudio.com/vs/rtvs/">R Tools for Visual Studio</a>.  Otherwise you might want to try <a href="rstudio.html">R Studio</a>. 
 

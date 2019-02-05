@@ -42,7 +42,7 @@ If this does not work, you may need to modify the connection information by usin
 <li class="hdi">Download and open the <a href="{{ site.pbix_hdidownload_url }}" target="_blank">{{ site.hdipbix_name }}</a> file</li>
 <li class="onp hdi">Click on <code>Edit Query</code></li>
 <li class="onp hdi">Select the first query (<code>TestData</code>) and then click on the <code>Advanced Editor</code> in the toolbar.</li>
-<li class="onp">Replace <code>localhost</code> with your server name and click on <code>Done</code>. (If you are using an Azure VM, such as the one deployed by Cortana Ingelligence Gallery, use the IP address for the server name.)</li>
+<li class="onp">Replace <code>localhost</code> with your server name and click on <code>Done</code>. (If you are using an Azure VM, such as the one deployed using the 'Deploy to Azure' button on the <a href="START_HERE.html">Quick Start page</a>, use the IP address for the server name.)</li>
 <li class="hdi">Replace <code>sdglcr2</code> with your cluster name and click on <code>Done</code>. (The full address will be <strong>http://CLUSTERNAME.azurehdinsight.net</strong>.)
 <img src="images/scoresdata.png"> </li>
 <li class="onp hdi">After a moment you'll see an alert asking for Permision to run the query.  Click on <code>Edit Permission</code> </li>
@@ -65,7 +65,7 @@ If this does not work, you may need to modify the connection information by usin
 </ol>
 
 <div class="alert alert-info onp" role="alert">
-Return to the <a href="Visualize_Results.html?path=cig">{{ site.cig_text }} instruction</a> if you have deployed your solution from the Azure AI Gallery.
+Return to the <a href="Visualize_Results.html?path=cig">{{ site.cig_text }} instruction</a> if you have deployed your solution using the 'Deploy to Azure' button.
 </div>
 
 [&lt; Home](index.html)

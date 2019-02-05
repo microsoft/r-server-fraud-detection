@@ -1,4 +1,4 @@
-#Online Fraud Detection Template implemented on SQL Server R Service
+#Online Fraud Detection Template implemented on SQL Server ML Services
 --------------------------
  * **Introduction**
 	* **System Requirements**
@@ -19,9 +19,9 @@
 ### Introduction:
 -------------------------
 
-Fraud detection is an important machine learning application. In this template, the online purchase transaction fraud detection scenario (for the online merchants, detecting whether a transaction is made by the original owner of payment instrument) is used as an example. This on-prem implementation with SQL Server R Servicds is equivalent to the [Azure ML template for Online Fraud Detection](https://gallery.cortanaanalytics.com/Collection/Online-Fraud-Detection-Template-1).
+Fraud detection is an important machine learning application. In this template, the online purchase transaction fraud detection scenario (for the online merchants, detecting whether a transaction is made by the original owner of payment instrument) is used as an example. This on-prem implementation with SQL Server ML Services is equivalent to the [Azure ML template for Online Fraud Detection](https://gallery.cortanaanalytics.com/Collection/Online-Fraud-Detection-Template-1).
 
-For customers that prefers and on-prem solution, the implementation with SQL Server R Services is a great option, which takes advantage of the power of SQL Server and Microsoft R Server. In this template, we implemented all steps in SQL stored procedures, where data splitting, data pre-processing and feature engineering are implemented in pure SQL, while the model training, scoring and evaluation steps are implemented with SQL stored procedures embedding with R (Microsoft R Server) code. 
+For customers that prefers and on-prem solution, the implementation with SQL Server ML Services is a great option, which takes advantage of the power of SQL Server and Microsoft ML Server. In this template, we implemented all steps in SQL stored procedures, where data splitting, data pre-processing and feature engineering are implemented in pure SQL, while the model training, scoring and evaluation steps are implemented with SQL stored procedures embedding with R (Microsoft ML Server) code. 
 
 All the steps can be executed on SQL Server client environment (such as SQL Server Management Studio), as well as from other applications. We provide a Windows PowerShell script which invokes the SQL scripts and demonstrate the end-to-end modeling process.
 
@@ -30,10 +30,10 @@ All the steps can be executed on SQL Server client environment (such as SQL Serv
 
 To run the scripts, it requires the following:
 
- * SQL server (2016 or higher) with Microsoft R server installed and configured;
+ * SQL server (2016 or higher) with Microsoft ML server installed and configured;
  * The SQL user name and password, and the user is configured properly to execute R scripts in-memory;
  * SQL Database which the user has write permission and execute stored procedures;
- * For more information about SQL server 2017 and R service, please visit: https://msdn.microsoft.com/en-us/library/mt604847.aspx
+ * For more information about SQL server 2017 and ML Services, please visit: https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services
 
 ### Workflow Automation
 -------------------

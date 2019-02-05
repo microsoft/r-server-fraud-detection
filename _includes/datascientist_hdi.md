@@ -298,7 +298,7 @@ In this step, we create risk tables for categorical variables, such as location 
 <p>This is done in the following way:</p>
 <ol>
 <li>
-Log into the R server that hosts the web services as admin. Note that even if you are already on the edge node, you still need to perform this step for authentication purpose.
+Log into the ML server that hosts the web services as admin. Note that even if you are already on the edge node, you still need to perform this step for authentication purpose.
 </li>
 <li>
 Specify the paths to the working directories on the edge node and HDFS.

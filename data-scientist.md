@@ -51,21 +51,21 @@ solution.
     </div>
     <div class="col-md-6">
         <div class="onp">
-        For businesses that prefer an on-prem solution, the implementation with SQL Server R Services is a great option, which takes advantage of the power of SQL Server and RevoScaleR (Microsoft R Server).
+        For businesses that prefer an on-prem solution, the implementation with SQL Server ML Services is a great option, which takes advantage of the power of SQL Server and RevoScaleR (Microsoft ML Server).
         </div> 
         <div class="cig">
-        This implementation on Azure SQL Server R Services is a great option which takes advantage of the power of SQL Server and RevoScaleR (Microsoft R Server). 
+        This implementation on Azure SQL Server ML Services is a great option which takes advantage of the power of SQL Server and RevoScaleR (Microsoft ML Server). 
         </div>
         <div class="hdi">
-        HDInsight is a cloud Spark and Hadoop service for the enterprise.  HDInsight is also the only managed cloud Hadoop solution with integration to Microsoft R Server.
+        HDInsight is a cloud Spark and Hadoop service for the enterprise.  HDInsight is also the only managed cloud Hadoop solution with integration to Microsoft ML Server.
         <p></p>
-        This solution shows how to pre-process data (cleaning and feature engineering), train prediction models, and perform scoring on an HDInsight Spark cluster with Microsoft R Server. 
+        This solution shows how to pre-process data (cleaning and feature engineering), train prediction models, and perform scoring on an HDInsight Spark cluster with Microsoft ML Server. 
         </div>   
     </div>
 </div>
 
 <div class="sql">
-Data scientists who are testing and developing solutions can work from the convenience of their R IDE on their client machine, while <a href="https://msdn.microsoft.com/en-us/library/mt604885.aspx">setting the computation context to SQL</a> (see <strong>R</strong> folder for code).  They can also deploy the completed solutions to SQL Server (2016 or higher) by embedding calls to R in stored procedures (see <strong>SQLR</strong> folder for code). These solutions can then be further automated by the use of SQL Server Integration Services and SQL Server agent: a PowerShell script (.ps1 file) automates the running of the SQL code.
+Data scientists who are testing and developing solutions can work from the convenience of their R IDE on their client machine, while <a href="https://docs.microsoft.com/en-us/sql/advanced-analytics/r/sql-server-r-services">setting the computation context to SQL</a> (see <strong>R</strong> folder for code).  They can also deploy the completed solutions to SQL Server (2016 or higher) by embedding calls to R in stored procedures (see <strong>SQLR</strong> folder for code). These solutions can then be further automated by the use of SQL Server Integration Services and SQL Server agent: a PowerShell script (.ps1 file) automates the running of the SQL code.
 </div>
 <div class="hdi">
 Data scientists who are testing and developing solutions can work from the browser-based Open Source Edition of RStudio Server on the HDInsight Spark cluster edge node, while <a href="https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-r-server-compute-contexts">using a compute context</a> to control whether computation will be performed locally on the edge node, or whether it will be distributed across the nodes in the HDInsight Spark cluster. 
@@ -78,7 +78,7 @@ Data scientists who are testing and developing solutions can work from the brows
 {% include typicalintro.md %}
 
 <div class="sql">
-This solution will show how to build a model to detect potential fraudulent transactions so that the transaction may be rejected. This implementation with SQL Server R Services is equivalent to the <a  href="https://gallery.cortanaanalytics.com/Collection/Online-Fraud-Detection-Template-1">Azure ML template for Online Fraud Detection</a>.
+This solution will show how to build a model to detect potential fraudulent transactions so that the transaction may be rejected. This implementation with SQL Server ML Services is equivalent to the <a  href="https://gallery.cortanaanalytics.com/Collection/Online-Fraud-Detection-Template-1">Azure ML template for Online Fraud Detection</a>.
 </div>
 
 
@@ -125,10 +125,10 @@ enables the user to define the input and call all the steps.
 
 The following are required to run the scripts in this solution:
 <ul>
-<li>SQL Server (2016 or higher) with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
+<li>SQL Server (2016 or higher) with Microsoft ML Server  (version 9.1.0 or later) installed and configured.  </li>   
 <li>The SQL user name and password, and the user configured properly to execute R scripts in-memory.</li> 
 <li>SQL Database which the user has write permission and execute stored procedures.</li> 
-<li>For more information about SQL server 2017 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
+<li>For more information about SQL server 2017 and ML Services, please visit: <a href="https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services">https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services</a></li> 
 </ul>
 </div>
 

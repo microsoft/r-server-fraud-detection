@@ -9,7 +9,7 @@ To do so, you will first need to open the Windows firewall on the VM to allow a 
        
 ### On your local computer:  Install R Client and obtain code
 
-If you use your own computer you will also need to have a copy of [R Client](https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows) on your local machine, installed and configured for your IDE. 
+If you use your own computer you will also need to have a copy of [R Client](https://docs.microsoft.com/en-us/machine-learning-server/r-client/what-is-microsoft-r-client) on your local machine, installed and configured for your IDE. 
 
 Finally, on your own computer you will need a copy of the solution code.  Open a PowerShell window, navigate to the directory of your choice, and execute the following command:  
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Using R Tools for Visual Studio with R Server
+title: Using R Tools for Visual Studio with ML Server
 ---
 <div class="alert alert-success" role="alert"> This page describes the 
 <strong>
@@ -9,11 +9,11 @@ title: Using R Tools for Visual Studio with R Server
 solution.
 </div> 
 
-## Set Up Visual Studio for R Server
+## Set Up Visual Studio for ML Server
 
-Visual Studio needs to use R Server for the code for this solution.  Follow the instructions below to set up Visual Studio to use R Server. 
+Visual Studio needs to use ML Server for the code for this solution.  Follow the instructions below to set up Visual Studio to use ML Server. 
 <div class = "label label-info">
-On the VM deployed from <a href="{{ site.deploy_url }}">Azure AI Gallery</a> you may see an alert that the path for R is no longer found. There is no need to install R Client, simply update the path as shown below.
+On the VM deployed using the 'Deploy to Azure' button on the <a href="START_HERE.html">Quick Start page</a> you may see an alert that the path for R is no longer found. There is no need to install R Client, simply update the path as shown below.
 </div>
 <p></p>
 <ol>
@@ -21,9 +21,9 @@ On the VM deployed from <a href="{{ site.deploy_url }}">Azure AI Gallery</a> you
 <li> Update the path to R.</li>
 <ol type="a">
 <li>From the <code>R Tools</code> menu, choose <code>Options</code>.</li>
-<li>In the R Tools section, update the path to R to point to R Server:</li>
+<li>In the R Tools section, update the path to R to point to ML Server:</li>
 <ul>
-<li><code>C:\Program Files\Microsoft\R Server\R_SERVER</code></li>
+<li><code>C:\Program Files\Microsoft\ML Server\ML_SERVER</code></li>
 </ul></ol>
 <li>Exit Visual Studio.</li>
 <li>When you relaunch Visual Studio, R Client will now be the default R engine.</li>
@@ -32,4 +32,4 @@ On the VM deployed from <a href="{{ site.deploy_url }}">Azure AI Gallery</a> you
 
  
 
-<a href="CIG_Workflow.html#step2">Return to Typical Workflow for Azure AI Gallery Deployment<a>
+<a href="CIG_Workflow.html#step2">Return to Typical Workflow for 'Deploy to Azure' Deployment<a>

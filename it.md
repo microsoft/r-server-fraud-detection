@@ -36,7 +36,7 @@ This solution demonstrates the code with approximately 200,000 transactions. Usi
 
 This solution uses:
 
- * [R Server for HDInsight](https://azure.microsoft.com/en-us/services/hdinsight/r-server/)
+ * [ML Server for HDInsight](https://azure.microsoft.com/en-us/services/hdinsight/r-server/)
 
 
 ## Cluster Maintenance

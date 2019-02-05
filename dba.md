@@ -37,15 +37,15 @@ solution.
 Fraudulent online transactions are becoming more and more of a problem to online merchants. This solution will show how to build a model to detect potential fraudulent transactions so that the transaction may be rejected.  View <a href="input_data.html">more information about the data.</a>
       <p/>
       <p>
- In this template, we implemented all steps in SQL stored procedures: data preprocessing is implemented in pure SQL, while feature engineering, model training, scoring and evaluation steps are implemented with SQL stored procedures with embedded R (Microsoft R Server) code.     This implementation with SQL Server R Services is equivalent to the <a href="https://gallery.cortanaanalytics.com/Collection/Online-Fraud-Detection-Template-1">Azure ML template for Online Fraud Detection</a>.
+ In this template, we implemented all steps in SQL stored procedures: data preprocessing is implemented in pure SQL, while feature engineering, model training, scoring and evaluation steps are implemented with SQL stored procedures with embedded R (Microsoft ML Server) code.     This implementation with SQL Server ML Services is equivalent to the <a href="https://gallery.cortanaanalytics.com/Collection/Online-Fraud-Detection-Template-1">Azure ML template for Online Fraud Detection</a>.
       </p>
 
         </div>
 </div>
 
-<span class="onp">For businesses that prefers an on-prem solution, the implementation with SQL Server R Services is a great option, which takes advantage of the power of SQL Server and RevoScaleR (Microsoft R Server). 
+<span class="onp">For businesses that prefers an on-prem solution, the implementation with SQL Server ML Services is a great option, which takes advantage of the power of SQL Server and RevoScaleR (Microsoft ML Server). 
 </span>
-<span class="cig">The implementation with SQL Server R Services is a great option, which takes advantage of the power of SQL Server and RevoScaleR (Microsoft R Server). 
+<span class="cig">The implementation with SQL Server ML Services is a great option, which takes advantage of the power of SQL Server and RevoScaleR (Microsoft ML Server). 
 </span>
 
 <p/>
@@ -56,10 +56,10 @@ All the steps can be executed on SQL Server client environment (such as SQL Serv
 
 The following are required to run the scripts in this solution:
 <ul>
-<li>SQL Server (2016 or higher) with Microsoft R Server  (version 9.1.0 or later) installed and configured.  </li>   
+<li>SQL Server (2016 or higher) with Microsoft ML Server  (version 9.1.0 or later) installed and configured.  </li>   
 <li>The SQL user name and password, and the user configured properly to execute R scripts in-memory.</li> 
 <li>SQL Database which the user has write permission and execute stored procedures.</li> 
-<li>For more information about SQL server 2017 and R service, please visit: <a href="https://msdn.microsoft.com/en-us/library/mt604847.aspx">https://msdn.microsoft.com/en-us/library/mt604847.aspx</a></li> 
+<li>For more information about SQL server 2017 and ML Services, please visit: <a href="https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services">https://docs.microsoft.com/en-us/sql/advanced-analytics/what-s-new-in-sql-server-machine-learning-services</a></li> 
 </ul>
 
 

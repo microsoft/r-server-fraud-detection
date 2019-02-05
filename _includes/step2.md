@@ -5,7 +5,7 @@ If you are using Visual Studio, you will see these file in the <code>Solution Ex
 </span> 
 
 <div class="sql">
-<strong>modeling_main.R</strong> is used to define the input and call all these steps. The inputs are pre-poplulated with the default values created for a VM from the Azure AI Gallery.  You must  change the values accordingly for your implementation if you are not using the default server (<code>localhost</code> represents a server on the same machine as the R code). If you are connecting to an Azure VM from a different machine, the server name can be found in the Azure Portal under the "Network interfaces" section - use the Public IP Address as the server name.
+<strong>modeling_main.R</strong> is used to define the input and call all these steps. The inputs are pre-populated with the default values created for a VM using the 'Deploy to Azure' button from the <a href="START_HERE.html">Quick Start page</a>.  You must  change the values accordingly for your implementation if you are not using the default server (<code>localhost</code> represents a server on the same machine as the R code). If you are connecting to an Azure VM from a different machine, the server name can be found in the Azure Portal under the "Network interfaces" section - use the Public IP Address as the server name.
 </div>
 <div class="hdi">
 <strong>development_main.R</strong> is used to define the input and call all these steps.

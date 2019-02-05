@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Using RStudio with R Server
+title: Using RStudio with ML Server
 ---
 <div class="alert alert-success" role="alert"> This page describes the 
 <strong>
@@ -23,17 +23,17 @@ RStudio is already installed on your VM and configured for you.
 RStudio is already installed and configured on the edge node of your cluster.  To install it on your local computer <a href="https://www.rstudio.com/products/rstudio/download2/" target="_blank">get it here</a>.
 </div>
 
-## Set Up RStudio for R Server
-RStudio needs to use R Server for the code in this solution.  Follow the instructions below to set up RStudio to use R Server and/or to verify that you are using the correct version.  
+## Set Up RStudio for ML Server
+RStudio needs to use ML Server for the code in this solution.  Follow the instructions below to set up RStudio to use ML Server and/or to verify that you are using the correct version.  
 <div class="hdi">(These steps are is not necessary for the version on the cluster edge node.)</div>
 <ol>
 <li>Launch RStudio.</li>
 <li> Update the path to R.</li>
 <ol type="a">
 <li>From the <code>Tools</code> menu, choose <code>Global Options</code>.</li>
-<li>In the General tab, update the path to R to point to R Server:</li>
-<ul><li>On the VM deployed from <a href="{{ site.deploy_url }}">Azure AI Gallery</a> the path is <code>C:\Program Files\Microsoft SQL Server\130\R_SERVER</code></li>
-<li>If you installed R Server on your own computer, the path is <code>C:\Program Files\Microsoft\R Client\R_SERVER\bin\x6b</code></li></ul>
+<li>In the General tab, update the path to R to point to ML Server:</li>
+<ul><li>On the VM deployed using the 'Deploy to Azure' button on the <a href="START_HERE.html">Quick Start page</a> the path is <code>C:\Program Files\Microsoft SQL Server\130\R_SERVER</code></li>
+<li>If you installed ML Server on your own computer, the path is <code>C:\Program Files\Microsoft\R Client\R_SERVER\bin\x6b</code></li></ul>
 </ol>
 <li>If you changed the path, exit RStudio. When you relaunch RStudio, R Client will now be the default R engine.</li>
 </ol>
@@ -41,4 +41,4 @@ RStudio needs to use R Server for the code in this solution.  Follow the instruc
 
  
 
-<a href="Typical.html#step2">Return to Typical Workflow for Azure AI Gallery Deployment<a>
+<a href="Typical.html#step2">Return to Typical Workflow for 'Deploy to Azure' Deployment<a>

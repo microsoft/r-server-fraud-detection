@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Operationalization with R Server
+title: Operationalization with ML Server
 ---
 <div class="alert alert-success" role="alert"> This page describes the 
 <strong>
@@ -9,9 +9,9 @@ title: Operationalization with R Server
 solution.
 </div> 
 
-## Configuring Operationalization with R Server
+## Configuring Operationalization with ML Server
 ---------------------------------------
-To access R Server Operationalization administrative services from your local computer, you must first connect to the edge node using the steps below.   
+To access ML Server Operationalization administrative services from your local computer, you must first connect to the edge node using the steps below.   
 
 ## Connect to Edge Node
 
@@ -22,7 +22,7 @@ For instructions on how to use PuTTY to connect to your HDInsight Spark cluster,
 * **Linux, Unix, and OS X users**
 For instructions on how to use the terminal to connect to your HDInsight Spark cluster, visit this [Azure documentation](http://go.microsoft.com/fwlink/p/?LinkID=619886).  The edge node address is of the form `sshuser@CLUSTERNAME-ed-ssh.azurehdinsight.net`
 
-* **All platforms:** Your login name and password are the ones you created when you deployed this solution from the [Azure AI Gallery]({{ site.deploy_url_hdi }})
+* **All platforms:** Your login name and password are the ones you created when you deployed this solution using the 'Deploy to Azure' button on the <a href="START_HERE.html">Quick Start page</a>.
 
 
 ## Configure Deployment Server

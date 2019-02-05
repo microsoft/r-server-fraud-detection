@@ -54,7 +54,7 @@ If you want to follow along and have <strong>not</strong> run the PowerShell scr
 
 <div class="cig">
 <p/><p>
-This step has already been done on your deployed Azure AI Gallery VM.
+This step has already been done on the VM deployed using the 'Deploy to Azure' button on the <a href="START_HERE.html">Quick Start page</a>.
 </p>
 </div>
 
@@ -66,7 +66,7 @@ You can perform these steps in your environment by using the instructions  <a hr
 
 <div class="hdi">
 <p/><p>
-The cluster has been created and data loaded for you when you used the <code>Deploy</code> button in the <a href="{{ site.deploy_url_hdi }}">Azure AI Gallery</a>. <strong>Once you complete the walkthrough, you will want to delete this cluster as it incurs expense whether it is in use or not - see <a href="hdinsight">HDInsight Cluster Maintenance</a> for more details.</strong>
+The cluster has been created and data loaded for you when you used the 'Deploy to Azure' button on the <a href="START_HERE.html">Quick Start page</a>. <strong>Once you complete the walkthrough, you will want to delete this cluster as it incurs expense whether it is in use or not - see <a href="hdinsight">HDInsight Cluster Maintenance</a> for more details.</strong>
 </p>
 </div>
 
@@ -77,15 +77,15 @@ The cluster has been created and data loaded for you when you used the <code>Dep
 -----------------------------------------------------------------
 
 Now let's meet Debra, the Data Scientist. Debra's job is to use historical data to predict a model to detect fraud. 
-<span class="sql">Debra's preferred language for developing the models is using R and SQL. She uses Microsoft R Services with SQL Server 2017 as it provides the capability to run large datasets and also is not constrained by memory restrictions of Open Source R.
+<span class="sql">Debra's preferred language for developing the models is using R and SQL. She uses Microsoft ML Services with SQL Server 2017 as it provides the capability to run large datasets and also is not constrained by memory restrictions of Open Source R.
 </span>
-<span class="hdi">Debra will develop these models using <a href="https://azure.microsoft.com/en-us/services/hdinsight/">HDInsight</a>, the managed cloud Hadoop solution with integration to Microsoft R Server.
+<span class="hdi">Debra will develop these models using <a href="https://azure.microsoft.com/en-us/services/hdinsight/">HDInsight</a>, the managed cloud Hadoop solution with integration to Microsoft ML Server.
 </span>  
 
 
 <div class="sql">
 <p/>
-Debra will work on her own machine, using  <a href = "https://msdn.microsoft.com/en-us/microsoft-r/install-r-client-windows">R Client</a> to execute these R scripts. <span class="cig">R Client is already installed on the VM.</span>  She will also use an IDE to run R.  
+Debra will work on her own machine, using  <a href = "https://docs.microsoft.com/en-us/machine-learning-server/r-client/what-is-microsoft-r-client">R Client</a> to execute these R scripts. <span class="cig">R Client is already installed on the VM.</span>  She will also use an IDE to run R.  
 </div>
 
 
@@ -94,7 +94,7 @@ Debra will work on her own machine, using  <a href = "https://msdn.microsoft.com
 <p/>
 <a name="rstudiologin"></a>
 
-Debra will develop her R scripts in  the Open Source Edition of RStudio Server, installed on her cluster's edge node.  You can follow along on <a href="{{ site.deploy_url_hdi }}">your own cluster deployed by Cortana Analytics Gallery</a>.  Access RStudio by using the url of the form: <br/> <code>http://CLUSTERNAME.azurehdinsight.net/rstudio</code>. 
+Debra will develop her R scripts in  the Open Source Edition of RStudio Server, installed on her cluster's edge node.  You can follow along on your own cluster deployed by using the 'Deploy to Azure' button on the <a href="START_HERE.html">Quick Start page</a>.  Access RStudio by using the url of the form: <br/> <code>http://CLUSTERNAME.azurehdinsight.net/rstudio</code>. 
 <p/>
 <div class="alert alert-info" role="alert">
 When you first visit the url to access RStudio, you will see two different logins.  Use the username and  password you created when you deployed the HDInsight solution for both of these prompts.

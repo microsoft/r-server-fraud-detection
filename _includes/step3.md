@@ -25,7 +25,7 @@ You can find this script in the <strong>SQLR</strong> directory, and execute it 
 <div class="hdi">
 <p></p>
 Now that we have evaluated the model, it is time to put it to use in predicting fraud during an online transaction. 
-Debra now creates an analytic web service  with <a href="https://msdn.microsoft.com/en-us/microsoft-r/operationalize/about">R Server Operationalization</a> that incorporates these same steps: data processing, feature engineering, and scoring.
+Debra now creates an analytic web service  with <a href="https://docs.microsoft.com/en-us/machine-learning-server/what-is-operationalization">ML Server Operationalization</a> that incorporates these same steps: data processing, feature engineering, and scoring.
 <p/>
  <strong>web_scoring_main.R</strong> will create a web service and test it on the edge node.  
 <p/>

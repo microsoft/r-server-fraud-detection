@@ -6,9 +6,6 @@ Predict if an online purchase transaction is fraudulent. This is an important sc
 ### Deploy to Azure on SQL Server
 [![Deploy to Azure (SQL Server)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2Fr-server-fraud-detection%2Fmaster%2FArmTemplates%2Ffraud-detection_arm.json)
 
-### Deploy to Azure on HDInsight
-[![Deploy to Azure (HDInsight)](https://raw.githubusercontent.com/Azure/Azure-CortanaIntelligence-SolutionAuthoringWorkspace/master/docs/images/DeployToAzure.PNG)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2Fr-server-fraud-detection%2Fmaster%2FArmTemplates%2Ffraud-detection_hdi_arm.json)
-
 ## More samples and information
 > Discover more examples at [Microsoft Machine Learning Server](https://github.com/Microsoft/ML-Server)
 

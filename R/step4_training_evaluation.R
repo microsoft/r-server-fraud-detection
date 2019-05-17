@@ -374,6 +374,18 @@ scr2stat <- function(data, contactPeriod, sampleRateNF, sampleRateFrd)
   }
   
   perf.df <- as.data.frame(scr_hash)
+  
+  # Colnames
+  # ADR = Fraud Account Detection Rate
+  # PCT NF Acct = Percentage on account level classified as Non-Fraud.
+  # Dol Frd = Dollar amount Fraud
+  # Dol NF = Dollar amount Non-Fraud
+  # VDR = Value detection rate. The percentage of values saved
+  # Acct FP(recontact period) = False positives for Account
+  # PCT Frd = Percentage classified as Fraud
+  # PCT NF = Percentage classified as Non-Fraud
+  # AFPR = Account-level false positive ratio
+  # TFPR = Transaction level false positive ratio
   colnames(perf.df) <- c("ADR", "PCT NF Acct", "Dol Frd", "Dol NF", "VDR", "Acct FP(recontact period)", "PCT Frd", "PCT NF","AFPR","TFPR")
   return(perf.df)	
 }
